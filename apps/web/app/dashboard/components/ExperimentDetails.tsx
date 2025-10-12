@@ -1,3 +1,4 @@
+import { Card } from '@repo/ui/card';
 import { useExperimentDetails } from '../../../hooks/useExperiment';
 import {
   Activity,
@@ -56,7 +57,7 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
   return (
     <div className="h-full overflow-y-auto p-8">
       <div className="max-w-6xl mx-auto space-y-6">
-        <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 rounded-xl border border-slate-700/50 p-6 shadow-xl">
+        <Card color="slate">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h1 className="text-2xl font-bold text-white mb-2">{experiment.name}</h1>
@@ -66,7 +67,7 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
             </div>
             {getStatusBadge()}
           </div>
-
+          
           <div className="flex gap-6 text-sm">
             <div>
               <span className="text-slate-500">Created:</span>
@@ -81,17 +82,15 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
               </span>
             </div>
           </div>
-        </div>
+        </Card>
 
         {parameters && (
-          <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 rounded-xl border border-slate-700/50 p-6 shadow-xl">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-purple-500/20 rounded-lg">
-                <Settings className="w-5 h-5 text-purple-400" />
-              </div>
-              <h2 className="text-xl font-bold text-white">Configuration Parameters</h2>
-            </div>
-
+          <Card 
+            title="Configuration Parameters" 
+            icon={<Settings className="w-5 h-5" />}
+            color="slate"
+            iconColor="purple"
+          >
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div>
@@ -144,19 +143,17 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
                 </div>
               </div>
             </div>
-          </div>
+          </Card>
         )}
 
         {results && (
           <>
-            <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 rounded-xl border border-slate-700/50 p-6 shadow-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-blue-500/20 rounded-lg">
-                  <BarChart3 className="w-5 h-5 text-blue-400" />
-                </div>
-                <h2 className="text-xl font-bold text-white">Performance Metrics</h2>
-              </div>
-
+            <Card 
+              title="Performance Metrics" 
+              icon={<BarChart3 className="w-5 h-5" />}
+              color="slate"
+              iconColor="blue"
+            >
               <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                 <MetricCard label="Accuracy" value={results.accuracy} color="teal" />
                 <MetricCard label="Precision" value={results.precision_score} color="blue" />
@@ -164,16 +161,14 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
                 <MetricCard label="F1 Score" value={results.f1_score} color="pink" />
                 <MetricCard label="ROC AUC" value={results.roc_auc} color="emerald" />
               </div>
-            </div>
+            </Card>
 
-            <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 rounded-xl border border-slate-700/50 p-6 shadow-xl">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-emerald-500/20 rounded-lg">
-                  <TrendingUp className="w-5 h-5 text-emerald-400" />
-                </div>
-                <h2 className="text-xl font-bold text-white">Top Expressed Genes</h2>
-              </div>
-
+            <Card 
+              title="Top Expressed Genes" 
+              icon={<TrendingUp className="w-5 h-5" />}
+              color="slate"
+              iconColor="emerald"
+            >
               <div className="space-y-3">
                 {results.top_genes.length > 0 ? (
                   results.top_genes.map((gene: Gene, index: number) => (
@@ -185,15 +180,15 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
                   </div>
                 )}
               </div>
-            </div>
+            </Card>
           </>
         )}
 
         {!results && experiment.status === 'completed' && (
-          <div className="bg-gradient-to-br from-slate-800/90 to-slate-900/90 rounded-xl border border-slate-700/50 p-8 text-center">
+          <Card className="text-center">
             <Activity className="w-12 h-12 text-slate-600 mx-auto mb-3" />
             <p className="text-slate-400">No results available for this experiment</p>
-          </div>
+          </Card>
         )}
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { FlaskConical, Sparkles } from 'lucide-react';
-
+import { Button } from '@repo/ui/button';
 interface EmptyStateProps {
   onNewExperiment: () => void;
 }
@@ -24,13 +24,10 @@ export function EmptyState({ onNewExperiment }: EmptyStateProps) {
           Start your first drug target interaction analysis to identify key genes and evaluate model performance.
         </p>
 
-        <button
-          onClick={onNewExperiment}
-          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-500 hover:to-blue-500 text-white rounded-lg font-medium transition-all shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40"
-        >
-          <Sparkles className="w-5 h-5" />
-          Create Your First Analysis
-        </button>
+     <Button onClick={onNewExperiment} type='primary' className="w-full h-15 justify-center">
+       <Sparkles className="w-5 h-5" />
+       Create Your First Analysis
+     </Button>
 
         <div className="mt-12 grid grid-cols-3 gap-4 text-left">
           <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700/50">

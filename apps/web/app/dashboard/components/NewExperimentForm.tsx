@@ -1,54 +1,59 @@
-import { useState } from 'react';
-import { X, Sparkles, Beaker } from 'lucide-react';
+import { useState } from "react";
+import { X, Sparkles, Beaker } from "lucide-react";
 
 interface NewExperimentFormProps {
+  datasetId: string;
   onClose: () => void;
   onSuccess: () => void;
 }
 
 const PREPROCESSING_OPTIONS = [
-  'Normalization',
-  'Missing Value Imputation',
-  'Outlier Removal',
-  'Feature Scaling',
-  'Log Transformation',
-  'Batch Correction',
-  'Quality Control Filtering'
+  "Normalization",
+  "Missing Value Imputation",
+  "Outlier Removal",
+  "Feature Scaling",
+  "Log Transformation",
+  "Batch Correction",
+  "Quality Control Filtering",
 ];
 
 const MODEL_OPTIONS = [
-  { value: 'random_forest', label: 'Random Forest' },
-  { value: 'svm', label: 'Support Vector Machine' },
-  { value: 'neural_network', label: 'Neural Network' },
-  { value: 'gradient_boosting', label: 'Gradient Boosting' },
-  { value: 'logistic_regression', label: 'Logistic Regression' },
-  { value: 'xgboost', label: 'XGBoost' },
+  { value: "random_forest", label: "Random Forest" },
+  { value: "svm", label: "Support Vector Machine" },
+  { value: "neural_network", label: "Neural Network" },
+  { value: "gradient_boosting", label: "Gradient Boosting" },
+  { value: "logistic_regression", label: "Logistic Regression" },
+  { value: "xgboost", label: "XGBoost" },
 ];
 
 const FEATURE_SELECTION_OPTIONS = [
-  'None',
-  'Variance Threshold',
-  'Recursive Feature Elimination',
-  'LASSO',
-  'Random Forest Importance',
-  'Chi-Square Test',
+  "None",
+  "Variance Threshold",
+  "Recursive Feature Elimination",
+  "LASSO",
+  "Random Forest Importance",
+  "Chi-Square Test",
 ];
 
-export function NewExperimentForm({ onClose, onSuccess }: NewExperimentFormProps) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [modelType, setModelType] = useState('random_forest');
+export function NewExperimentForm({
+  datasetId,
+  onClose,
+  onSuccess,
+}: NewExperimentFormProps) {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [modelType, setModelType] = useState("random_forest");
   const [numFolds, setNumFolds] = useState(5);
   const [trainTestSplit, setTrainTestSplit] = useState(80);
-  const [featureSelection, setFeatureSelection] = useState('None');
-  const [selectedPreprocessing, setSelectedPreprocessing] = useState<string[]>([]);
+  const [featureSelection, setFeatureSelection] = useState("None");
+  const [selectedPreprocessing, setSelectedPreprocessing] = useState<string[]>(
+    []
+  );
   const [submitting, setSubmitting] = useState(false);
 
   const togglePreprocessing = (step: string) => {
-    setSelectedPreprocessing(prev =>
-      prev.includes(step)
-        ? prev.filter(s => s !== step)
-        : [...prev, step]
+    setSelectedPreprocessing((prev) =>
+      prev.includes(step) ? prev.filter((s) => s !== step) : [...prev, step]
     );
   };
 
@@ -60,12 +65,17 @@ export function NewExperimentForm({ onClose, onSuccess }: NewExperimentFormProps
       const newId = Date.now().toString();
       const now = new Date().toISOString();
 
+      const currentUser =
+        sessionStorage.getItem("currentUser") ||
+        "00000000-0000-0000-0000-000000000000";
+
       const newExperiment = {
         id: newId,
-        user_id: '00000000-0000-0000-0000-000000000000',
+        user_id: currentUser,
+        dataset_id: datasetId,
         name,
         description,
-        status: 'completed' as const,
+        status: "completed" as const,
         created_at: now,
         updated_at: now,
       };
@@ -77,7 +87,7 @@ export function NewExperimentForm({ onClose, onSuccess }: NewExperimentFormProps
         model_type: modelType,
         num_folds: numFolds,
         train_test_split: trainTestSplit / 100,
-        feature_selection: featureSelection === 'None' ? '' : featureSelection,
+        feature_selection: featureSelection === "None" ? "" : featureSelection,
         hyperparameters: {},
         created_at: now,
       };
@@ -102,18 +112,18 @@ export function NewExperimentForm({ onClose, onSuccess }: NewExperimentFormProps
         created_at: now,
       };
 
-      const stored = localStorage.getItem('experiments');
+      const stored = sessionStorage.getItem("experiments");
       const experiments = stored ? JSON.parse(stored) : [];
       experiments.unshift(newExperiment);
-      localStorage.setItem('experiments', JSON.stringify(experiments));
-      localStorage.setItem(`params_${newId}`, JSON.stringify(newParams));
-      localStorage.setItem(`results_${newId}`, JSON.stringify(newResults));
+      sessionStorage.setItem("experiments", JSON.stringify(experiments));
+      sessionStorage.setItem(`params_${newId}`, JSON.stringify(newParams));
+      sessionStorage.setItem(`results_${newId}`, JSON.stringify(newResults));
 
       onSuccess();
       onClose();
     } catch (error) {
-      console.error('Error creating experiment:', error);
-      alert('Failed to create experiment. Please try again.');
+      console.error("Error creating experiment:", error);
+      alert("Failed to create experiment. Please try again.");
     } finally {
       setSubmitting(false);
     }
@@ -129,7 +139,9 @@ export function NewExperimentForm({ onClose, onSuccess }: NewExperimentFormProps
             </div>
             <div>
               <h2 className="text-2xl font-bold text-white">New Analysis</h2>
-              <p className="text-sm text-slate-400">Configure your drug target interaction experiment</p>
+              <p className="text-sm text-slate-400">
+                Configure your drug target interaction experiment
+              </p>
             </div>
           </div>
           <button
@@ -173,7 +185,9 @@ export function NewExperimentForm({ onClose, onSuccess }: NewExperimentFormProps
           <div className="border-t border-slate-700/50 pt-6">
             <div className="flex items-center gap-2 mb-4">
               <Beaker className="w-5 h-5 text-purple-400" />
-              <h3 className="text-lg font-semibold text-white">Preprocessing Steps</h3>
+              <h3 className="text-lg font-semibold text-white">
+                Preprocessing Steps
+              </h3>
             </div>
             <div className="grid grid-cols-2 gap-3">
               {PREPROCESSING_OPTIONS.map((step) => (
@@ -181,8 +195,8 @@ export function NewExperimentForm({ onClose, onSuccess }: NewExperimentFormProps
                   key={step}
                   className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
                     selectedPreprocessing.includes(step)
-                      ? 'bg-purple-500/20 border-purple-500/50 text-purple-300'
-                      : 'bg-slate-700/30 border-slate-600/50 text-slate-300 hover:bg-slate-700/50'
+                      ? "bg-purple-500/20 border-purple-500/50 text-purple-300"
+                      : "bg-slate-700/30 border-slate-600/50 text-slate-300 hover:bg-slate-700/50"
                   }`}
                 >
                   <input
@@ -274,7 +288,7 @@ export function NewExperimentForm({ onClose, onSuccess }: NewExperimentFormProps
               disabled={submitting}
               className="flex-1 px-6 py-3 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-500 hover:to-blue-500 text-white rounded-lg font-medium transition-all shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {submitting ? 'Creating...' : 'Create Analysis'}
+              {submitting ? "Creating..." : "Create Analysis"}
             </button>
           </div>
         </form>

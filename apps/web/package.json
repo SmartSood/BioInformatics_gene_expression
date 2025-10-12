@@ -13,13 +13,17 @@
   "dependencies": {
     "@repo/ui": "*",
     "@tailwindcss/postcss": "^4.1.14",
+    "@types/axios": "^0.9.36",
+    "axios": "^1.12.2",
     "next": "^15.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
+    "@repo/types": "*",
     "@repo/typescript-config": "*",
+    "@repo/config": "*",
     "@types/node": "^22.15.3",
     "@types/react": "19.1.0",
     "@types/react-dom": "19.1.1",

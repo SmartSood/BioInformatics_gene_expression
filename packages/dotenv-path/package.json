@@ -1,0 +1,15 @@
+{
+  "name": "@repo/dotenv-path",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }, 
+  "scripts": {
+    "testx": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
