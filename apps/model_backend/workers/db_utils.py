@@ -1,4 +1,5 @@
 # workers/db_utils.py
+
 import time
 import traceback
 import math
@@ -19,6 +20,9 @@ try:
     import pandas as pd
 except Exception:
     pd = None
+
+# Import Prisma Json helper for proper JSON field wrapping
+from prisma import Json
 
 # logger (worker already configures a handler; this will reuse it)
 logger = logging.getLogger("train_worker.db_utils")
@@ -178,6 +182,10 @@ async def update_trainingrun_with_retries(prisma_client, job_id: str, data: dict
         except Exception:
             logger.exception("Failed to sanitize metrics for job %s; setting metrics=None", job_id)
             data["metrics"] = None
+
+    # ✅ Wrap metrics in Prisma.Json for proper DB update
+    if "metrics" in data and data["metrics"] is not None:
+        data["metrics"] = Json(data["metrics"])
 
     # Log the payload we are going to send (truncate large payloads)
     try:

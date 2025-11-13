@@ -1,0 +1,4 @@
+2025-11-13 11:57:18,233 INFO: Attempting final DB update for job b56f64fd-f92d-4c18-8048-dee9808fdee5; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b56f64fd-f92d-4c18-8048-dee9808fdee5/model.joblib", "metrics": {"r2": -0.19137896963651402, "rmse": 0.3129547369889867, "cv_mean": -0.15013845720925575, "cv_std": 0.019789047273416405}}
+2025-11-13 11:57:18,233 INFO: Prisma update attempt for job b56f64fd-f92d-4c18-8048-dee9808fdee5; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b56f64fd-f92d-4c18-8048-dee9808fdee5/model.joblib", "metrics": "Json"}
+2025-11-13 11:57:18,476 INFO: Prisma update successful for job b56f64fd-f92d-4c18-8048-dee9808fdee5 on attempt 1
+2025-11-13 11:57:18,476 INFO: DB updated to finished for job b56f64fd-f92d-4c18-8048-dee9808fdee5
