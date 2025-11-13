@@ -75,8 +75,11 @@ app.post("/signup", async (req, res) => {
   });
   if (existingUser) {
     return res.status(409).json({ message: "User already exists" });
-  } 
-  const hashedPassword = await bcrypt.hash(password, Number(process.env.SALT_ROUNDS));
+  }
+  const hashedPassword = await bcrypt.hash(
+    password,
+    Number(process.env.SALT_ROUNDS)
+  );
   // add the user
 
   try {
@@ -106,11 +109,6 @@ app.post("/signup", async (req, res) => {
     });
   }
 });
-
-
-
-
-
 
 app.post("/signin", async (req, res) => {
   const { email, password } = req.body;
@@ -148,11 +146,21 @@ app.post("/signin", async (req, res) => {
     if (process.env.JWT_SECRET === undefined) {
       return res.status(500).json({ message: "Internal server error" });
     }
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
-    res.status(200).json({ token: token,
-      userId: user.id,
-      name: user.name
-     });
+    const token = jwt.sign(
+      {
+        sub: user.id, // Standard "subject" claim — user’s unique ID
+        email: user.email, // Optional, for convenience
+        scope: ["train", "predict"], // Optional array of permissions
+      },
+      process.env.JWT_SECRET, // Same as AUTH_JWT_SECRET in FastAPI
+      {
+        algorithm: "HS256",
+        issuer: "http://localhost:4000", // Must match AUTH_JWT_ISSUER
+        audience: "mlapp", // Must match AUTH_JWT_AUDIENCE
+        expiresIn: "1h", // Expiration (required)
+      }
+    );
+    res.status(200).json({ token: token, userId: user.id, name: user.name });
   } catch (error) {
     console.error("Error during signin:", error);
     res.status(500).json({ message: "Internal server error" });

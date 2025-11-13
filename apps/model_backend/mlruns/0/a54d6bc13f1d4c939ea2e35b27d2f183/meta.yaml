@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/a54d6bc13f1d4c939ea2e35b27d2f183/artifacts
+end_time: 1762977168347
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: a54d6bc13f1d4c939ea2e35b27d2f183
+run_name: monumental-roo-609
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762977160388
+status: 3
+tags: []
+user_id: smarthsood

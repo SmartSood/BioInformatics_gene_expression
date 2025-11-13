@@ -36,3 +36,11 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+# files uploaded by users
+uploads/
+data/
+mlruns/
+
+#models trained
+artifacts/

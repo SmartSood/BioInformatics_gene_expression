@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/f4e8314b1e4343aaa323f82b384a2ced/artifacts
+end_time: 1763013500263
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f4e8314b1e4343aaa323f82b384a2ced
+run_name: merciful-turtle-700
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763013492231
+status: 3
+tags: []
+user_id: smarthsood

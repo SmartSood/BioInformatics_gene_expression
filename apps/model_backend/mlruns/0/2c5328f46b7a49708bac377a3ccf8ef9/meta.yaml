@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/2c5328f46b7a49708bac377a3ccf8ef9/artifacts
+end_time: 1763014236978
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 2c5328f46b7a49708bac377a3ccf8ef9
+run_name: invincible-quail-487
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763014228837
+status: 3
+tags: []
+user_id: smarthsood

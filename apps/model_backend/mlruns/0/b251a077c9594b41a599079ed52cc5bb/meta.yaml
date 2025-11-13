@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/b251a077c9594b41a599079ed52cc5bb/artifacts
+end_time: 1762963568342
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b251a077c9594b41a599079ed52cc5bb
+run_name: popular-doe-622
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762963560280
+status: 3
+tags: []
+user_id: smarthsood

@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/4a0b07cc9463489f9f81d3b6f3d7e567/artifacts
+end_time: 1762965634370
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 4a0b07cc9463489f9f81d3b6f3d7e567
+run_name: nimble-midge-70
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762965626291
+status: 3
+tags: []
+user_id: smarthsood

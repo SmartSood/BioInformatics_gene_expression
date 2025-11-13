@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/c5319fb4b70e4781939ba9822b280bba/artifacts
+end_time: 1762964218587
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: c5319fb4b70e4781939ba9822b280bba
+run_name: orderly-gnat-284
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762964210432
+status: 3
+tags: []
+user_id: smarthsood

@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/b55d67a76703437a9e44e097f27f0d66/artifacts
+end_time: 1762977784000
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b55d67a76703437a9e44e097f27f0d66
+run_name: bedecked-shrimp-998
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762977776046
+status: 3
+tags: []
+user_id: smarthsood

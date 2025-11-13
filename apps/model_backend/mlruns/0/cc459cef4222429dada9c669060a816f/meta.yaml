@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/cc459cef4222429dada9c669060a816f/artifacts
+end_time: 1762964271106
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: cc459cef4222429dada9c669060a816f
+run_name: resilient-stoat-939
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762964263065
+status: 3
+tags: []
+user_id: smarthsood

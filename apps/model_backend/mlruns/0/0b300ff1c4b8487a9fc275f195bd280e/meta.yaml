@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/0b300ff1c4b8487a9fc275f195bd280e/artifacts
+end_time: 1762964646317
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0b300ff1c4b8487a9fc275f195bd280e
+run_name: charming-hog-975
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762964638176
+status: 3
+tags: []
+user_id: smarthsood

@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+generator py_client {
+  provider = "prisma-client-py"
+  output   = "../generated/prisma-python"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             Int           @id @default(autoincrement())
+  email          String        @unique
+  name           String
+  degree         String
+  field          String
+  university     String
+  graduationYear Int
+  password       String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  runs           TrainingRun[]
+}
+
+model TrainingRun {
+  id         String   @id // RQ job_id
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  status     String // queued | started | finished | failed
+  datasetUri String
+  modelPath  String?
+  metrics    Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

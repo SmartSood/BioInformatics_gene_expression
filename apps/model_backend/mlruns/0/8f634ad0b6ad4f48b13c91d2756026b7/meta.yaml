@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/8f634ad0b6ad4f48b13c91d2756026b7/artifacts
+end_time: 1762974169655
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8f634ad0b6ad4f48b13c91d2756026b7
+run_name: chill-dog-987
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762974161602
+status: 3
+tags: []
+user_id: smarthsood

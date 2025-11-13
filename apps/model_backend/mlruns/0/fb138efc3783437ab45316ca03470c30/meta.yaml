@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/fb138efc3783437ab45316ca03470c30/artifacts
+end_time: 1762974211688
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: fb138efc3783437ab45316ca03470c30
+run_name: colorful-sponge-181
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762974203632
+status: 3
+tags: []
+user_id: smarthsood

@@ -9,6 +9,11 @@ generator client {
   output   = "../generated/prisma"
 }
 
+generator py_client {
+  provider = "prisma-client-py"
+  output   = "../generated/python/prisma"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -26,4 +31,17 @@ model User {
   password String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  runs            TrainingRun[]
+}
+
+model TrainingRun {
+  id           String   @id            // RQ job_id
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  status       String   // queued | started | finished | failed
+  datasetUri   String
+  modelPath    String?
+  metrics      Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/8b5caf0a9631453b8a03159dfb867798/artifacts
+end_time: 1762964761480
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8b5caf0a9631453b8a03159dfb867798
+run_name: efficient-koi-878
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762964753329
+status: 3
+tags: []
+user_id: smarthsood

@@ -1,2 +1,3 @@
 {
+  "python.analysis.extraPaths": ["./packages/db/generated/python"]
 }

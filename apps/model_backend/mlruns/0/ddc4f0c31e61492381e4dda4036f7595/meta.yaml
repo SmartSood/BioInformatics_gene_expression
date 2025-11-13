@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0/ddc4f0c31e61492381e4dda4036f7595/artifacts
+end_time: 1762978597485
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: ddc4f0c31e61492381e4dda4036f7595
+run_name: crawling-sow-268
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762978589525
+status: 3
+tags: []
+user_id: smarthsood

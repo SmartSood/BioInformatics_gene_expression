@@ -1,0 +1,17 @@
+2025-11-13 11:26:58 ERROR: REDIS_URL is not set. Please export REDIS_URL in your shell or set it in env_updates.
+2025-11-13 11:26:58 ERROR: Example (bash): export REDIS_URL='redis://localhost:6379/0'
+2025-11-13 11:29:38 ERROR: REDIS_URL is not set. Please export REDIS_URL in your shell or set it in env_updates.
+2025-11-13 11:29:38 ERROR: Example (bash): export REDIS_URL='redis://localhost:6379/0'
+2025-11-13 11:30:13 INFO: Starting rq worker with the following environment variables (sensitive values hidden):
+2025-11-13 11:30:13 INFO:   DATABASE_URL = postgresql://neondb_...
+2025-11-13 11:30:13 INFO:   REDIS_URL = redis://localhost:63...
+2025-11-13 11:30:13 INFO:   OMP_NUM_THREADS = 1
+2025-11-13 11:30:13 INFO:   OPENBLAS_NUM_THREADS = 1
+2025-11-13 11:30:13 INFO:   MKL_NUM_THREADS = 1
+2025-11-13 11:30:13 INFO:   NUMEXPR_NUM_THREADS = 1
+2025-11-13 11:30:13 INFO:   OBJC_DISABLE_INITIALIZE_FORK_SAFETY = YES
+2025-11-13 11:30:13 INFO:   PYTHONUNBUFFERED = 1
+2025-11-13 11:30:13 INFO: Command: /Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/bin/python -m rq worker -u redis://localhost:6379/0 train
+2025-11-13 11:30:13 INFO: Started rq worker (pid=61618). Streaming logs... (also saved to logs/rq_worker.log)
+2025-11-13 11:30:13 INFO: /Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/bin/python: No module named rq.__main__; 'rq' is a package and cannot be directly executed
+2025-11-13 11:30:13 INFO: rq worker exited with code 1
