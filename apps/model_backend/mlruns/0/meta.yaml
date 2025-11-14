@@ -1,6 +1,4 @@
-artifact_location: file:///Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0
-creation_time: 1762963560235
+artifact_location: /Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/mlruns/0
 experiment_id: '0'
-last_update_time: 1762963560235
 lifecycle_stage: active
 name: Default

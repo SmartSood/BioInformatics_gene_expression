@@ -1,0 +1,4 @@
+npx prisma migrate dev --name add_name_description_training
+python -m prisma generate   # if you are using python client
+cd /Users/smarthsood/Desktop/Gene_startup/gene_web
+python -m uvicorn apps.model_backend.server:app --reload

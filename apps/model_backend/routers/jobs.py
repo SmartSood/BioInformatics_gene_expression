@@ -30,18 +30,26 @@ async def job_status(job_id: str, user=Depends(get_current_user)):
             return {"id": job_id, "status": "started", "metrics": None, "model_path": None}
         if status == "finished":
             res = job.result or {}
+            # Use model_path from result if available, otherwise fallback to filesystem
+            model_path_from_result = res.get("model_path")
+            fs_model_path = _fs_model_path(user["sub"], job_id)
+            final_model_path = model_path_from_result or fs_model_path
+            
             return {
                 "id": job_id,
                 "status": "finished",
                 "metrics": res.get("metrics"),
-                "model_path": res.get("model_path") or _fs_model_path(user["sub"], job_id),
+                "model_path": final_model_path,
             }
         if status == "failed":
+            res = job.result or {}
+            # Failed jobs may have error information in result
+            error_metrics = res.get("metrics") or ({"error": str(res.get("error", "Unknown error"))} if res.get("error") else None)
             return {
                 "id": job_id,
                 "status": "failed",
-                "metrics": None,
-                "model_path": _fs_model_path(user["sub"], job_id),
+                "metrics": error_metrics,
+                "model_path": res.get("model_path") or _fs_model_path(user["sub"], job_id),
             }
 
     # Not present in Redis → ask DB

@@ -36,3 +36,1289 @@
 2025-11-14 23:42:09,773 INFO: Prisma update successful for job 81cde44b-f8aa-42c9-80a9-c81808119c7e on attempt 1
 2025-11-14 23:42:34,527 INFO: Prisma update attempt for job e89162b9-82b9-4777-8205-1726af8424ec; payload (truncated): {"status": "failed"}
 2025-11-14 23:42:34,714 INFO: Prisma update successful for job e89162b9-82b9-4777-8205-1726af8424ec on attempt 1
+2025-11-15 00:02:21,194 INFO: Prisma update attempt for job 2c38437f-3423-4095-a70c-993fce199159; payload (truncated): {"status": "failed"}
+2025-11-15 00:02:21,448 INFO: Prisma update successful for job 2c38437f-3423-4095-a70c-993fce199159 on attempt 1
+2025-11-15 00:02:41,945 INFO: Prisma update attempt for job 08fa38ab-a4c0-49e9-8420-b435a5ccc857; payload (truncated): {"status": "failed"}
+2025-11-15 00:02:42,151 INFO: Prisma update successful for job 08fa38ab-a4c0-49e9-8420-b435a5ccc857 on attempt 1
+2025-11-15 00:05:15,557 INFO: Prisma update attempt for job 1617805a-5fd4-4520-86bc-d48661f37ecb; payload (truncated): {"status": "failed"}
+2025-11-15 00:05:15,757 INFO: Prisma update successful for job 1617805a-5fd4-4520-86bc-d48661f37ecb on attempt 1
+2025-11-15 00:10:03,970 INFO: Attempting final DB update for job 8a5b17b5-f5e5-43e7-b51b-9ab5f30e1513; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/8a5b17b5-f5e5-43e7-b51b-9ab5f30e1513/model.joblib", "metrics": {"r2": -0.18496215325122733, "rmse": 0.31211080551636944, "cv_mean": -0.15309230535069798, "cv_std": 0.016962798967121537}}
+2025-11-15 00:10:03,971 INFO: Prisma update attempt for job 8a5b17b5-f5e5-43e7-b51b-9ab5f30e1513; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/8a5b17b5-f5e5-43e7-b51b-9ab5f30e1513/model.joblib", "metrics": "Json"}
+2025-11-15 00:10:04,170 INFO: Prisma update successful for job 8a5b17b5-f5e5-43e7-b51b-9ab5f30e1513 on attempt 1
+2025-11-15 00:10:04,171 INFO: DB updated to finished for job 8a5b17b5-f5e5-43e7-b51b-9ab5f30e1513
+2025-11-15 00:12:26,519 INFO: Prisma update attempt for job bb1a1f71-8dd5-4aee-829c-a5d7ec4175c2; payload (truncated): {"status": "failed"}
+2025-11-15 00:12:26,734 INFO: Prisma update successful for job bb1a1f71-8dd5-4aee-829c-a5d7ec4175c2 on attempt 1
+2025-11-15 00:13:10,228 INFO: Prisma update attempt for job e27939a9-0e9d-41b8-96e4-c67026805fab; payload (truncated): {"status": "failed"}
+2025-11-15 00:13:10,465 INFO: Prisma update successful for job e27939a9-0e9d-41b8-96e4-c67026805fab on attempt 1
+2025-11-15 00:14:00,667 INFO: Attempting final DB update for job b84392f2-8eed-49bc-ba3e-8310c66abd11; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b84392f2-8eed-49bc-ba3e-8310c66abd11/model.joblib", "metrics": {"r2": -0.48205039980515196, "rmse": 0.34905032860069096, "cv_mean": null, "cv_std": null}}
+2025-11-15 00:14:00,668 INFO: Prisma update attempt for job b84392f2-8eed-49bc-ba3e-8310c66abd11; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b84392f2-8eed-49bc-ba3e-8310c66abd11/model.joblib", "metrics": "Json"}
+2025-11-15 00:14:00,871 INFO: Prisma update successful for job b84392f2-8eed-49bc-ba3e-8310c66abd11 on attempt 1
+2025-11-15 00:14:00,871 INFO: DB updated to finished for job b84392f2-8eed-49bc-ba3e-8310c66abd11
+2025-11-15 00:18:59,773 INFO: Attempting final DB update for job ae9e5a7a-1c65-4ee4-bfaf-9f3e0511579c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/ae9e5a7a-1c65-4ee4-bfaf-9f3e0511579c/model.joblib", "metrics": {"r2": -0.48116863762594764, "rmse": 0.34894647748630103, "cv_mean": -0.4975167514740688, "cv_std": 0.03742034413645099}}
+2025-11-15 00:18:59,774 INFO: Prisma update attempt for job ae9e5a7a-1c65-4ee4-bfaf-9f3e0511579c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/ae9e5a7a-1c65-4ee4-bfaf-9f3e0511579c/model.joblib", "metrics": "Json"}
+2025-11-15 00:19:00,055 INFO: Prisma update successful for job ae9e5a7a-1c65-4ee4-bfaf-9f3e0511579c on attempt 1
+2025-11-15 00:19:00,056 INFO: DB updated to finished for job ae9e5a7a-1c65-4ee4-bfaf-9f3e0511579c
+2025-11-15 00:21:20,999 INFO: Attempting final DB update for job a116fa3e-a77f-40ba-8622-bdb494843d08; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/a116fa3e-a77f-40ba-8622-bdb494843d08/model.joblib", "metrics": {"r2": -0.1915492713575737, "rmse": 0.3129771038542712, "cv_mean": -0.15157747773741911, "cv_std": 0.016936002338394675}}
+2025-11-15 00:21:21,003 INFO: Prisma update attempt for job a116fa3e-a77f-40ba-8622-bdb494843d08; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/a116fa3e-a77f-40ba-8622-bdb494843d08/model.joblib", "metrics": "Json"}
+2025-11-15 00:21:21,254 INFO: Prisma update successful for job a116fa3e-a77f-40ba-8622-bdb494843d08 on attempt 1
+2025-11-15 00:21:21,254 INFO: DB updated to finished for job a116fa3e-a77f-40ba-8622-bdb494843d08
+2025-11-15 00:27:22,583 INFO: Attempting final DB update for job 57cd4add-ee01-461e-a1ca-2c4cc1dae570; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/57cd4add-ee01-461e-a1ca-2c4cc1dae570/model.joblib", "metrics": {"r2": -0.19446307262976226, "rmse": 0.3133595455484383, "cv_mean": -0.15584399821548311, "cv_std": 0.020930442220039338}}
+2025-11-15 00:27:22,584 INFO: Prisma update attempt for job 57cd4add-ee01-461e-a1ca-2c4cc1dae570; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/57cd4add-ee01-461e-a1ca-2c4cc1dae570/model.joblib", "metrics": "Json"}
+2025-11-15 00:27:22,784 INFO: Prisma update successful for job 57cd4add-ee01-461e-a1ca-2c4cc1dae570 on attempt 1
+2025-11-15 00:27:22,784 INFO: DB updated to finished for job 57cd4add-ee01-461e-a1ca-2c4cc1dae570
+2025-11-15 00:28:42,646 INFO: Prisma update attempt for job a8cead59-69dd-4493-bc8a-ead6a21afc34; payload (truncated): {"status": "failed"}
+2025-11-15 00:28:42,854 INFO: Prisma update successful for job a8cead59-69dd-4493-bc8a-ead6a21afc34 on attempt 1
+2025-11-15 00:29:20,242 INFO: Prisma update attempt for job 342dce75-fcb6-4976-b855-8b18ef720037; payload (truncated): {"status": "failed"}
+2025-11-15 00:29:20,447 INFO: Prisma update successful for job 342dce75-fcb6-4976-b855-8b18ef720037 on attempt 1
+2025-11-15 00:31:53,853 INFO: Prisma update attempt for job 32563e59-c151-415f-a32d-c83359d86966; payload (truncated): {"status": "failed"}
+2025-11-15 00:31:54,036 INFO: Prisma update successful for job 32563e59-c151-415f-a32d-c83359d86966 on attempt 1
+2025-11-15 00:32:03,740 INFO: Prisma update attempt for job 2b45deb3-ded5-479a-87e5-cd29fdb0f3e2; payload (truncated): {"status": "failed"}
+2025-11-15 00:32:03,925 INFO: Prisma update successful for job 2b45deb3-ded5-479a-87e5-cd29fdb0f3e2 on attempt 1
+2025-11-15 01:01:38,424 INFO: Attempting final DB update for job 5e68e989-3091-4eee-9270-8c59c5e5851c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/5e68e989-3091-4eee-9270-8c59c5e5851c/model.joblib", "metrics": {"r2": -0.19463719333983165, "rmse": 0.31338238442874344, "cv_mean": -0.1544127903280112, "cv_std": 0.01959642274513909}}
+2025-11-15 01:01:38,425 INFO: Prisma update attempt for job 5e68e989-3091-4eee-9270-8c59c5e5851c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/5e68e989-3091-4eee-9270-8c59c5e5851c/model.joblib", "metrics": "Json"}
+2025-11-15 01:01:38,632 INFO: Prisma update successful for job 5e68e989-3091-4eee-9270-8c59c5e5851c on attempt 1
+2025-11-15 01:01:38,633 INFO: DB updated to finished for job 5e68e989-3091-4eee-9270-8c59c5e5851c
+2025-11-15 01:03:15,320 INFO: Prisma update attempt for job 82070e53-5f90-4e4f-af33-82289ec12d30; payload (truncated): {"status": "failed"}
+2025-11-15 01:03:15,532 INFO: Prisma update successful for job 82070e53-5f90-4e4f-af33-82289ec12d30 on attempt 1
+2025-11-15 01:03:53,732 INFO: Attempting final DB update for job e362fefd-8bab-452c-aa7c-7f5bbb371fbc; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/e362fefd-8bab-452c-aa7c-7f5bbb371fbc/model.joblib", "metrics": {"r2": -0.20023189740614455, "rmse": 0.31411534074732717, "cv_mean": -0.15085702550278296, "cv_std": 0.013209843908670322}}
+2025-11-15 01:03:53,733 INFO: Prisma update attempt for job e362fefd-8bab-452c-aa7c-7f5bbb371fbc; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/e362fefd-8bab-452c-aa7c-7f5bbb371fbc/model.joblib", "metrics": "Json"}
+2025-11-15 01:03:53,921 INFO: Prisma update successful for job e362fefd-8bab-452c-aa7c-7f5bbb371fbc on attempt 1
+2025-11-15 01:03:53,922 INFO: DB updated to finished for job e362fefd-8bab-452c-aa7c-7f5bbb371fbc
+2025-11-15 01:08:16,923 INFO: Attempting final DB update for job 9a2931f5-8744-4778-a7f6-f83049ec54f5; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9a2931f5-8744-4778-a7f6-f83049ec54f5/model.joblib", "metrics": {"r2": -0.4812392276647335, "rmse": 0.34895479249219546, "cv_mean": null, "cv_std": null}}
+2025-11-15 01:08:16,924 INFO: Prisma update attempt for job 9a2931f5-8744-4778-a7f6-f83049ec54f5; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9a2931f5-8744-4778-a7f6-f83049ec54f5/model.joblib", "metrics": "Json"}
+2025-11-15 01:08:17,126 INFO: Prisma update successful for job 9a2931f5-8744-4778-a7f6-f83049ec54f5 on attempt 1
+2025-11-15 01:08:17,126 INFO: DB updated to finished for job 9a2931f5-8744-4778-a7f6-f83049ec54f5
+2025-11-15 01:10:01,919 INFO: Attempting final DB update for job 65d5cc2d-b7d4-49f9-bf6a-74175c571dbc; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/65d5cc2d-b7d4-49f9-bf6a-74175c571dbc/model.joblib", "metrics": {"r2": -0.4808352284523574, "rmse": 0.3489072015721431, "cv_mean": null, "cv_std": null}}
+2025-11-15 01:10:01,920 INFO: Prisma update attempt for job 65d5cc2d-b7d4-49f9-bf6a-74175c571dbc; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/65d5cc2d-b7d4-49f9-bf6a-74175c571dbc/model.joblib", "metrics": "Json"}
+2025-11-15 01:10:02,141 INFO: Prisma update successful for job 65d5cc2d-b7d4-49f9-bf6a-74175c571dbc on attempt 1
+2025-11-15 01:10:02,142 INFO: DB updated to finished for job 65d5cc2d-b7d4-49f9-bf6a-74175c571dbc
+2025-11-15 01:12:33,773 INFO: Attempting final DB update for job 9811daaa-4bc1-4e29-a372-453c065c3168; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9811daaa-4bc1-4e29-a372-453c065c3168/model.joblib", "metrics": {"r2": -0.4821508766418341, "rmse": 0.34906216047849364, "cv_mean": null, "cv_std": null}}
+2025-11-15 01:12:33,774 INFO: Prisma update attempt for job 9811daaa-4bc1-4e29-a372-453c065c3168; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9811daaa-4bc1-4e29-a372-453c065c3168/model.joblib", "metrics": "Json"}
+2025-11-15 01:12:33,998 INFO: Prisma update successful for job 9811daaa-4bc1-4e29-a372-453c065c3168 on attempt 1
+2025-11-15 01:12:33,999 INFO: DB updated to finished for job 9811daaa-4bc1-4e29-a372-453c065c3168
+2025-11-15 01:18:56,622 ERROR: Training error for job 80348d3b-3c24-4e96-9df7-4f672bf902d1: Training failed: Cross-validation failed: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 333, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 333, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 350, in train
+    raise ValueError(error_msg) from e
+ValueError: Cross-validation failed: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 333, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+
+2025-11-15 01:18:56,622 INFO: Prisma update attempt for job 80348d3b-3c24-4e96-9df7-4f672bf902d1; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 01:18:56,950 INFO: Prisma update successful for job 80348d3b-3c24-4e96-9df7-4f672bf902d1 on attempt 1
+2025-11-15 01:18:56,952 INFO: Prisma update attempt for job 80348d3b-3c24-4e96-9df7-4f672bf902d1; payload (truncated): {"status": "failed"}
+2025-11-15 01:18:57,172 INFO: Prisma update successful for job 80348d3b-3c24-4e96-9df7-4f672bf902d1 on attempt 1
+2025-11-15 01:20:22,835 ERROR: Training error for job 21b4b361-d529-41ee-8716-61b24f8c5020: Training failed: Cross-validation failed: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 333, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 333, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 350, in train
+    raise ValueError(error_msg) from e
+ValueError: Cross-validation failed: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 333, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+
+2025-11-15 01:20:22,836 INFO: Prisma update attempt for job 21b4b361-d529-41ee-8716-61b24f8c5020; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 01:20:23,119 INFO: Prisma update successful for job 21b4b361-d529-41ee-8716-61b24f8c5020 on attempt 1
+2025-11-15 01:20:23,119 INFO: Prisma update attempt for job 21b4b361-d529-41ee-8716-61b24f8c5020; payload (truncated): {"status": "failed"}
+2025-11-15 01:20:23,306 INFO: Prisma update successful for job 21b4b361-d529-41ee-8716-61b24f8c5020 on attempt 1
+2025-11-15 01:22:39,774 ERROR: Training error for job ccb013c7-ecb3-4b49-9d5d-b722f1e3d83e: Training failed: Cross-validation failed: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 379, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 379, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 396, in train
+    raise ValueError(error_msg) from e
+ValueError: Cross-validation failed: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 379, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+
+2025-11-15 01:22:39,775 INFO: Prisma update attempt for job ccb013c7-ecb3-4b49-9d5d-b722f1e3d83e; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 01:22:40,093 INFO: Prisma update successful for job ccb013c7-ecb3-4b49-9d5d-b722f1e3d83e on attempt 1
+2025-11-15 01:22:40,094 INFO: Prisma update attempt for job ccb013c7-ecb3-4b49-9d5d-b722f1e3d83e; payload (truncated): {"status": "failed"}
+2025-11-15 01:22:40,316 INFO: Prisma update successful for job ccb013c7-ecb3-4b49-9d5d-b722f1e3d83e on attempt 1
+2025-11-15 01:23:15,727 INFO: Attempting final DB update for job d696143f-3c8b-4729-ab5b-aec7a5e32fa3; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/d696143f-3c8b-4729-ab5b-aec7a5e32fa3/model.joblib", "metrics": {"r2": -0.19301480083020905, "rmse": 0.31316951562932044, "cv_mean": -0.15428005274658685, "cv_std": 0.021565475408670185}}
+2025-11-15 01:23:15,728 INFO: Prisma update attempt for job d696143f-3c8b-4729-ab5b-aec7a5e32fa3; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/d696143f-3c8b-4729-ab5b-aec7a5e32fa3/model.joblib", "metrics": "Json"}
+2025-11-15 01:23:15,981 INFO: Prisma update successful for job d696143f-3c8b-4729-ab5b-aec7a5e32fa3 on attempt 1
+2025-11-15 01:23:15,982 INFO: DB updated to finished for job d696143f-3c8b-4729-ab5b-aec7a5e32fa3
+2025-11-15 01:27:40,788 ERROR: Training error for job b40d803c-f2c4-4071-ba67-df18a72b5f32: Training failed: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 379, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 434, in train
+    raise ValueError(error_msg) from e
+ValueError: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+2025-11-15 01:27:40,788 INFO: Prisma update attempt for job b40d803c-f2c4-4071-ba67-df18a72b5f32; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 01:27:41,014 INFO: Prisma update successful for job b40d803c-f2c4-4071-ba67-df18a72b5f32 on attempt 1
+2025-11-15 01:27:41,015 INFO: Prisma update attempt for job b40d803c-f2c4-4071-ba67-df18a72b5f32; payload (truncated): {"status": "failed"}
+2025-11-15 01:27:41,231 INFO: Prisma update successful for job b40d803c-f2c4-4071-ba67-df18a72b5f32 on attempt 1
+2025-11-15 01:29:32,194 ERROR: Training error for job 7a303142-904f-4cc1-814d-d62c37ab6efb: Training failed: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 379, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 434, in train
+    raise ValueError(error_msg) from e
+ValueError: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+2025-11-15 01:29:32,195 INFO: Prisma update attempt for job 7a303142-904f-4cc1-814d-d62c37ab6efb; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 01:29:32,474 INFO: Prisma update successful for job 7a303142-904f-4cc1-814d-d62c37ab6efb on attempt 1
+2025-11-15 01:29:32,475 INFO: Prisma update attempt for job 7a303142-904f-4cc1-814d-d62c37ab6efb; payload (truncated): {"status": "failed"}
+2025-11-15 01:29:32,704 INFO: Prisma update successful for job 7a303142-904f-4cc1-814d-d62c37ab6efb on attempt 1
+2025-11-15 01:32:19,226 ERROR: Training error for job 041fdb55-5f1c-4b99-bdb6-f9a67aa416a8: Training failed: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 379, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 434, in train
+    raise ValueError(error_msg) from e
+ValueError: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+2025-11-15 01:32:19,226 INFO: Prisma update attempt for job 041fdb55-5f1c-4b99-bdb6-f9a67aa416a8; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 01:32:19,539 INFO: Prisma update successful for job 041fdb55-5f1c-4b99-bdb6-f9a67aa416a8 on attempt 1
+2025-11-15 01:32:19,539 INFO: Prisma update attempt for job 041fdb55-5f1c-4b99-bdb6-f9a67aa416a8; payload (truncated): {"status": "failed"}
+2025-11-15 01:32:19,784 INFO: Prisma update successful for job 041fdb55-5f1c-4b99-bdb6-f9a67aa416a8 on attempt 1
+2025-11-15 01:32:48,762 INFO: Attempting final DB update for job 880f2060-a2fb-46c5-9193-1dbe2964f840; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/880f2060-a2fb-46c5-9193-1dbe2964f840/model.joblib", "metrics": {"r2": -0.19877323532936408, "rmse": 0.31392440788182274, "cv_mean": -0.1517855534406954, "cv_std": 0.015192652207125047}}
+2025-11-15 01:32:48,763 INFO: Prisma update attempt for job 880f2060-a2fb-46c5-9193-1dbe2964f840; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/880f2060-a2fb-46c5-9193-1dbe2964f840/model.joblib", "metrics": "Json"}
+2025-11-15 01:32:48,950 INFO: Prisma update successful for job 880f2060-a2fb-46c5-9193-1dbe2964f840 on attempt 1
+2025-11-15 01:32:48,950 INFO: DB updated to finished for job 880f2060-a2fb-46c5-9193-1dbe2964f840
+2025-11-15 02:26:33,038 ERROR: Training error for job 25b74959-4419-4f82-b666-2bdc6d510c64: Training failed: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 379, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 434, in train
+    raise ValueError(error_msg) from e
+ValueError: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+2025-11-15 02:26:33,039 INFO: Prisma update attempt for job 25b74959-4419-4f82-b666-2bdc6d510c64; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 02:26:33,221 INFO: Prisma update successful for job 25b74959-4419-4f82-b666-2bdc6d510c64 on attempt 1
+2025-11-15 02:26:33,222 INFO: Prisma update attempt for job 25b74959-4419-4f82-b666-2bdc6d510c64; payload (truncated): {"status": "failed"}
+2025-11-15 02:26:33,404 INFO: Prisma update successful for job 25b74959-4419-4f82-b666-2bdc6d510c64 on attempt 1
+2025-11-15 02:27:31,080 ERROR: Training error for job dcd87e8e-4034-4742-9c20-1f10013943b2: Training failed: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 379, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1137, in check_array
+    raise ValueError(
+    ...<3 lines>...
+    )
+ValueError: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 434, in train
+    raise ValueError(error_msg) from e
+ValueError: Feature selection removed all features during CV. Method: lasso, Original features: 2. This suggests the feature selection criteria are too strict for this dataset. Try: (1) Using a different feature selection method, (2) Relaxing the selection parameters (e.g., lower variance_threshold, lower alpha), or (3) Disabling feature selection.
+
+Original error: Found array with 0 feature(s) (shape=(6400, 0)) while a minimum of 1 is required by RandomForestRegressor.
+
+2025-11-15 02:27:31,081 INFO: Prisma update attempt for job dcd87e8e-4034-4742-9c20-1f10013943b2; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 02:27:31,272 INFO: Prisma update successful for job dcd87e8e-4034-4742-9c20-1f10013943b2 on attempt 1
+2025-11-15 02:27:31,273 INFO: Prisma update attempt for job dcd87e8e-4034-4742-9c20-1f10013943b2; payload (truncated): {"status": "failed"}
+2025-11-15 02:27:31,460 INFO: Prisma update successful for job dcd87e8e-4034-4742-9c20-1f10013943b2 on attempt 1
+2025-11-15 02:30:41,969 ERROR: Training error for job 6af55cfe-8500-4b1b-ab44-a044d15166ca: Training failed: log_text() got an unexpected keyword argument 'artifact_path'. Did you mean 'artifact_file'?
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 554, in train
+    mlflow.log_text(warnings_str, artifact_path="warnings.txt")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: log_text() got an unexpected keyword argument 'artifact_path'. Did you mean 'artifact_file'?
+
+2025-11-15 02:30:41,969 INFO: Prisma update attempt for job 6af55cfe-8500-4b1b-ab44-a044d15166ca; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 02:30:42,157 INFO: Prisma update successful for job 6af55cfe-8500-4b1b-ab44-a044d15166ca on attempt 1
+2025-11-15 02:30:42,158 INFO: Prisma update attempt for job 6af55cfe-8500-4b1b-ab44-a044d15166ca; payload (truncated): {"status": "failed"}
+2025-11-15 02:30:42,429 INFO: Prisma update successful for job 6af55cfe-8500-4b1b-ab44-a044d15166ca on attempt 1
+2025-11-15 02:31:51,036 INFO: Attempting final DB update for job 387198d1-b1f8-464b-930b-7ea74d5fb4de; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/387198d1-b1f8-464b-930b-7ea74d5fb4de/model.joblib", "metrics": {"r2": -0.49010502639832043, "rmse": 0.34999755025730933, "cv_mean": -0.4302198756804839, "cv_std": 0.15649108479312537, "warnings": ["Warning: Dataset has only 2 features but using lasso feature selection. This may result in all features being removed. Consider using a different method or disabling feature selection."], "warnings_count": 1}}
+2025-11-15 02:31:51,037 INFO: Prisma update attempt for job 387198d1-b1f8-464b-930b-7ea74d5fb4de; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/387198d1-b1f8-464b-930b-7ea74d5fb4de/model.joblib", "metrics": "Json"}
+2025-11-15 02:31:51,249 INFO: Prisma update successful for job 387198d1-b1f8-464b-930b-7ea74d5fb4de on attempt 1
+2025-11-15 02:31:51,250 INFO: DB updated to finished for job 387198d1-b1f8-464b-930b-7ea74d5fb4de
+2025-11-15 02:34:12,223 INFO: Attempting final DB update for job b4b0c7c6-8705-4355-8995-cbf66a60d1e7; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b4b0c7c6-8705-4355-8995-cbf66a60d1e7/model.joblib", "metrics": {"r2": -0.4821790077333268, "rmse": 0.3490654730471177, "cv_mean": -0.42565934652675336, "cv_std": 0.15686775758605687, "warnings": ["Warning: Dataset has only 2 features but using lasso feature selection. This may result in all features being removed. Consider using a different method or disabling feature selection."], "warnings_count": 1}}
+2025-11-15 02:34:12,225 INFO: Prisma update attempt for job b4b0c7c6-8705-4355-8995-cbf66a60d1e7; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b4b0c7c6-8705-4355-8995-cbf66a60d1e7/model.joblib", "metrics": "Json"}
+2025-11-15 02:34:12,414 INFO: Prisma update successful for job b4b0c7c6-8705-4355-8995-cbf66a60d1e7 on attempt 1
+2025-11-15 02:34:12,415 INFO: DB updated to finished for job b4b0c7c6-8705-4355-8995-cbf66a60d1e7
+2025-11-15 02:40:39,147 INFO: Attempting final DB update for job f44830ec-2955-41e7-8092-9b7a489eb39f; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/f44830ec-2955-41e7-8092-9b7a489eb39f/model.joblib", "metrics": {"r2": -0.02310627561058598, "rmse": 1.0240299498750567, "cv_mean": -0.014129061506101026, "cv_std": 0.004508231970178972}}
+2025-11-15 02:40:39,149 INFO: Prisma update attempt for job f44830ec-2955-41e7-8092-9b7a489eb39f; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/f44830ec-2955-41e7-8092-9b7a489eb39f/model.joblib", "metrics": "Json"}
+2025-11-15 02:40:39,445 INFO: Prisma update successful for job f44830ec-2955-41e7-8092-9b7a489eb39f on attempt 1
+2025-11-15 02:40:39,446 INFO: DB updated to finished for job f44830ec-2955-41e7-8092-9b7a489eb39f
+2025-11-15 02:40:50,076 INFO: Attempting final DB update for job 7448d8aa-cdc3-4e2b-9394-ca378959139f; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/7448d8aa-cdc3-4e2b-9394-ca378959139f/model.joblib", "metrics": {"r2": -0.19119470821142293, "rmse": 0.31293053490168365, "cv_mean": -0.14884871350476514, "cv_std": 0.01836638615213407}}
+2025-11-15 02:40:50,077 INFO: Prisma update attempt for job 7448d8aa-cdc3-4e2b-9394-ca378959139f; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/7448d8aa-cdc3-4e2b-9394-ca378959139f/model.joblib", "metrics": "Json"}
+2025-11-15 02:40:50,260 INFO: Prisma update successful for job 7448d8aa-cdc3-4e2b-9394-ca378959139f on attempt 1
+2025-11-15 02:40:50,260 INFO: DB updated to finished for job 7448d8aa-cdc3-4e2b-9394-ca378959139f
+2025-11-15 02:41:00,695 INFO: Attempting final DB update for job 8295e060-c8b1-40d7-89bf-ce34c7f7ac87; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/8295e060-c8b1-40d7-89bf-ce34c7f7ac87/model.joblib", "metrics": {"r2": -0.18995143902130218, "rmse": 0.3127671869371302, "cv_mean": -0.14994381733113746, "cv_std": 0.01866886860319116}}
+2025-11-15 02:41:00,696 INFO: Prisma update attempt for job 8295e060-c8b1-40d7-89bf-ce34c7f7ac87; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/8295e060-c8b1-40d7-89bf-ce34c7f7ac87/model.joblib", "metrics": "Json"}
+2025-11-15 02:41:00,882 INFO: Prisma update successful for job 8295e060-c8b1-40d7-89bf-ce34c7f7ac87 on attempt 1
+2025-11-15 02:41:00,883 INFO: DB updated to finished for job 8295e060-c8b1-40d7-89bf-ce34c7f7ac87
+2025-11-15 02:44:42,082 WARNING: Warning: failed to connect to DB at job start: Could not connect to the query engine
+2025-11-15 02:46:06,429 INFO: Attempting final DB update for job e5d83199-abe3-4211-bd46-bdb408646408; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/e5d83199-abe3-4211-bd46-bdb408646408/model.joblib", "metrics": {"r2": -0.021569295230714935, "rmse": 1.0232604767843005, "cv_mean": -0.01937227886468289, "cv_std": 0.00594064247248579}}
+2025-11-15 02:46:06,431 INFO: Prisma update attempt for job e5d83199-abe3-4211-bd46-bdb408646408; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/e5d83199-abe3-4211-bd46-bdb408646408/model.joblib", "metrics": "Json"}
+2025-11-15 02:46:06,743 INFO: Prisma update successful for job e5d83199-abe3-4211-bd46-bdb408646408 on attempt 1
+2025-11-15 02:46:06,744 INFO: DB updated to finished for job e5d83199-abe3-4211-bd46-bdb408646408
+2025-11-15 02:47:43,299 WARNING: Warning: failed to connect to DB at job start: Could not connect to the query engine
+2025-11-15 02:47:43,524 ERROR: Training error for job c1c645a4-8ed7-40d6-b8a5-ca8461667b71: Training failed: Unknown label type: (array([0.18174337, 0.78909322, 0.85815792, ..., 0.40445658, 0.50596681,
+       0.69889264], shape=(8000,)),)
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 369, in train
+    fs_step.fit(X_tr_prep, y_tr)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/feature_selection/_univariate_selection.py", line 568, in fit
+    score_func_ret = self.score_func(X, y)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 191, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/feature_selection/_univariate_selection.py", line 271, in chi2
+    Y = LabelBinarizer(sparse_output=True).fit_transform(y)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/preprocessing/_label.py", line 335, in fit_transform
+    return self.fit(y).transform(y)
+           ~~~~~~~~^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/preprocessing/_label.py", line 312, in fit
+    self.classes_ = unique_labels(y)
+                    ~~~~~~~~~~~~~^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/multiclass.py", line 105, in unique_labels
+    raise ValueError("Unknown label type: %s" % repr(ys))
+ValueError: Unknown label type: (array([0.18174337, 0.78909322, 0.85815792, ..., 0.40445658, 0.50596681,
+       0.69889264], shape=(8000,)),)
+
+2025-11-15 02:48:31,105 ERROR: Training error for job 99c6d10b-24d2-4103-ad55-3b05b28b24bc: Training failed: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 264, in train
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=test_size, random_state=random_state, stratify=y if problem_type=="classification" else None)
+                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 2940, in train_test_split
+    train, test = next(cv.split(X=arrays[0], y=stratify))
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 1927, in split
+    for train, test in self._iter_indices(X, y, groups):
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 2342, in _iter_indices
+    raise ValueError(
+    ...<4 lines>...
+    )
+ValueError: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2.
+
+2025-11-15 02:48:31,106 INFO: Prisma update attempt for job 99c6d10b-24d2-4103-ad55-3b05b28b24bc; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 02:48:31,290 INFO: Prisma update successful for job 99c6d10b-24d2-4103-ad55-3b05b28b24bc on attempt 1
+2025-11-15 02:48:31,290 INFO: Prisma update attempt for job 99c6d10b-24d2-4103-ad55-3b05b28b24bc; payload (truncated): {"status": "failed"}
+2025-11-15 02:48:31,476 INFO: Prisma update successful for job 99c6d10b-24d2-4103-ad55-3b05b28b24bc on attempt 1
+2025-11-15 02:49:09,385 ERROR: Training error for job b2b8842b-2259-4ee5-bcbf-36e1708892a6: Training failed: Input X must be non-negative.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 369, in train
+    fs_step.fit(X_tr_prep, y_tr)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/feature_selection/_univariate_selection.py", line 568, in fit
+    score_func_ret = self.score_func(X, y)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 191, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/feature_selection/_univariate_selection.py", line 267, in chi2
+    raise ValueError("Input X must be non-negative.")
+ValueError: Input X must be non-negative.
+
+2025-11-15 02:49:09,385 INFO: Prisma update attempt for job b2b8842b-2259-4ee5-bcbf-36e1708892a6; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 02:49:09,589 INFO: Prisma update successful for job b2b8842b-2259-4ee5-bcbf-36e1708892a6 on attempt 1
+2025-11-15 02:49:09,590 INFO: Prisma update attempt for job b2b8842b-2259-4ee5-bcbf-36e1708892a6; payload (truncated): {"status": "failed"}
+2025-11-15 02:49:09,779 INFO: Prisma update successful for job b2b8842b-2259-4ee5-bcbf-36e1708892a6 on attempt 1
+2025-11-15 02:51:30,005 INFO: Attempting final DB update for job 90568eb0-19a1-4291-88b4-55467dd04b35; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/90568eb0-19a1-4291-88b4-55467dd04b35/model.joblib", "metrics": {"r2": -0.026836626956336262, "rmse": 1.0258951108583239, "cv_mean": -0.01802824124004898, "cv_std": 0.0021797381193848775}}
+2025-11-15 02:51:30,008 INFO: Prisma update attempt for job 90568eb0-19a1-4291-88b4-55467dd04b35; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/90568eb0-19a1-4291-88b4-55467dd04b35/model.joblib", "metrics": "Json"}
+2025-11-15 02:51:30,282 INFO: Prisma update successful for job 90568eb0-19a1-4291-88b4-55467dd04b35 on attempt 1
+2025-11-15 02:51:30,283 INFO: DB updated to finished for job 90568eb0-19a1-4291-88b4-55467dd04b35
+2025-11-15 02:53:35,378 INFO: Attempting final DB update for job 815f68c8-2591-42ba-a3f4-988ef3956181; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/815f68c8-2591-42ba-a3f4-988ef3956181/model.joblib", "metrics": {"r2": -0.017101562028614126, "rmse": 1.021020460268052, "cv_mean": -0.02008703451698035, "cv_std": 0.004623533738361996}}
+2025-11-15 02:53:35,380 INFO: Prisma update attempt for job 815f68c8-2591-42ba-a3f4-988ef3956181; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/815f68c8-2591-42ba-a3f4-988ef3956181/model.joblib", "metrics": "Json"}
+2025-11-15 02:53:35,702 INFO: Prisma update successful for job 815f68c8-2591-42ba-a3f4-988ef3956181 on attempt 1
+2025-11-15 02:53:35,702 INFO: DB updated to finished for job 815f68c8-2591-42ba-a3f4-988ef3956181
+2025-11-15 02:55:13,178 ERROR: Training error for job 130b7c11-3644-4226-bce9-4aa2607064bc: Training failed: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 264, in train
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=test_size, random_state=random_state, stratify=y if problem_type=="classification" else None)
+                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 2940, in train_test_split
+    train, test = next(cv.split(X=arrays[0], y=stratify))
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 1927, in split
+    for train, test in self._iter_indices(X, y, groups):
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 2342, in _iter_indices
+    raise ValueError(
+    ...<4 lines>...
+    )
+ValueError: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2.
+
+2025-11-15 02:55:13,179 INFO: Prisma update attempt for job 130b7c11-3644-4226-bce9-4aa2607064bc; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 02:55:13,439 INFO: Prisma update successful for job 130b7c11-3644-4226-bce9-4aa2607064bc on attempt 1
+2025-11-15 02:55:13,440 INFO: Prisma update attempt for job 130b7c11-3644-4226-bce9-4aa2607064bc; payload (truncated): {"status": "failed"}
+2025-11-15 02:55:13,721 INFO: Prisma update successful for job 130b7c11-3644-4226-bce9-4aa2607064bc on attempt 1
+2025-11-15 02:59:44,908 ERROR: Training error for job c0d80540-1c8f-4976-9bf4-e0686ffc0209: Training failed: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2.
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 265, in train
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=test_size, random_state=random_state, stratify=y if problem_type=="classification" else None)
+                             ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 2940, in train_test_split
+    train, test = next(cv.split(X=arrays[0], y=stratify))
+                  ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 1927, in split
+    for train, test in self._iter_indices(X, y, groups):
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_split.py", line 2342, in _iter_indices
+    raise ValueError(
+    ...<4 lines>...
+    )
+ValueError: The least populated class in y has only 1 member, which is too few. The minimum number of groups for any class cannot be less than 2.
+
+2025-11-15 02:59:44,909 INFO: Prisma update attempt for job c0d80540-1c8f-4976-9bf4-e0686ffc0209; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-11-15 02:59:45,127 INFO: Prisma update successful for job c0d80540-1c8f-4976-9bf4-e0686ffc0209 on attempt 1
+2025-11-15 02:59:45,128 INFO: Prisma update attempt for job c0d80540-1c8f-4976-9bf4-e0686ffc0209; payload (truncated): {"status": "failed"}
+2025-11-15 02:59:45,343 INFO: Prisma update successful for job c0d80540-1c8f-4976-9bf4-e0686ffc0209 on attempt 1
+2025-11-15 03:02:18,101 INFO: Attempting final DB update for job f6d0a10a-1b32-48c6-b167-078ee12ff208; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/f6d0a10a-1b32-48c6-b167-078ee12ff208/model.joblib", "metrics": {"r2": -0.030053567255225566, "rmse": 1.0275008495293931, "cv_mean": -0.017846081147136417, "cv_std": 0.006250999224858359, "feature_selection": {"n_features_original": 99, "n_features_selected": 50, "selected_feature_indices": [0, 6, 7, 9, 12, 13, 15, 17, 19, 25, 26, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 42, 44, 47, 49, 50, 51, 53, 55, 58, 60, 61, 63, 64, 65, 66, 67, 72, 74, 76, 77, 78, 79, 80, 81, 85, 87, 90, 92, 98], "selected_feature_names": ["num__x1", "num__x7", "num__x8", "num__x10", "num__x13", "num__x14", "num__x16", "num__x18", "num__x20", "num__x26", "num__x27", "num__x30", "num__x31", "num__x32", "num__x33", "num__x34", "num__x35", "num__x36", "num__x37", "num__x38", "num__x39", "num__x43", "num__x45", "num__x48", "num__x50", "num__x51", "num__x52", "num__x54", "num__x56", "num__x59", "num__x61", "num__x62", "num__x64", "num__x65", "num__x66", "num__x67", "num__x68", "num__x73", "num__x75", "num__x77", "num__x78", "num__x79", "num__x80", "num__x81", "num__x82", "num__x86", "num__x88", "num__x91", "num__x93", "num__x99"]}, "n_features_original": 99, "n_features_selected": 50}}
+2025-11-15 03:02:18,103 INFO: Prisma update attempt for job f6d0a10a-1b32-48c6-b167-078ee12ff208; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/f6d0a10a-1b32-48c6-b167-078ee12ff208/model.joblib", "metrics": "Json"}
+2025-11-15 03:02:18,432 INFO: Prisma update successful for job f6d0a10a-1b32-48c6-b167-078ee12ff208 on attempt 1
+2025-11-15 03:02:18,432 INFO: DB updated to finished for job f6d0a10a-1b32-48c6-b167-078ee12ff208

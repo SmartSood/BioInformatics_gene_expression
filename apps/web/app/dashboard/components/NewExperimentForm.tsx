@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { X, Sparkles, Beaker } from "lucide-react";
+import { X, Sparkles, Beaker, ChevronDown, ChevronUp } from "lucide-react";
 import { MODEL_BACKEND_URL } from "@repo/config";
 import {dataset_props} from '../../../utils/scemma';
 interface NewExperimentFormProps {
@@ -50,6 +50,51 @@ const FEATURE_SELECTION_OPTIONS = [
   { value: "chi2", label: "Chi-Square Test (non-negative features only)" },
 ];
 
+// Batch correction method options
+const BATCH_CORRECTION_METHODS = [
+  { value: "none", label: "None" },
+  { value: "combat", label: "ComBat" },
+  { value: "zscore", label: "Z-Score Normalization" },
+  { value: "ratio", label: "Ratio Method" },
+];
+
+// Missing value imputation strategies
+const NUMERIC_IMPUTATION_STRATEGIES = [
+  { value: "mean", label: "Mean" },
+  { value: "median", label: "Median" },
+  { value: "most_frequent", label: "Most Frequent" },
+  { value: "constant", label: "Constant" },
+];
+
+const CATEGORICAL_IMPUTATION_STRATEGIES = [
+  { value: "most_frequent", label: "Most Frequent" },
+  { value: "constant", label: "Constant" },
+];
+
+// Outlier removal methods
+const OUTLIER_REMOVAL_METHODS = [
+  { value: "none", label: "None" },
+  { value: "iqr", label: "IQR (Interquartile Range)" },
+  { value: "zscore", label: "Z-Score" },
+  { value: "percentile", label: "Percentile" },
+];
+
+// Scaling methods
+const SCALING_METHODS = [
+  { value: "none", label: "None" },
+  { value: "standard", label: "Standard (Z-score)" },
+  { value: "minmax", label: "Min-Max" },
+  { value: "robust", label: "Robust" },
+  { value: "maxabs", label: "Max Absolute" },
+];
+
+// Encoding methods
+const ENCODING_METHODS = [
+  { value: "onehot", label: "One-Hot Encoding" },
+  { value: "ordinal", label: "Ordinal Encoding" },
+  { value: "none", label: "None" },
+];
+
 export function NewExperimentForm({
   datasetId,
   dataset,
@@ -59,6 +104,7 @@ export function NewExperimentForm({
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [modelType, setModelType] = useState("random_forest");
+  const [problemType, setProblemType] = useState<"classification" | "regression">("classification");
   const [numFolds, setNumFolds] = useState(5);
   const [trainTestSplit, setTrainTestSplit] = useState(80);
   const [featureSelection, setFeatureSelection] = useState("none");
@@ -67,11 +113,97 @@ export function NewExperimentForm({
   >([]);
   const [targetVariable, setTargetVariable] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [expandedConfigs, setExpandedConfigs] = useState<Record<string, boolean>>({});
+  const [showHyperparams, setShowHyperparams] = useState(false);
+  const [hyperparams, setHyperparams] = useState<Array<{ key: string; value: string }>>([]);
+
+  // Configuration states for each preprocessing step
+  const [batchCorrectionConfig, setBatchCorrectionConfig] = useState({
+    enabled: false,
+    method: "combat" as "none" | "combat" | "zscore" | "ratio",
+    batch_column: "",
+  });
+
+  const [missingValuesConfig, setMissingValuesConfig] = useState({
+    strategy_numeric: "median" as "mean" | "median" | "most_frequent" | "constant",
+    strategy_categorical: "most_frequent" as "most_frequent" | "constant",
+    fill_value_numeric: "",
+    fill_value_categorical: "",
+    drop_rows: false,
+  });
+
+  const [outlierRemovalConfig, setOutlierRemovalConfig] = useState({
+    method: "iqr" as "none" | "iqr" | "zscore" | "percentile",
+    iqr_factor: 1.5,
+    zscore_threshold: 3.0,
+    percentile_min: 0.5,
+    percentile_max: 99.5,
+    cap_outliers: false,
+  });
+
+  const [scalingConfig, setScalingConfig] = useState({
+    method: "standard" as "none" | "standard" | "minmax" | "robust" | "maxabs",
+    feature_range_min: 0.0,
+    feature_range_max: 1.0,
+    apply_to: "numeric_only" as "numeric_only" | "all",
+  });
+
+  const [logTransformConfig, setLogTransformConfig] = useState({
+    enabled: false,
+    offset: 1.0,
+    columns: "",
+  });
+
+  const [qcFilteringConfig, setQcFilteringConfig] = useState({
+    enabled: false,
+    max_missing_fraction: 0.2,
+    numeric_range: "",
+  });
+
+  const [encodingConfig, setEncodingConfig] = useState({
+    method: "onehot" as "onehot" | "ordinal" | "none",
+    drop_first: false,
+  });
+
+  const [featureSelectionConfig, setFeatureSelectionConfig] = useState({
+    method: "none" as string,
+    k_features: "",
+    variance_threshold: 0.0,
+    alpha: 0.001,
+    importance_threshold: "",
+  });
 
   const togglePreprocessing = (step: string) => {
-    setSelectedPreprocessing((prev) =>
-      prev.includes(step) ? prev.filter((s) => s !== step) : [...prev, step]
-    );
+    setSelectedPreprocessing((prev) => {
+      const isCurrentlySelected = prev.includes(step);
+      const newSelection = isCurrentlySelected
+        ? prev.filter((s) => s !== step)
+        : [...prev, step];
+      
+      // Update enabled state for steps that have it
+      if (step === "batch_correction") {
+        setBatchCorrectionConfig(prev => ({ 
+          ...prev, 
+          enabled: !isCurrentlySelected,
+          method: !isCurrentlySelected && prev.method === "none" ? "combat" : prev.method
+        }));
+      } else if (step === "log_transform") {
+        setLogTransformConfig(prev => ({ ...prev, enabled: !isCurrentlySelected }));
+      } else if (step === "qc_filtering") {
+        setQcFilteringConfig(prev => ({ ...prev, enabled: !isCurrentlySelected }));
+      }
+      
+      // Toggle expanded state when enabling
+      if (!isCurrentlySelected) {
+        setExpandedConfigs(prev => ({ ...prev, [step]: true }));
+      }
+      
+      return newSelection;
+    });
+  };
+
+  const toggleConfigExpanded = (step: string) => {
+    setExpandedConfigs(prev => ({ ...prev, [step]: !prev[step] }));
   };
 
   /**
@@ -87,130 +219,75 @@ export function NewExperimentForm({
    *   feature_selection: FeatureSelectionConfig
    * }
    *
-   * The function sets safe defaults; toggling a step will enable/change fields appropriately.
+   * The function uses the user's selected configuration values.
    */
   const buildPreprocessingPayload = () => {
-    // Defaults mirror your Pydantic defaults and pipeline expectations
     const payload: any = {
       missing_values: {
-        strategy_numeric: "median", // ImputationConfig.strategy_numeric
-        strategy_categorical: "most_frequent",
-        fill_value_numeric: null,
-        fill_value_categorical: null,
-        drop_rows: false,
+        strategy_numeric: missingValuesConfig.strategy_numeric,
+        strategy_categorical: missingValuesConfig.strategy_categorical,
+        fill_value_numeric: missingValuesConfig.fill_value_numeric 
+          ? parseFloat(missingValuesConfig.fill_value_numeric) 
+          : null,
+        fill_value_categorical: missingValuesConfig.fill_value_categorical || null,
+        drop_rows: missingValuesConfig.drop_rows,
       },
       outlier_removal: {
-        method: "none", // "none" | "iqr" | "zscore" | "percentile"
-        iqr_factor: 1.5,
-        zscore_threshold: 3.0,
-        percentile_min: 0.5,
-        percentile_max: 99.5,
-        cap_outliers: false,
+        method: selectedPreprocessing.includes("outlier_removal") 
+          ? outlierRemovalConfig.method 
+          : "none",
+        iqr_factor: outlierRemovalConfig.iqr_factor,
+        zscore_threshold: outlierRemovalConfig.zscore_threshold,
+        percentile_min: outlierRemovalConfig.percentile_min,
+        percentile_max: outlierRemovalConfig.percentile_max,
+        cap_outliers: outlierRemovalConfig.cap_outliers,
       },
       scaling: {
-        method: "standard", // "none"|"standard"|"minmax"|"robust"|"maxabs"
-        feature_range: [0.0, 1.0],
-        apply_to: "numeric_only",
+        method: selectedPreprocessing.includes("scaling") 
+          ? scalingConfig.method 
+          : "none",
+        feature_range: [scalingConfig.feature_range_min, scalingConfig.feature_range_max],
+        apply_to: scalingConfig.apply_to,
       },
       log_transform: {
-        enabled: false,
-        offset: 1.0,
-        columns: null,
+        enabled: logTransformConfig.enabled,
+        offset: logTransformConfig.offset,
+        columns: logTransformConfig.columns 
+          ? logTransformConfig.columns.split(",").map(c => c.trim()).filter(c => c)
+          : null,
       },
       batch_correction: {
-        enabled: false,
-        method: "none", // "none" | "combat" | "zscore" | "ratio"
-        batch_column: null,
+        enabled: batchCorrectionConfig.enabled,
+        method: batchCorrectionConfig.enabled 
+          ? (batchCorrectionConfig.method === "none" ? "combat" : batchCorrectionConfig.method)
+          : "none",
+        batch_column: batchCorrectionConfig.enabled && batchCorrectionConfig.batch_column 
+          ? batchCorrectionConfig.batch_column 
+          : null,
       },
       qc_filtering: {
-        enabled: false,
-        max_missing_fraction: 0.2,
-        numeric_range: null,
+        enabled: qcFilteringConfig.enabled,
+        max_missing_fraction: qcFilteringConfig.max_missing_fraction,
+        numeric_range: qcFilteringConfig.numeric_range 
+          ? JSON.parse(qcFilteringConfig.numeric_range)
+          : null,
       },
       encoding: {
-        method: "onehot", // "onehot" | "ordinal" | "none"
-        drop_first: false,
+        method: encodingConfig.method,
+        drop_first: encodingConfig.drop_first,
       },
       feature_selection: {
-        method: "none", // one of FeatureSelectionMethod
-        k_features: null,
-        variance_threshold: 0.0,
-        alpha: 0.001,
-        importance_threshold: null,
+        method: featureSelection,
+        k_features: featureSelectionConfig.k_features 
+          ? parseInt(featureSelectionConfig.k_features) 
+          : null,
+        variance_threshold: featureSelectionConfig.variance_threshold,
+        alpha: featureSelectionConfig.alpha,
+        importance_threshold: featureSelectionConfig.importance_threshold 
+          ? parseFloat(featureSelectionConfig.importance_threshold) 
+          : null,
       },
     };
-
-    // Now enable/adjust chosen steps to produce a payload compatible with the pipeline
-    if (selectedPreprocessing.includes("missing_values")) {
-      // keep defaults; let backend handle if drop_rows true vs impute
-      payload.missing_values = { ...payload.missing_values };
-    }
-
-    if (selectedPreprocessing.includes("outlier_removal")) {
-      // pick a reasonable default used by pipeline — "iqr"
-      payload.outlier_removal.method = "iqr";
-      payload.outlier_removal.cap_outliers = false;
-      payload.outlier_removal.iqr_factor = 1.5;
-    }
-
-    if (selectedPreprocessing.includes("scaling")) {
-      // choose "standard" as default; if user also picked "Normalization" earlier you might map to minmax,
-      // but UI does not have separate "Normalization" now — scaling step enables StandardScaler by default.
-      payload.scaling.method = "standard";
-      payload.scaling.feature_range = [0.0, 1.0];
-    }
-
-    if (selectedPreprocessing.includes("log_transform")) {
-      payload.log_transform.enabled = true;
-      payload.log_transform.offset = 1.0;
-      payload.log_transform.columns = null; // pipeline applies to all numeric if null
-    }
-
-    if (selectedPreprocessing.includes("batch_correction")) {
-      payload.batch_correction.enabled = true;
-      // pipeline supports "combat", "zscore", "ratio"; choose "combat" as a common default
-      payload.batch_correction.method = "combat";
-      payload.batch_correction.batch_column = null; // user may set later
-    }
-
-    if (selectedPreprocessing.includes("qc_filtering")) {
-      payload.qc_filtering.enabled = true;
-      payload.qc_filtering.max_missing_fraction = 0.2;
-    }
-
-    if (selectedPreprocessing.includes("encoding")) {
-      // Most pipelines expect onehot for categorical features by default
-      payload.encoding.method = "onehot";
-      payload.encoding.drop_first = false;
-    }
-
-    if (selectedPreprocessing.includes("feature_selection")) {
-      // Map the selected featureSelection choice into the structured object
-      const sel = featureSelection;
-      if (!sel || sel === "none") {
-        payload.feature_selection.method = "none";
-      } else if (sel === "variance_threshold") {
-        payload.feature_selection.method = "variance_threshold";
-        payload.feature_selection.variance_threshold = 0.0;
-      } else if (sel === "rfe") {
-        payload.feature_selection.method = "rfe";
-        payload.feature_selection.k_features = 10; // reasonable default
-      } else if (sel === "lasso") {
-        payload.feature_selection.method = "lasso";
-        payload.feature_selection.alpha = 0.001;
-      } else if (sel === "random_forest_importance") {
-        payload.feature_selection.method = "random_forest_importance";
-        payload.feature_selection.importance_threshold = 0.01;
-      } else if (sel === "chi2") {
-        payload.feature_selection.method = "chi2";
-        payload.feature_selection.k_features = 10;
-      } else {
-        payload.feature_selection.method = "none";
-      }
-    } else {
-      // if user didn't enable feature_selection step, keep method "none"
-      payload.feature_selection.method = "none";
-    }
 
     return payload;
   };
@@ -228,19 +305,38 @@ export function NewExperimentForm({
       // default target (you should add a UI field later to choose this)
       
 
-      // Determine problem_type fallback — default to classification (pipeline expects "classification"|"regression")
-      const problem_type =
-        sessionStorage.getItem(`dataset_problem_${datasetId}`) || "classification";
+      // Build hyperparams object - parse numeric values where appropriate
+      const parsedHyperparams: Record<string, any> = {};
+      for (const { key, value } of hyperparams) {
+        if (!key.trim() || !value.trim()) continue; // Skip empty values
+        
+        // Try to parse as number, if fails keep as string
+        const numValue = parseFloat(value);
+        if (!isNaN(numValue) && isFinite(numValue)) {
+          // Check if it's an integer
+          if (Number.isInteger(numValue)) {
+            parsedHyperparams[key.trim()] = parseInt(value, 10);
+          } else {
+            parsedHyperparams[key.trim()] = numValue;
+          }
+        } else if (value.toLowerCase() === "true") {
+          parsedHyperparams[key.trim()] = true;
+        } else if (value.toLowerCase() === "false") {
+          parsedHyperparams[key.trim()] = false;
+        } else {
+          parsedHyperparams[key.trim()] = value;
+        }
+      }
 
       const trainRequest = {
         dataset_id: datasetId,
         dataset_uri,
         config: {
           target: targetVariable,
-          problem_type,
+          problem_type: problemType,
           preprocessing: buildPreprocessingPayload(),
           model: modelType,
-          hyperparams: {}, // UI doesn't expose hyperparams — keep empty
+          hyperparams: parsedHyperparams,
           split: {
             // backend expects test_size as fraction (pipeline uses test_size)
             test_size: Number((1 - trainTestSplit / 100).toFixed(3)),
@@ -380,19 +476,34 @@ export function NewExperimentForm({
               />
             </div>
           </div>
-          <div className="col-span-2">
+          <div className="grid grid-cols-2 gap-6">
+            <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">
-                Target
+                Target Column
               </label>
-              <textarea
+              <input
+                type="text"
                 value={targetVariable}
                 onChange={(e) => setTargetVariable(e.target.value)}
-                rows={1}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50 resize-none"
+                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50"
                 placeholder="Enter the target column (e.g. Y)"
               />
             </div>
-          
+
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">
+                Problem Type
+              </label>
+              <select
+                value={problemType}
+                onChange={(e) => setProblemType(e.target.value as "classification" | "regression")}
+                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50"
+              >
+                <option value="classification">Classification</option>
+                <option value="regression">Regression</option>
+              </select>
+            </div>
+          </div>
 
           <div className="border-t border-slate-700/50 pt-6">
             <div className="flex items-center gap-2 mb-4">
@@ -401,24 +512,566 @@ export function NewExperimentForm({
                 Preprocessing Steps
               </h3>
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-3">
               {PREPROCESSING_STEPS.map((step) => (
-                <label
+                <div
                   key={step.key}
-                  className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
+                  className={`rounded-lg border transition-all ${
                     selectedPreprocessing.includes(step.key)
-                      ? "bg-purple-500/20 border-purple-500/50 text-purple-300"
-                      : "bg-slate-700/30 border-slate-600/50 text-slate-300 hover:bg-slate-700/50"
+                      ? "bg-purple-500/10 border-purple-500/50"
+                      : "bg-slate-700/30 border-slate-600/50"
                   }`}
                 >
-                  <input
-                    type="checkbox"
-                    checked={selectedPreprocessing.includes(step.key)}
-                    onChange={() => togglePreprocessing(step.key)}
-                    className="w-4 h-4 rounded border-slate-500 text-teal-500 focus:ring-teal-500/50 bg-slate-700"
-                  />
-                  <span className="text-sm font-medium">{step.label}</span>
-                </label>
+                  <label
+                    className={`flex items-center gap-3 p-3 cursor-pointer ${
+                      selectedPreprocessing.includes(step.key)
+                        ? "text-purple-300"
+                        : "text-slate-300 hover:bg-slate-700/50"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedPreprocessing.includes(step.key)}
+                      onChange={() => togglePreprocessing(step.key)}
+                      className="w-4 h-4 rounded border-slate-500 text-teal-500 focus:ring-teal-500/50 bg-slate-700"
+                    />
+                    <span className="text-sm font-medium flex-1">{step.label}</span>
+                    {selectedPreprocessing.includes(step.key) && (
+                      <button
+                        type="button"
+                        onClick={() => toggleConfigExpanded(step.key)}
+                        className="p-1 hover:bg-slate-700/50 rounded transition-colors"
+                      >
+                        {expandedConfigs[step.key] ? (
+                          <ChevronUp className="w-4 h-4" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4" />
+                        )}
+                      </button>
+                    )}
+                  </label>
+                  
+                  {/* Configuration Panel */}
+                  {selectedPreprocessing.includes(step.key) && expandedConfigs[step.key] && (
+                    <div className="p-4 pt-0 border-t border-slate-600/50 space-y-4">
+                      {/* Batch Correction Configuration */}
+                      {step.key === "batch_correction" && (
+                        <>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Method
+                            </label>
+                            <select
+                              value={batchCorrectionConfig.method}
+                              onChange={(e) =>
+                                setBatchCorrectionConfig((prev) => ({
+                                  ...prev,
+                                  method: e.target.value as typeof prev.method,
+                                }))
+                              }
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            >
+                              {BATCH_CORRECTION_METHODS.map((method) => (
+                                <option key={method.value} value={method.value}>
+                                  {method.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Batch Column
+                            </label>
+                            <input
+                              type="text"
+                              value={batchCorrectionConfig.batch_column}
+                              onChange={(e) =>
+                                setBatchCorrectionConfig((prev) => ({
+                                  ...prev,
+                                  batch_column: e.target.value,
+                                }))
+                              }
+                              placeholder="Enter batch column name"
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            />
+                          </div>
+                        </>
+                      )}
+
+                      {/* Missing Values Configuration */}
+                      {step.key === "missing_values" && (
+                        <>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Numeric Strategy
+                              </label>
+                              <select
+                                value={missingValuesConfig.strategy_numeric}
+                                onChange={(e) =>
+                                  setMissingValuesConfig((prev) => ({
+                                    ...prev,
+                                    strategy_numeric: e.target.value as typeof prev.strategy_numeric,
+                                  }))
+                                }
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              >
+                                {NUMERIC_IMPUTATION_STRATEGIES.map((strategy) => (
+                                  <option key={strategy.value} value={strategy.value}>
+                                    {strategy.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Categorical Strategy
+                              </label>
+                              <select
+                                value={missingValuesConfig.strategy_categorical}
+                                onChange={(e) =>
+                                  setMissingValuesConfig((prev) => ({
+                                    ...prev,
+                                    strategy_categorical: e.target.value as typeof prev.strategy_categorical,
+                                  }))
+                                }
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              >
+                                {CATEGORICAL_IMPUTATION_STRATEGIES.map((strategy) => (
+                                  <option key={strategy.value} value={strategy.value}>
+                                    {strategy.label}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Numeric Fill Value (optional)
+                              </label>
+                              <input
+                                type="number"
+                                step="any"
+                                value={missingValuesConfig.fill_value_numeric}
+                                onChange={(e) =>
+                                  setMissingValuesConfig((prev) => ({
+                                    ...prev,
+                                    fill_value_numeric: e.target.value,
+                                  }))
+                                }
+                                placeholder="For constant strategy"
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Categorical Fill Value (optional)
+                              </label>
+                              <input
+                                type="text"
+                                value={missingValuesConfig.fill_value_categorical}
+                                onChange={(e) =>
+                                  setMissingValuesConfig((prev) => ({
+                                    ...prev,
+                                    fill_value_categorical: e.target.value,
+                                  }))
+                                }
+                                placeholder="For constant strategy"
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={missingValuesConfig.drop_rows}
+                              onChange={(e) =>
+                                setMissingValuesConfig((prev) => ({
+                                  ...prev,
+                                  drop_rows: e.target.checked,
+                                }))
+                              }
+                              className="w-4 h-4 rounded border-slate-500 text-teal-500 focus:ring-teal-500/50 bg-slate-700"
+                            />
+                            <label className="text-sm text-slate-300">
+                              Drop rows with missing values
+                            </label>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Outlier Removal Configuration */}
+                      {step.key === "outlier_removal" && (
+                        <>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Method
+                            </label>
+                            <select
+                              value={outlierRemovalConfig.method}
+                              onChange={(e) =>
+                                setOutlierRemovalConfig((prev) => ({
+                                  ...prev,
+                                  method: e.target.value as typeof prev.method,
+                                }))
+                              }
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            >
+                              {OUTLIER_REMOVAL_METHODS.map((method) => (
+                                <option key={method.value} value={method.value}>
+                                  {method.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                IQR Factor
+                              </label>
+                              <input
+                                type="number"
+                                step="0.1"
+                                value={outlierRemovalConfig.iqr_factor}
+                                onChange={(e) =>
+                                  setOutlierRemovalConfig((prev) => ({
+                                    ...prev,
+                                    iqr_factor: parseFloat(e.target.value) || 1.5,
+                                  }))
+                                }
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Z-Score Threshold
+                              </label>
+                              <input
+                                type="number"
+                                step="0.1"
+                                value={outlierRemovalConfig.zscore_threshold}
+                                onChange={(e) =>
+                                  setOutlierRemovalConfig((prev) => ({
+                                    ...prev,
+                                    zscore_threshold: parseFloat(e.target.value) || 3.0,
+                                  }))
+                                }
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              />
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={outlierRemovalConfig.cap_outliers}
+                              onChange={(e) =>
+                                setOutlierRemovalConfig((prev) => ({
+                                  ...prev,
+                                  cap_outliers: e.target.checked,
+                                }))
+                              }
+                              className="w-4 h-4 rounded border-slate-500 text-teal-500 focus:ring-teal-500/50 bg-slate-700"
+                            />
+                            <label className="text-sm text-slate-300">
+                              Cap outliers instead of removing
+                            </label>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Scaling Configuration */}
+                      {step.key === "scaling" && (
+                        <>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Method
+                            </label>
+                            <select
+                              value={scalingConfig.method}
+                              onChange={(e) =>
+                                setScalingConfig((prev) => ({
+                                  ...prev,
+                                  method: e.target.value as typeof prev.method,
+                                }))
+                              }
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            >
+                              {SCALING_METHODS.map((method) => (
+                                <option key={method.value} value={method.value}>
+                                  {method.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          {scalingConfig.method === "minmax" && (
+                            <div className="grid grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                  Min Value
+                                </label>
+                                <input
+                                  type="number"
+                                  step="0.1"
+                                  value={scalingConfig.feature_range_min}
+                                  onChange={(e) =>
+                                    setScalingConfig((prev) => ({
+                                      ...prev,
+                                      feature_range_min: parseFloat(e.target.value) || 0.0,
+                                    }))
+                                  }
+                                  className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                                />
+                              </div>
+                              <div>
+                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                  Max Value
+                                </label>
+                                <input
+                                  type="number"
+                                  step="0.1"
+                                  value={scalingConfig.feature_range_max}
+                                  onChange={(e) =>
+                                    setScalingConfig((prev) => ({
+                                      ...prev,
+                                      feature_range_max: parseFloat(e.target.value) || 1.0,
+                                    }))
+                                  }
+                                  className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                                />
+                              </div>
+                            </div>
+                          )}
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Apply To
+                            </label>
+                            <select
+                              value={scalingConfig.apply_to}
+                              onChange={(e) =>
+                                setScalingConfig((prev) => ({
+                                  ...prev,
+                                  apply_to: e.target.value as typeof prev.apply_to,
+                                }))
+                              }
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            >
+                              <option value="numeric_only">Numeric Only</option>
+                              <option value="all">All Features</option>
+                            </select>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Log Transform Configuration */}
+                      {step.key === "log_transform" && (
+                        <>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Offset
+                            </label>
+                            <input
+                              type="number"
+                              step="0.1"
+                              value={logTransformConfig.offset}
+                              onChange={(e) =>
+                                setLogTransformConfig((prev) => ({
+                                  ...prev,
+                                  offset: parseFloat(e.target.value) || 1.0,
+                                }))
+                              }
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Columns (comma-separated, leave empty for all numeric)
+                            </label>
+                            <input
+                              type="text"
+                              value={logTransformConfig.columns}
+                              onChange={(e) =>
+                                setLogTransformConfig((prev) => ({
+                                  ...prev,
+                                  columns: e.target.value,
+                                }))
+                              }
+                              placeholder="col1, col2, col3"
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            />
+                          </div>
+                        </>
+                      )}
+
+                      {/* QC Filtering Configuration */}
+                      {step.key === "qc_filtering" && (
+                        <>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Max Missing Fraction
+                            </label>
+                            <input
+                              type="number"
+                              step="0.01"
+                              min="0"
+                              max="1"
+                              value={qcFilteringConfig.max_missing_fraction}
+                              onChange={(e) =>
+                                setQcFilteringConfig((prev) => ({
+                                  ...prev,
+                                  max_missing_fraction: parseFloat(e.target.value) || 0.2,
+                                }))
+                              }
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            />
+                          </div>
+                        </>
+                      )}
+
+                      {/* Encoding Configuration */}
+                      {step.key === "encoding" && (
+                        <>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Method
+                            </label>
+                            <select
+                              value={encodingConfig.method}
+                              onChange={(e) =>
+                                setEncodingConfig((prev) => ({
+                                  ...prev,
+                                  method: e.target.value as typeof prev.method,
+                                }))
+                              }
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            >
+                              {ENCODING_METHODS.map((method) => (
+                                <option key={method.value} value={method.value}>
+                                  {method.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={encodingConfig.drop_first}
+                              onChange={(e) =>
+                                setEncodingConfig((prev) => ({
+                                  ...prev,
+                                  drop_first: e.target.checked,
+                                }))
+                              }
+                              className="w-4 h-4 rounded border-slate-500 text-teal-500 focus:ring-teal-500/50 bg-slate-700"
+                            />
+                            <label className="text-sm text-slate-300">
+                              Drop first category (for one-hot encoding)
+                            </label>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Feature Selection Configuration */}
+                      {step.key === "feature_selection" && (
+                        <>
+                          <div>
+                            <label className="block text-sm font-medium text-slate-300 mb-2">
+                              Method
+                            </label>
+                            <select
+                              value={featureSelection}
+                              onChange={(e) => setFeatureSelection(e.target.value)}
+                              className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                            >
+                              {FEATURE_SELECTION_OPTIONS.map((method) => (
+                                <option key={method.value} value={method.value}>
+                                  {method.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          {(featureSelection === "rfe" || featureSelection === "chi2") && (
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Number of Features (k_features)
+                              </label>
+                              <input
+                                type="number"
+                                value={featureSelectionConfig.k_features}
+                                onChange={(e) =>
+                                  setFeatureSelectionConfig((prev) => ({
+                                    ...prev,
+                                    k_features: e.target.value,
+                                  }))
+                                }
+                                placeholder="Leave empty for auto"
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              />
+                            </div>
+                          )}
+                          {featureSelection === "variance_threshold" && (
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Variance Threshold
+                              </label>
+                              <input
+                                type="number"
+                                step="0.001"
+                                value={featureSelectionConfig.variance_threshold}
+                                onChange={(e) =>
+                                  setFeatureSelectionConfig((prev) => ({
+                                    ...prev,
+                                    variance_threshold: parseFloat(e.target.value) || 0.0,
+                                  }))
+                                }
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              />
+                            </div>
+                          )}
+                          {featureSelection === "lasso" && (
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Alpha (L1 Regularization)
+                              </label>
+                              <input
+                                type="number"
+                                step="0.001"
+                                value={featureSelectionConfig.alpha}
+                                onChange={(e) =>
+                                  setFeatureSelectionConfig((prev) => ({
+                                    ...prev,
+                                    alpha: parseFloat(e.target.value) || 0.001,
+                                  }))
+                                }
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              />
+                            </div>
+                          )}
+                          {featureSelection === "random_forest_importance" && (
+                            <div>
+                              <label className="block text-sm font-medium text-slate-300 mb-2">
+                                Importance Threshold
+                              </label>
+                              <input
+                                type="number"
+                                step="0.01"
+                                value={featureSelectionConfig.importance_threshold}
+                                onChange={(e) =>
+                                  setFeatureSelectionConfig((prev) => ({
+                                    ...prev,
+                                    importance_threshold: e.target.value,
+                                  }))
+                                }
+                                placeholder="Leave empty for auto"
+                                className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                              />
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
           </div>
@@ -436,23 +1089,6 @@ export function NewExperimentForm({
                 {MODEL_OPTIONS.map((model) => (
                   <option key={model.value} value={model.value}>
                     {model.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Feature Selection
-              </label>
-              <select
-                value={featureSelection}
-                onChange={(e) => setFeatureSelection(e.target.value)}
-                className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50"
-              >
-                {FEATURE_SELECTION_OPTIONS.map((method) => (
-                  <option key={method.value} value={method.value}>
-                    {method.label}
                   </option>
                 ))}
               </select>
@@ -485,6 +1121,107 @@ export function NewExperimentForm({
                 className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500/50"
               />
             </div>
+          </div>
+
+          {/* Hyperparameters Section */}
+          <div className="border-t border-slate-700/50 pt-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <h3 className="text-lg font-semibold text-white">
+                  Hyperparameters (Optional)
+                </h3>
+                <span className="text-xs text-slate-400">
+                  Enter as key-value pairs (e.g., n_estimators: 100, max_depth: 10)
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowHyperparams(!showHyperparams)}
+                className="p-2 hover:bg-slate-700/50 rounded-lg transition-colors text-slate-300"
+              >
+                {showHyperparams ? (
+                  <ChevronUp className="w-5 h-5" />
+                ) : (
+                  <ChevronDown className="w-5 h-5" />
+                )}
+              </button>
+            </div>
+
+            {showHyperparams && (
+              <div className="space-y-3">
+                <div className="text-sm text-slate-400 mb-4">
+                  <p className="mb-2">Common hyperparameters by model:</p>
+                  <ul className="list-disc list-inside space-y-1 ml-2">
+                    <li><strong>Random Forest:</strong> n_estimators, max_depth, min_samples_split, min_samples_leaf</li>
+                    <li><strong>SVM:</strong> C, kernel, gamma</li>
+                    <li><strong>Neural Network:</strong> hidden_layer_sizes, activation, alpha, learning_rate</li>
+                    <li><strong>Gradient Boosting:</strong> n_estimators, max_depth, learning_rate</li>
+                    <li><strong>Logistic Regression:</strong> C, penalty, solver</li>
+                    <li><strong>XGBoost:</strong> n_estimators, max_depth, learning_rate, subsample</li>
+                  </ul>
+                </div>
+
+                {hyperparams.map((param, index) => (
+                  <div key={index} className="grid grid-cols-[1fr_1fr_auto] gap-3 items-end">
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">
+                        Parameter Name
+                      </label>
+                      <input
+                        type="text"
+                        value={param.key}
+                        onChange={(e) => {
+                          const newHyperparams = [...hyperparams];
+                          if (newHyperparams[index]) {
+                            newHyperparams[index].key = e.target.value;
+                            setHyperparams(newHyperparams);
+                          }
+                        }}
+                        placeholder="e.g., n_estimators"
+                        className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-300 mb-2">
+                        Value
+                      </label>
+                      <input
+                        type="text"
+                        value={param.value}
+                        onChange={(e) => {
+                          const newHyperparams = [...hyperparams];
+                          if (newHyperparams[index]) {
+                            newHyperparams[index].value = e.target.value;
+                            setHyperparams(newHyperparams);
+                          }
+                        }}
+                        placeholder="e.g., 100"
+                        className="w-full px-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setHyperparams(hyperparams.filter((_, i) => i !== index));
+                      }}
+                      className="px-4 py-2 bg-red-600/50 hover:bg-red-600 text-white rounded-lg transition-colors text-sm"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setHyperparams([...hyperparams, { key: "", value: "" }]);
+                  }}
+                  className="w-full px-4 py-2 bg-slate-700/50 hover:bg-slate-700 text-white rounded-lg border border-slate-600/50 transition-colors text-sm"
+                >
+                  + Add Hyperparameter
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="flex gap-3 pt-4">

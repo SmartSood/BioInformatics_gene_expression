@@ -7,6 +7,7 @@ from rq import get_current_job
 import logging
 import json
 import joblib
+import traceback
 
 # DB helpers
 from client.db import db, connect_db
@@ -167,13 +168,59 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
                     logger.warning("Warning: upsert(started) failed: %s", e)
 
             # synchronous train function
-            result = train(dataset_path, config, str(out_dir))
+            try:
+                result = train(dataset_path, config, str(out_dir))
+            except Exception as e:
+                # Capture the error and traceback
+                error_traceback = traceback.format_exc()
+                error_msg = f"Training failed: {str(e)}\n{error_traceback}"
+                logger.error("Training error for job %s: %s", job_id, error_msg)
+                
+                # Store error in result
+                result = {
+                    "error": str(e),
+                    "error_traceback": error_traceback,
+                    "model_path": None,
+                    "metrics": None,
+                    "warnings": None
+                }
+                
+                # Update DB with failed status
+                if prisma:
+                    try:
+                        await update_trainingrun_with_retries(
+                            prisma, 
+                            job_id, 
+                            {
+                                "status": "failed",
+                                "metrics": _coerce_metrics_for_prisma({"error": str(e), "error_traceback": error_traceback})
+                            }, 
+                            attempts=3, 
+                            base_delay=0.5
+                        )
+                    except Exception:
+                        logger.exception("Failed to update DB with error status for job %s", job_id)
+                
+                # Re-raise to mark job as failed in RQ
+                raise ValueError(error_msg) from e
+            
+            # Get model_path from result (this is the actual path where model was saved)
+            actual_model_path = (result or {}).get("model_path") or model_path
+            
             # First try to get metrics from result
             raw_metrics = (result or {}).get("metrics")
             metrics = None
 
             if isinstance(raw_metrics, dict):
                 metrics = raw_metrics
+                # Ensure feature selection info is preserved if it exists
+                if "feature_selection" in metrics:
+                    feature_selection_info = metrics.get("feature_selection")
+                    # Ensure top-level counts are present
+                    if "n_features_original" not in metrics and feature_selection_info:
+                        metrics["n_features_original"] = feature_selection_info.get("n_features_original")
+                    if "n_features_selected" not in metrics and feature_selection_info:
+                        metrics["n_features_selected"] = feature_selection_info.get("n_features_selected")
             elif raw_metrics is not None:
                 # if it's path-like string pointing into artifacts, try to interpret
                 try:
@@ -202,6 +249,35 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
                 except Exception:
                     metrics = None
 
+            # Include warnings in metrics if present
+            warnings_list = (result or {}).get("warnings")
+            if warnings_list:
+                if not metrics:
+                    metrics = {}
+                metrics["warnings"] = warnings_list
+                metrics["warnings_count"] = len(warnings_list)
+
+            # Include feature selection info if present
+            feature_selection_info = (result or {}).get("feature_selection")
+            if feature_selection_info:
+                if not metrics:
+                    metrics = {}
+                # Merge feature selection info into metrics
+                metrics["feature_selection"] = feature_selection_info
+                # Ensure top-level counts are present for easy access
+                if "n_features_original" not in metrics:
+                    metrics["n_features_original"] = feature_selection_info.get("n_features_original")
+                if "n_features_selected" not in metrics:
+                    metrics["n_features_selected"] = feature_selection_info.get("n_features_selected")
+            
+            # Also check if feature counts are in metrics directly from result
+            if not metrics:
+                metrics = {}
+            if "n_features_original" not in metrics:
+                metrics["n_features_original"] = result.get("n_features_original") if result else None
+            if "n_features_selected" not in metrics:
+                metrics["n_features_selected"] = result.get("n_features_selected") if result else None
+
             # Coerce to JSON-safe structure for Prisma
             metrics_clean = _coerce_metrics_for_prisma(metrics)
 
@@ -209,7 +285,7 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
             if prisma:
                 payload = {
                     "status": "finished",
-                    "modelPath": model_path,
+                    "modelPath": actual_model_path,
                     "metrics": metrics_clean,
                 }
                 # Log the payload truncated (so you can inspect in logs)
@@ -229,7 +305,8 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
 
             enriched = dict(result or {})
             enriched.setdefault("job_id", job_id)
-            enriched.setdefault("model_path", model_path)
+            enriched.setdefault("model_path", actual_model_path)
+            enriched.setdefault("metrics", metrics)
             return enriched
 
         except Exception:
