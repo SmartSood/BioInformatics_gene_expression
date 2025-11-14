@@ -1,19 +1,11 @@
 import { useState } from "react";
 import { X, Database, Upload, FileText, Calendar } from "lucide-react";
+import { dataset_props } from "../../../utils/scemma";
 
-interface Dataset {
-  updatedAt(updatedAt: any): import("react").ReactNode;
-  id: string;
-  name: string;
-  description: string;
-  uploadedAt: string;
-  rowCount: number;
-  columnCount: number;
-}
 
 interface DatasetSelectionModalProps {
   onClose: () => void;
-  onSelectDataset: (datasetId: string) => void;
+  onSelectDataset: (datasetId: string, dataset: dataset_props) => void;
   onUploadNew: () => void;
 }
 
@@ -22,7 +14,7 @@ export function DatasetSelectionModal({
   onSelectDataset,
   onUploadNew,
 }: DatasetSelectionModalProps) {
-  const [datasets] = useState<Dataset[]>(() => {
+  const [datasets] = useState<dataset_props[]>(() => {
     const stored = sessionStorage.getItem("datasets");
     console.log("stored");
     console.log(stored ? JSON.parse(stored)[0]?.uploadedAt : "No stored datasets");
@@ -91,7 +83,7 @@ export function DatasetSelectionModal({
             {datasets.map((dataset) => (
               <button
                 key={dataset.id}
-                onClick={() => onSelectDataset(dataset.id)}
+                onClick={() => onSelectDataset(dataset.id,dataset)}
                 className="w-full p-4 bg-slate-700/30 hover:bg-slate-700/50 border border-slate-600/50 hover:border-teal-500/50 rounded-lg transition-all text-left group"
               >
                 <div className="flex items-start justify-between mb-2">

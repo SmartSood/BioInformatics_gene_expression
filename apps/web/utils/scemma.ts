@@ -1,12 +1,24 @@
-
 export interface Experiment {
   id: string;
   user_id: string;
   name: string;
   description: string;
-  status: 'queued' | 'started' | 'finished' | 'failed';
+  status: "queued" | "started" | "finished" | "failed";
   createdAt: string;
   updatedAt: string;
+}
+
+export interface dataset_props {
+  columnCount: number;
+  createdAt: Date;
+  description: string;
+  filePath: string;
+  id: string;
+  name: string;
+  rowCount: number;
+  updatedAt: Date;
+  user: string | null;
+  userId: number;
 }
 
 export interface ExperimentParameters {

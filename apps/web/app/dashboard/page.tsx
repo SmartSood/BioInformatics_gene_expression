@@ -8,6 +8,7 @@ import { DatasetSelectionModal } from "./components/DataSelectionUploadModal";
 import { DatasetUploadModal } from "./components/DatasetUploadModal";
 import { useRouter } from "next/navigation";
 import {MODEL_BACKEND_URL} from '@repo/config';
+import {dataset_props} from '../../utils/scemma';
 import axios from "axios";
 export default function Dashboard() {
   const [userId, setUserId] = useState<string | null>(null);
@@ -20,6 +21,7 @@ export default function Dashboard() {
   const [selectedDatasetId, setSelectedDatasetId] = useState<string | null>(
     null
   );
+  const [selectedDataset, setSelectedDataset] = useState<dataset_props | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const router = useRouter();
 
@@ -59,6 +61,7 @@ useEffect(() => {
     sessionStorage.removeItem("authToken");
     sessionStorage.removeItem("userId");
     sessionStorage.removeItem("User");
+    router.push("/login");
     setUserId(null);
     setSelectedExperimentId(null);
   };
@@ -67,8 +70,9 @@ useEffect(() => {
     setShowDatasetSelection(true);
   };
 
-  const handleDatasetSelected = (datasetId: string) => {
+  const handleDatasetSelected = (datasetId: string, dataset: dataset_props) => {
     setSelectedDatasetId(datasetId);
+    setSelectedDataset(dataset);
     setShowDatasetSelection(false);
     setShowNewExperimentForm(true);
   };
@@ -87,6 +91,7 @@ useEffect(() => {
   const handleExperimentCreated = () => {
     setRefreshKey((prev) => prev + 1);
     setSelectedDatasetId(null);
+    setSelectedDataset(null)
   };
 
   return (
@@ -122,9 +127,10 @@ useEffect(() => {
         />
       )}
 
-      {showNewExperimentForm && selectedDatasetId && (
+      {showNewExperimentForm && selectedDatasetId && selectedDataset&&(
         <NewExperimentForm
           datasetId={selectedDatasetId}
+          dataset={selectedDataset}
           onClose={() => {
             setShowNewExperimentForm(false);
             setSelectedDatasetId(null);
