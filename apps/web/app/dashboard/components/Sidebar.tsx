@@ -43,9 +43,9 @@ export function Sidebar({
 
   const getStatusIcon = (status: Experiment["status"]) => {
     switch (status) {
-      case "completed":
+      case "finished":
         return <CheckCircle className="w-4 h-4 text-emerald-400" />;
-      case "running":
+      case "started":
         return <Loader className="w-4 h-4 text-blue-400 animate-spin" />;
       case "failed":
         return <XCircle className="w-4 h-4 text-red-400" />;
@@ -125,7 +125,7 @@ export function Sidebar({
                 title={experiment.name}
                 description={experiment.description}
                 statusIcon={getStatusIcon(experiment.status)}
-                createdAt={experiment.created_at}
+                createdAt={experiment.updatedAt}
                 onClick={() => onSelectExperiment(experiment.id)}
                 selected={selectedExperimentId === experiment.id}
               />

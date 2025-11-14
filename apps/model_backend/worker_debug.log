@@ -2,3 +2,11 @@
 2025-11-13 11:57:18,233 INFO: Prisma update attempt for job b56f64fd-f92d-4c18-8048-dee9808fdee5; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b56f64fd-f92d-4c18-8048-dee9808fdee5/model.joblib", "metrics": "Json"}
 2025-11-13 11:57:18,476 INFO: Prisma update successful for job b56f64fd-f92d-4c18-8048-dee9808fdee5 on attempt 1
 2025-11-13 11:57:18,476 INFO: DB updated to finished for job b56f64fd-f92d-4c18-8048-dee9808fdee5
+2025-11-13 13:07:48,309 INFO: Attempting final DB update for job 76c569c9-d498-426c-8b72-27b43ef10c8f; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/76c569c9-d498-426c-8b72-27b43ef10c8f/model.joblib", "metrics": {"r2": -0.1870342630219377, "rmse": 0.31238357598677674, "cv_mean": -0.15315314178046782, "cv_std": 0.018021645344838657}}
+2025-11-13 13:07:48,310 INFO: Prisma update attempt for job 76c569c9-d498-426c-8b72-27b43ef10c8f; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/76c569c9-d498-426c-8b72-27b43ef10c8f/model.joblib", "metrics": "Json"}
+2025-11-13 13:07:48,508 INFO: Prisma update successful for job 76c569c9-d498-426c-8b72-27b43ef10c8f on attempt 1
+2025-11-13 13:07:48,508 INFO: DB updated to finished for job 76c569c9-d498-426c-8b72-27b43ef10c8f
+2025-11-14 18:54:28,503 INFO: Attempting final DB update for job ce3703ad-fecf-4092-bc15-2798436e1f8d; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/ce3703ad-fecf-4092-bc15-2798436e1f8d/model.joblib", "metrics": {"r2": -0.19564506250407554, "rmse": 0.31351455085318314, "cv_mean": -0.1507336362311881, "cv_std": 0.022064188764655608}}
+2025-11-14 18:54:28,505 INFO: Prisma update attempt for job ce3703ad-fecf-4092-bc15-2798436e1f8d; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/ce3703ad-fecf-4092-bc15-2798436e1f8d/model.joblib", "metrics": "Json"}
+2025-11-14 18:54:28,768 INFO: Prisma update successful for job ce3703ad-fecf-4092-bc15-2798436e1f8d on attempt 1
+2025-11-14 18:54:28,769 INFO: DB updated to finished for job ce3703ad-fecf-4092-bc15-2798436e1f8d

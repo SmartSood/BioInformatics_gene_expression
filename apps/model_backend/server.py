@@ -26,10 +26,11 @@ if str(APP_DIR) not in sys.path:
 import logging
 import asyncio
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
 # Use package-qualified imports to be explicit where possible; bare imports in modules
 # will still work because APP_DIR is on sys.path
-from apps.model_backend.routers import health, datasets, train, jobs, inference
+from apps.model_backend.routers import dataset, experiments, health, datasets, train, jobs, inference
 
 # Import the DB helpers (client.db must exist under apps.model_backend/client/db.py)
 # connect_db and disconnect_db should be async functions
@@ -41,17 +42,29 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s - %(message)s",
 )
 logger = logging.getLogger("apps.model_backend.server")
-
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    # add any other dev hosts you use, or use "*" to allow all origins (not recommended for prod)
+]
 # --- create app and include routers ---
 def create_app() -> FastAPI:
     app = FastAPI(title="ML API")
+    app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,          # or ["*"] to allow all
+    allow_credentials=True,         # if you need to send cookies / auth headers
+    allow_methods=["*"],            # allow GET, POST, PUT, DELETE, OPTIONS, ...
+    allow_headers=["*"],            # allow any request headers (or list specific ones)
+)
 
     app.include_router(health.router)
     app.include_router(datasets.router)
     app.include_router(train.router)
     app.include_router(jobs.router)
     app.include_router(inference.router)
-
+    app.include_router(dataset.router)
+    app.include_router(experiments.router)
     return app
 
 

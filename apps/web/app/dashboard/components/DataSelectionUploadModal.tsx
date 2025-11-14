@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, Database, Upload, FileText, Calendar } from "lucide-react";
 
 interface Dataset {
+  updatedAt(updatedAt: any): import("react").ReactNode;
   id: string;
   name: string;
   description: string;
@@ -23,30 +24,15 @@ export function DatasetSelectionModal({
 }: DatasetSelectionModalProps) {
   const [datasets] = useState<Dataset[]>(() => {
     const stored = sessionStorage.getItem("datasets");
+    console.log("stored");
+    console.log(stored ? JSON.parse(stored)[0]?.uploadedAt : "No stored datasets");
     return stored
       ? JSON.parse(stored)
-      : [
-          {
-            id: "dataset_1",
-            name: "Lung Cancer Gene Expression",
-            description:
-              "RNA-seq data from 150 lung cancer patients vs 50 controls",
-            uploadedAt: new Date(Date.now() - 86400000 * 7).toISOString(),
-            rowCount: 200,
-            columnCount: 20000,
-          },
-          {
-            id: "dataset_2",
-            name: "Alzheimer Brain Tissue",
-            description: "Microarray gene expression from hippocampal tissue",
-            uploadedAt: new Date(Date.now() - 86400000 * 14).toISOString(),
-            rowCount: 120,
-            columnCount: 15000,
-          },
-        ];
+      : [];
   });
 
   const formatDate = (date: string) => {
+    console.log("formatDate input:", date);
     return new Date(date).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -124,7 +110,8 @@ export function DatasetSelectionModal({
                 <div className="flex items-center gap-4 text-xs text-slate-500 mt-3">
                   <div className="flex items-center gap-1">
                     <Calendar className="w-3.5 h-3.5" />
-                    <span>{formatDate(dataset.uploadedAt)}</span>
+                    {/* @ts-ignore */}
+                    <span>{formatDate(dataset.updatedAt)}</span>
                   </div>
                   <span>•</span>
                   <span>{dataset.rowCount.toLocaleString()} samples</span>

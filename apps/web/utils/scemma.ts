@@ -4,9 +4,9 @@ export interface Experiment {
   user_id: string;
   name: string;
   description: string;
-  status: 'pending' | 'running' | 'completed' | 'failed';
-  created_at: string;
-  updated_at: string;
+  status: 'queued' | 'started' | 'finished' | 'failed';
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ExperimentParameters {

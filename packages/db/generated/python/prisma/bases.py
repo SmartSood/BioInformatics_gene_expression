@@ -94,3 +94,13 @@ class BaseTrainingRun(_PrismaModel):
         return actions.TrainingRunActions[_PrismaModelT](client or get_client(), cls)
 
 
+class BaseDataset(_PrismaModel):
+    __prisma_model__: ClassVar[Literal['Dataset']] = 'Dataset'  # pyright: ignore[reportIncompatibleVariableOverride]
+
+    @classmethod
+    def prisma(cls: Type[_PrismaModelT], client: Optional['Prisma'] = None) -> 'actions.DatasetActions[_PrismaModelT]':
+        from .client import get_client
+
+        return actions.DatasetActions[_PrismaModelT](client or get_client(), cls)
+
+

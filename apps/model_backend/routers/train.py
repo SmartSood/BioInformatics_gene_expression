@@ -29,6 +29,8 @@ async def start_training(req: TrainRequest, user=Depends(get_current_user)):
                 "userId": int(user["sub"]),          # adjust if sub isn’t an int
                 "status": "queued",
                 "datasetUri": req.dataset_uri,
+                "name": req.name,
+                "description": req.description,
             },
             "update": {
                 "status": "queued",

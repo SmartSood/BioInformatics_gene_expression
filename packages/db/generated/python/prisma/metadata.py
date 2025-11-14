@@ -8,13 +8,18 @@ from __future__ import annotations
 PRISMA_MODELS: set[str] = {
     'User',
     'TrainingRun',
+    'Dataset',
 }
 
 RELATIONAL_FIELD_MAPPINGS: dict[str, dict[str, str]] = {
     'User': {
         'runs': 'TrainingRun',
+        'datasets': 'Dataset',
     },
     'TrainingRun': {
+        'user': 'User',
+    },
+    'Dataset': {
         'user': 'User',
     },
 }

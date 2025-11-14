@@ -1148,6 +1148,7 @@ class UserOptionalCreateInput(TypedDict, total=False):
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
     runs: 'TrainingRunCreateManyNestedWithoutRelationsInput'
+    datasets: 'DatasetCreateManyNestedWithoutRelationsInput'
 
 
 class UserCreateInput(UserOptionalCreateInput):
@@ -1231,6 +1232,7 @@ class UserUpdateInput(TypedDict, total=False):
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
     runs: 'TrainingRunUpdateManyWithoutRelationsInput'
+    datasets: 'DatasetUpdateManyWithoutRelationsInput'
 
 
 class UserUpdateManyMutationInput(TypedDict, total=False):
@@ -1420,6 +1422,7 @@ class UserListRelationFilter(TypedDict, total=False):
 class UserInclude(TypedDict, total=False):
     """User relational arguments"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromUser']
+    datasets: Union[bool, 'FindManyDatasetArgsFromUser']
 
 
     
@@ -1427,21 +1430,25 @@ class UserInclude(TypedDict, total=False):
 class UserIncludeFromUser(TypedDict, total=False):
     """Relational arguments for User"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromUserRecursive1']
+    datasets: Union[bool, 'FindManyDatasetArgsFromUserRecursive1']
 
 
 class UserIncludeFromUserRecursive1(TypedDict, total=False):
     """Relational arguments for User"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromUserRecursive2']
+    datasets: Union[bool, 'FindManyDatasetArgsFromUserRecursive2']
 
 
 class UserIncludeFromUserRecursive2(TypedDict, total=False):
     """Relational arguments for User"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromUserRecursive3']
+    datasets: Union[bool, 'FindManyDatasetArgsFromUserRecursive3']
 
 
 class UserIncludeFromUserRecursive3(TypedDict, total=False):
     """Relational arguments for User"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromUserRecursive4']
+    datasets: Union[bool, 'FindManyDatasetArgsFromUserRecursive4']
 
 
 class UserIncludeFromUserRecursive4(TypedDict, total=False):
@@ -1632,6 +1639,111 @@ class FindManyTrainingRunArgsFromUserRecursive4(TypedDict, total=False):
     cursor: 'TrainingRunWhereUniqueInput'
     distinct: List['TrainingRunScalarFieldKeys']
     
+    
+
+class DatasetIncludeFromUser(TypedDict, total=False):
+    """Relational arguments for User"""
+    user: Union[bool, 'UserArgsFromUserRecursive1']
+
+
+class DatasetIncludeFromUserRecursive1(TypedDict, total=False):
+    """Relational arguments for User"""
+    user: Union[bool, 'UserArgsFromUserRecursive2']
+
+
+class DatasetIncludeFromUserRecursive2(TypedDict, total=False):
+    """Relational arguments for User"""
+    user: Union[bool, 'UserArgsFromUserRecursive3']
+
+
+class DatasetIncludeFromUserRecursive3(TypedDict, total=False):
+    """Relational arguments for User"""
+    user: Union[bool, 'UserArgsFromUserRecursive4']
+
+
+class DatasetIncludeFromUserRecursive4(TypedDict, total=False):
+    """Relational arguments for User"""
+
+    
+
+class DatasetArgsFromUser(TypedDict, total=False):
+    """Arguments for User"""
+    include: 'DatasetIncludeFromDatasetRecursive1'
+
+
+class DatasetArgsFromUserRecursive1(TypedDict, total=False):
+    """Arguments for User"""
+    include: 'DatasetIncludeFromDatasetRecursive2'
+
+
+class DatasetArgsFromUserRecursive2(TypedDict, total=False):
+    """Arguments for User"""
+    include: 'DatasetIncludeFromDatasetRecursive3'
+
+
+class DatasetArgsFromUserRecursive3(TypedDict, total=False):
+    """Arguments for User"""
+    include: 'DatasetIncludeFromDatasetRecursive4'
+
+
+class DatasetArgsFromUserRecursive4(TypedDict, total=False):
+    """Arguments for User"""
+    
+    
+
+class FindManyDatasetArgsFromUser(TypedDict, total=False):
+    """Arguments for User"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive1'
+
+
+class FindManyDatasetArgsFromUserRecursive1(TypedDict, total=False):
+    """Arguments for User"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive2'
+
+
+class FindManyDatasetArgsFromUserRecursive2(TypedDict, total=False):
+    """Arguments for User"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive3'
+
+
+class FindManyDatasetArgsFromUserRecursive3(TypedDict, total=False):
+    """Arguments for User"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive4'
+
+
+class FindManyDatasetArgsFromUserRecursive4(TypedDict, total=False):
+    """Arguments for User"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    
 
 
 FindManyUserArgs = FindManyUserArgsFromUser
@@ -1653,6 +1765,7 @@ class UserWhereInput(TypedDict, total=False):
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
     runs: 'TrainingRunListRelationFilter'
+    datasets: 'DatasetListRelationFilter'
 
     # should be noted that AND and NOT should be Union['UserWhereInputRecursive1', List['UserWhereInputRecursive1']]
     # but this causes mypy to hang :/
@@ -1674,6 +1787,7 @@ class UserWhereInputRecursive1(TypedDict, total=False):
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
     runs: 'TrainingRunListRelationFilter'
+    datasets: 'DatasetListRelationFilter'
 
     # should be noted that AND and NOT should be Union['UserWhereInputRecursive2', List['UserWhereInputRecursive2']]
     # but this causes mypy to hang :/
@@ -1695,6 +1809,7 @@ class UserWhereInputRecursive2(TypedDict, total=False):
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
     runs: 'TrainingRunListRelationFilter'
+    datasets: 'DatasetListRelationFilter'
 
     # should be noted that AND and NOT should be Union['UserWhereInputRecursive3', List['UserWhereInputRecursive3']]
     # but this causes mypy to hang :/
@@ -1716,6 +1831,7 @@ class UserWhereInputRecursive3(TypedDict, total=False):
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
     runs: 'TrainingRunListRelationFilter'
+    datasets: 'DatasetListRelationFilter'
 
     # should be noted that AND and NOT should be Union['UserWhereInputRecursive4', List['UserWhereInputRecursive4']]
     # but this causes mypy to hang :/
@@ -1737,6 +1853,7 @@ class UserWhereInputRecursive4(TypedDict, total=False):
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
     runs: 'TrainingRunListRelationFilter'
+    datasets: 'DatasetListRelationFilter'
 
 
 
@@ -1967,6 +2084,7 @@ UserKeys = Literal[
     'createdAt',
     'updatedAt',
     'runs',
+    'datasets',
 ]
 UserScalarFieldKeys = Literal[
     'id',
@@ -1984,6 +2102,7 @@ UserScalarFieldKeysT = TypeVar('UserScalarFieldKeysT', bound=UserScalarFieldKeys
 
 UserRelationalFieldKeys = Literal[
         'runs',
+        'datasets',
     ]
 
 # TrainingRun types
@@ -1992,6 +2111,8 @@ class TrainingRunOptionalCreateInput(TypedDict, total=False):
     """Optional arguments to the TrainingRun create method"""
     userId: _int
     user: 'UserCreateNestedWithoutRelationsInput'
+    name: _str
+    description: _str
     modelPath: Optional[_str]
     metrics: Optional['fields.Json']
     createdAt: datetime.datetime
@@ -2011,6 +2132,8 @@ class TrainingRunCreateInput(TrainingRunOptionalCreateInput):
 class TrainingRunOptionalCreateWithoutRelationsInput(TypedDict, total=False):
     """Optional arguments to the TrainingRun create method, without relations"""
     userId: _int
+    name: _str
+    description: _str
     modelPath: Optional[_str]
     metrics: Optional['fields.Json']
     createdAt: datetime.datetime
@@ -2053,6 +2176,8 @@ class TrainingRunUpdateInput(TypedDict, total=False):
     """Optional arguments for updating a record"""
     id: _str
     user: 'UserUpdateOneWithoutRelationsInput'
+    name: _str
+    description: _str
     status: _str
     datasetUri: _str
     modelPath: Optional[_str]
@@ -2064,6 +2189,8 @@ class TrainingRunUpdateInput(TypedDict, total=False):
 class TrainingRunUpdateManyMutationInput(TypedDict, total=False):
     """Arguments for updating many records"""
     id: _str
+    name: _str
+    description: _str
     status: _str
     datasetUri: _str
     modelPath: Optional[_str]
@@ -2116,6 +2243,22 @@ _TrainingRun_userId_OrderByInput = TypedDict(
     '_TrainingRun_userId_OrderByInput',
     {
         'userId': 'SortOrder',
+    },
+    total=True
+)
+
+_TrainingRun_name_OrderByInput = TypedDict(
+    '_TrainingRun_name_OrderByInput',
+    {
+        'name': 'SortOrder',
+    },
+    total=True
+)
+
+_TrainingRun_description_OrderByInput = TypedDict(
+    '_TrainingRun_description_OrderByInput',
+    {
+        'description': 'SortOrder',
     },
     total=True
 )
@@ -2189,6 +2332,8 @@ _TrainingRun_RelevanceOrderByInput = TypedDict(
 TrainingRunOrderByInput = Union[
     '_TrainingRun_id_OrderByInput',
     '_TrainingRun_userId_OrderByInput',
+    '_TrainingRun_name_OrderByInput',
+    '_TrainingRun_description_OrderByInput',
     '_TrainingRun_status_OrderByInput',
     '_TrainingRun_datasetUri_OrderByInput',
     '_TrainingRun_modelPath_OrderByInput',
@@ -2234,21 +2379,25 @@ class TrainingRunInclude(TypedDict, total=False):
 class UserIncludeFromTrainingRun(TypedDict, total=False):
     """Relational arguments for TrainingRun"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromTrainingRunRecursive1']
+    datasets: Union[bool, 'FindManyDatasetArgsFromTrainingRunRecursive1']
 
 
 class UserIncludeFromTrainingRunRecursive1(TypedDict, total=False):
     """Relational arguments for TrainingRun"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromTrainingRunRecursive2']
+    datasets: Union[bool, 'FindManyDatasetArgsFromTrainingRunRecursive2']
 
 
 class UserIncludeFromTrainingRunRecursive2(TypedDict, total=False):
     """Relational arguments for TrainingRun"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromTrainingRunRecursive3']
+    datasets: Union[bool, 'FindManyDatasetArgsFromTrainingRunRecursive3']
 
 
 class UserIncludeFromTrainingRunRecursive3(TypedDict, total=False):
     """Relational arguments for TrainingRun"""
     runs: Union[bool, 'FindManyTrainingRunArgsFromTrainingRunRecursive4']
+    datasets: Union[bool, 'FindManyDatasetArgsFromTrainingRunRecursive4']
 
 
 class UserIncludeFromTrainingRunRecursive4(TypedDict, total=False):
@@ -2439,6 +2588,111 @@ class FindManyTrainingRunArgsFromTrainingRunRecursive4(TypedDict, total=False):
     cursor: 'TrainingRunWhereUniqueInput'
     distinct: List['TrainingRunScalarFieldKeys']
     
+    
+
+class DatasetIncludeFromTrainingRun(TypedDict, total=False):
+    """Relational arguments for TrainingRun"""
+    user: Union[bool, 'UserArgsFromTrainingRunRecursive1']
+
+
+class DatasetIncludeFromTrainingRunRecursive1(TypedDict, total=False):
+    """Relational arguments for TrainingRun"""
+    user: Union[bool, 'UserArgsFromTrainingRunRecursive2']
+
+
+class DatasetIncludeFromTrainingRunRecursive2(TypedDict, total=False):
+    """Relational arguments for TrainingRun"""
+    user: Union[bool, 'UserArgsFromTrainingRunRecursive3']
+
+
+class DatasetIncludeFromTrainingRunRecursive3(TypedDict, total=False):
+    """Relational arguments for TrainingRun"""
+    user: Union[bool, 'UserArgsFromTrainingRunRecursive4']
+
+
+class DatasetIncludeFromTrainingRunRecursive4(TypedDict, total=False):
+    """Relational arguments for TrainingRun"""
+
+    
+
+class DatasetArgsFromTrainingRun(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    include: 'DatasetIncludeFromDatasetRecursive1'
+
+
+class DatasetArgsFromTrainingRunRecursive1(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    include: 'DatasetIncludeFromDatasetRecursive2'
+
+
+class DatasetArgsFromTrainingRunRecursive2(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    include: 'DatasetIncludeFromDatasetRecursive3'
+
+
+class DatasetArgsFromTrainingRunRecursive3(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    include: 'DatasetIncludeFromDatasetRecursive4'
+
+
+class DatasetArgsFromTrainingRunRecursive4(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    
+    
+
+class FindManyDatasetArgsFromTrainingRun(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive1'
+
+
+class FindManyDatasetArgsFromTrainingRunRecursive1(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive2'
+
+
+class FindManyDatasetArgsFromTrainingRunRecursive2(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive3'
+
+
+class FindManyDatasetArgsFromTrainingRunRecursive3(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive4'
+
+
+class FindManyDatasetArgsFromTrainingRunRecursive4(TypedDict, total=False):
+    """Arguments for TrainingRun"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    
 
 
 FindManyTrainingRunArgs = FindManyTrainingRunArgsFromTrainingRun
@@ -2452,6 +2706,8 @@ class TrainingRunWhereInput(TypedDict, total=False):
     id: Union[_str, 'types.StringFilter']
     userId: Union[_int, 'types.IntFilter']
     user: 'UserRelationFilter'
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
@@ -2471,6 +2727,8 @@ class TrainingRunWhereInputRecursive1(TypedDict, total=False):
     id: Union[_str, 'types.StringFilter']
     userId: Union[_int, 'types.IntFilter']
     user: 'UserRelationFilter'
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
@@ -2490,6 +2748,8 @@ class TrainingRunWhereInputRecursive2(TypedDict, total=False):
     id: Union[_str, 'types.StringFilter']
     userId: Union[_int, 'types.IntFilter']
     user: 'UserRelationFilter'
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
@@ -2509,6 +2769,8 @@ class TrainingRunWhereInputRecursive3(TypedDict, total=False):
     id: Union[_str, 'types.StringFilter']
     userId: Union[_int, 'types.IntFilter']
     user: 'UserRelationFilter'
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
@@ -2528,6 +2790,8 @@ class TrainingRunWhereInputRecursive4(TypedDict, total=False):
     id: Union[_str, 'types.StringFilter']
     userId: Union[_int, 'types.IntFilter']
     user: 'UserRelationFilter'
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
@@ -2546,6 +2810,8 @@ class TrainingRunScalarWhereWithAggregatesInput(TypedDict, total=False):
     """TrainingRun arguments for searching"""
     id: Union[_str, 'types.StringWithAggregatesFilter']
     userId: Union[_int, 'types.IntWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
@@ -2562,6 +2828,8 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False
     """TrainingRun arguments for searching"""
     id: Union[_str, 'types.StringWithAggregatesFilter']
     userId: Union[_int, 'types.IntWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
@@ -2578,6 +2846,8 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False
     """TrainingRun arguments for searching"""
     id: Union[_str, 'types.StringWithAggregatesFilter']
     userId: Union[_int, 'types.IntWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
@@ -2594,6 +2864,8 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False
     """TrainingRun arguments for searching"""
     id: Union[_str, 'types.StringWithAggregatesFilter']
     userId: Union[_int, 'types.IntWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
@@ -2610,6 +2882,8 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False
     """TrainingRun arguments for searching"""
     id: Union[_str, 'types.StringWithAggregatesFilter']
     userId: Union[_int, 'types.IntWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
@@ -2622,6 +2896,8 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False
 class TrainingRunGroupByOutput(TypedDict, total=False):
     id: _str
     userId: _int
+    name: _str
+    description: _str
     status: _str
     datasetUri: _str
     modelPath: _str
@@ -2649,6 +2925,8 @@ class TrainingRunScalarAggregateOutput(TypedDict, total=False):
     """TrainingRun output including scalar fields"""
     id: _str
     userId: _int
+    name: _str
+    description: _str
     status: _str
     datasetUri: _str
     modelPath: _str
@@ -2665,6 +2943,8 @@ class TrainingRunMaxAggregateInput(TypedDict, total=False):
     """TrainingRun input for aggregating by max"""
     id: bool
     userId: bool
+    name: bool
+    description: bool
     status: bool
     datasetUri: bool
     modelPath: bool
@@ -2677,6 +2957,8 @@ class TrainingRunMinAggregateInput(TypedDict, total=False):
     """TrainingRun input for aggregating by min"""
     id: bool
     userId: bool
+    name: bool
+    description: bool
     status: bool
     datasetUri: bool
     modelPath: bool
@@ -2699,6 +2981,8 @@ TrainingRunCountAggregateInput = TypedDict(
     {
         'id': bool,
         'userId': bool,
+        'name': bool,
+        'description': bool,
         'status': bool,
         'datasetUri': bool,
         'modelPath': bool,
@@ -2715,6 +2999,8 @@ TrainingRunCountAggregateOutput = TypedDict(
     {
         'id': int,
         'userId': int,
+        'name': int,
+        'description': int,
         'status': int,
         'datasetUri': int,
         'modelPath': int,
@@ -2731,6 +3017,8 @@ TrainingRunKeys = Literal[
     'id',
     'userId',
     'user',
+    'name',
+    'description',
     'status',
     'datasetUri',
     'modelPath',
@@ -2741,6 +3029,8 @@ TrainingRunKeys = Literal[
 TrainingRunScalarFieldKeys = Literal[
     'id',
     'userId',
+    'name',
+    'description',
     'status',
     'datasetUri',
     'modelPath',
@@ -2751,6 +3041,920 @@ TrainingRunScalarFieldKeys = Literal[
 TrainingRunScalarFieldKeysT = TypeVar('TrainingRunScalarFieldKeysT', bound=TrainingRunScalarFieldKeys)
 
 TrainingRunRelationalFieldKeys = Literal[
+        'user',
+    ]
+
+# Dataset types
+
+class DatasetOptionalCreateInput(TypedDict, total=False):
+    """Optional arguments to the Dataset create method"""
+    userId: _int
+    user: 'UserCreateNestedWithoutRelationsInput'
+    rowCount: Optional[_int]
+    columnCount: Optional[_int]
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
+
+
+class DatasetCreateInput(DatasetOptionalCreateInput):
+    """Required arguments to the Dataset create method"""
+    id: _str
+    filePath: _str
+    name: _str
+    description: _str
+
+
+# TODO: remove this in favour of without explicit relations
+# e.g. PostCreateWithoutAuthorInput
+
+class DatasetOptionalCreateWithoutRelationsInput(TypedDict, total=False):
+    """Optional arguments to the Dataset create method, without relations"""
+    userId: _int
+    rowCount: Optional[_int]
+    columnCount: Optional[_int]
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
+
+
+class DatasetCreateWithoutRelationsInput(DatasetOptionalCreateWithoutRelationsInput):
+    """Required arguments to the Dataset create method, without relations"""
+    id: _str
+    filePath: _str
+    name: _str
+    description: _str
+
+class DatasetConnectOrCreateWithoutRelationsInput(TypedDict):
+    create: 'DatasetCreateWithoutRelationsInput'
+    where: 'DatasetWhereUniqueInput'
+
+class DatasetCreateNestedWithoutRelationsInput(TypedDict, total=False):
+    create: 'DatasetCreateWithoutRelationsInput'
+    connect: 'DatasetWhereUniqueInput'
+    connect_or_create: 'DatasetConnectOrCreateWithoutRelationsInput'
+
+
+class DatasetCreateManyNestedWithoutRelationsInput(TypedDict, total=False):
+    create: Union['DatasetCreateWithoutRelationsInput', List['DatasetCreateWithoutRelationsInput']]
+    connect: Union['DatasetWhereUniqueInput', List['DatasetWhereUniqueInput']]
+    connect_or_create: Union['DatasetConnectOrCreateWithoutRelationsInput', List['DatasetConnectOrCreateWithoutRelationsInput']]
+
+_DatasetWhereUnique_id_Input = TypedDict(
+    '_DatasetWhereUnique_id_Input',
+    {
+        'id': '_str',
+    },
+    total=True
+)
+
+DatasetWhereUniqueInput = _DatasetWhereUnique_id_Input
+
+
+class DatasetUpdateInput(TypedDict, total=False):
+    """Optional arguments for updating a record"""
+    id: _str
+    user: 'UserUpdateOneWithoutRelationsInput'
+    filePath: _str
+    name: _str
+    description: _str
+    rowCount: Optional[Union[AtomicIntInput, _int]]
+    columnCount: Optional[Union[AtomicIntInput, _int]]
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
+
+
+class DatasetUpdateManyMutationInput(TypedDict, total=False):
+    """Arguments for updating many records"""
+    id: _str
+    filePath: _str
+    name: _str
+    description: _str
+    rowCount: Optional[Union[AtomicIntInput, _int]]
+    columnCount: Optional[Union[AtomicIntInput, _int]]
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
+
+
+class DatasetUpdateManyWithoutRelationsInput(TypedDict, total=False):
+    create: List['DatasetCreateWithoutRelationsInput']
+    connect: List['DatasetWhereUniqueInput']
+    connect_or_create: List['DatasetConnectOrCreateWithoutRelationsInput']
+    set: List['DatasetWhereUniqueInput']
+    disconnect: List['DatasetWhereUniqueInput']
+    delete: List['DatasetWhereUniqueInput']
+
+    # TODO
+    # update: List['DatasetUpdateWithWhereUniqueWithoutRelationsInput']
+    # updateMany: List['DatasetUpdateManyWithWhereUniqueWithoutRelationsInput']
+    # deleteMany: List['DatasetScalarWhereInput']
+    # upsert: List['DatasetUpserteWithWhereUniqueWithoutRelationsInput']
+
+
+class DatasetUpdateOneWithoutRelationsInput(TypedDict, total=False):
+    create: 'DatasetCreateWithoutRelationsInput'
+    connect: 'DatasetWhereUniqueInput'
+    connect_or_create: 'DatasetConnectOrCreateWithoutRelationsInput'
+    disconnect: bool
+    delete: bool
+
+    # TODO
+    # update: 'DatasetUpdateInput'
+    # upsert: 'DatasetUpsertWithoutRelationsInput'
+
+
+class DatasetUpsertInput(TypedDict):
+    create: 'DatasetCreateInput'
+    update: 'DatasetUpdateInput'  # pyright: ignore[reportIncompatibleMethodOverride]
+
+
+_Dataset_id_OrderByInput = TypedDict(
+    '_Dataset_id_OrderByInput',
+    {
+        'id': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_userId_OrderByInput = TypedDict(
+    '_Dataset_userId_OrderByInput',
+    {
+        'userId': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_filePath_OrderByInput = TypedDict(
+    '_Dataset_filePath_OrderByInput',
+    {
+        'filePath': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_name_OrderByInput = TypedDict(
+    '_Dataset_name_OrderByInput',
+    {
+        'name': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_description_OrderByInput = TypedDict(
+    '_Dataset_description_OrderByInput',
+    {
+        'description': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_rowCount_OrderByInput = TypedDict(
+    '_Dataset_rowCount_OrderByInput',
+    {
+        'rowCount': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_columnCount_OrderByInput = TypedDict(
+    '_Dataset_columnCount_OrderByInput',
+    {
+        'columnCount': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_createdAt_OrderByInput = TypedDict(
+    '_Dataset_createdAt_OrderByInput',
+    {
+        'createdAt': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_updatedAt_OrderByInput = TypedDict(
+    '_Dataset_updatedAt_OrderByInput',
+    {
+        'updatedAt': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_RelevanceInner = TypedDict(
+    '_Dataset_RelevanceInner',
+    {
+        'fields': 'List[DatasetScalarFieldKeys]',
+        'search': 'str',
+        'sort': 'SortOrder',
+    },
+    total=True
+)
+
+_Dataset_RelevanceOrderByInput = TypedDict(
+    '_Dataset_RelevanceOrderByInput',
+    {
+        '_relevance': '_Dataset_RelevanceInner',
+    },
+    total=True
+)
+
+DatasetOrderByInput = Union[
+    '_Dataset_id_OrderByInput',
+    '_Dataset_userId_OrderByInput',
+    '_Dataset_filePath_OrderByInput',
+    '_Dataset_name_OrderByInput',
+    '_Dataset_description_OrderByInput',
+    '_Dataset_rowCount_OrderByInput',
+    '_Dataset_columnCount_OrderByInput',
+    '_Dataset_createdAt_OrderByInput',
+    '_Dataset_updatedAt_OrderByInput',
+    '_Dataset_RelevanceOrderByInput',
+]
+
+
+
+# recursive Dataset types
+# TODO: cleanup these types
+
+
+# Dict[str, Any] is a mypy limitation
+# see https://github.com/RobertCraigie/prisma-client-py/issues/45
+# switch to pyright for improved types, see https://prisma-client-py.readthedocs.io/en/stable/reference/limitations/
+
+DatasetRelationFilter = TypedDict(
+    'DatasetRelationFilter',
+    {
+        'is': 'Dict[str, Any]',
+        'is_not': 'Dict[str, Any]',
+    },
+    total=False,
+)
+
+
+class DatasetListRelationFilter(TypedDict, total=False):
+    some: 'Dict[str, Any]'
+    none: 'Dict[str, Any]'
+    every: 'Dict[str, Any]'
+
+
+class DatasetInclude(TypedDict, total=False):
+    """Dataset relational arguments"""
+    user: Union[bool, 'UserArgsFromDataset']
+
+
+    
+
+class UserIncludeFromDataset(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    runs: Union[bool, 'FindManyTrainingRunArgsFromDatasetRecursive1']
+    datasets: Union[bool, 'FindManyDatasetArgsFromDatasetRecursive1']
+
+
+class UserIncludeFromDatasetRecursive1(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    runs: Union[bool, 'FindManyTrainingRunArgsFromDatasetRecursive2']
+    datasets: Union[bool, 'FindManyDatasetArgsFromDatasetRecursive2']
+
+
+class UserIncludeFromDatasetRecursive2(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    runs: Union[bool, 'FindManyTrainingRunArgsFromDatasetRecursive3']
+    datasets: Union[bool, 'FindManyDatasetArgsFromDatasetRecursive3']
+
+
+class UserIncludeFromDatasetRecursive3(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    runs: Union[bool, 'FindManyTrainingRunArgsFromDatasetRecursive4']
+    datasets: Union[bool, 'FindManyDatasetArgsFromDatasetRecursive4']
+
+
+class UserIncludeFromDatasetRecursive4(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+
+    
+
+class UserArgsFromDataset(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'UserIncludeFromUserRecursive1'
+
+
+class UserArgsFromDatasetRecursive1(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'UserIncludeFromUserRecursive2'
+
+
+class UserArgsFromDatasetRecursive2(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'UserIncludeFromUserRecursive3'
+
+
+class UserArgsFromDatasetRecursive3(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'UserIncludeFromUserRecursive4'
+
+
+class UserArgsFromDatasetRecursive4(TypedDict, total=False):
+    """Arguments for Dataset"""
+    
+    
+
+class FindManyUserArgsFromDataset(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['UserOrderByInput', List['UserOrderByInput']]
+    where: 'UserWhereInput'
+    cursor: 'UserWhereUniqueInput'
+    distinct: List['UserScalarFieldKeys']
+    include: 'UserIncludeFromUserRecursive1'
+
+
+class FindManyUserArgsFromDatasetRecursive1(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['UserOrderByInput', List['UserOrderByInput']]
+    where: 'UserWhereInput'
+    cursor: 'UserWhereUniqueInput'
+    distinct: List['UserScalarFieldKeys']
+    include: 'UserIncludeFromUserRecursive2'
+
+
+class FindManyUserArgsFromDatasetRecursive2(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['UserOrderByInput', List['UserOrderByInput']]
+    where: 'UserWhereInput'
+    cursor: 'UserWhereUniqueInput'
+    distinct: List['UserScalarFieldKeys']
+    include: 'UserIncludeFromUserRecursive3'
+
+
+class FindManyUserArgsFromDatasetRecursive3(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['UserOrderByInput', List['UserOrderByInput']]
+    where: 'UserWhereInput'
+    cursor: 'UserWhereUniqueInput'
+    distinct: List['UserScalarFieldKeys']
+    include: 'UserIncludeFromUserRecursive4'
+
+
+class FindManyUserArgsFromDatasetRecursive4(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['UserOrderByInput', List['UserOrderByInput']]
+    where: 'UserWhereInput'
+    cursor: 'UserWhereUniqueInput'
+    distinct: List['UserScalarFieldKeys']
+    
+    
+
+class TrainingRunIncludeFromDataset(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    user: Union[bool, 'UserArgsFromDatasetRecursive1']
+
+
+class TrainingRunIncludeFromDatasetRecursive1(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    user: Union[bool, 'UserArgsFromDatasetRecursive2']
+
+
+class TrainingRunIncludeFromDatasetRecursive2(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    user: Union[bool, 'UserArgsFromDatasetRecursive3']
+
+
+class TrainingRunIncludeFromDatasetRecursive3(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    user: Union[bool, 'UserArgsFromDatasetRecursive4']
+
+
+class TrainingRunIncludeFromDatasetRecursive4(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+
+    
+
+class TrainingRunArgsFromDataset(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'TrainingRunIncludeFromTrainingRunRecursive1'
+
+
+class TrainingRunArgsFromDatasetRecursive1(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'TrainingRunIncludeFromTrainingRunRecursive2'
+
+
+class TrainingRunArgsFromDatasetRecursive2(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'TrainingRunIncludeFromTrainingRunRecursive3'
+
+
+class TrainingRunArgsFromDatasetRecursive3(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'TrainingRunIncludeFromTrainingRunRecursive4'
+
+
+class TrainingRunArgsFromDatasetRecursive4(TypedDict, total=False):
+    """Arguments for Dataset"""
+    
+    
+
+class FindManyTrainingRunArgsFromDataset(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['TrainingRunOrderByInput', List['TrainingRunOrderByInput']]
+    where: 'TrainingRunWhereInput'
+    cursor: 'TrainingRunWhereUniqueInput'
+    distinct: List['TrainingRunScalarFieldKeys']
+    include: 'TrainingRunIncludeFromTrainingRunRecursive1'
+
+
+class FindManyTrainingRunArgsFromDatasetRecursive1(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['TrainingRunOrderByInput', List['TrainingRunOrderByInput']]
+    where: 'TrainingRunWhereInput'
+    cursor: 'TrainingRunWhereUniqueInput'
+    distinct: List['TrainingRunScalarFieldKeys']
+    include: 'TrainingRunIncludeFromTrainingRunRecursive2'
+
+
+class FindManyTrainingRunArgsFromDatasetRecursive2(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['TrainingRunOrderByInput', List['TrainingRunOrderByInput']]
+    where: 'TrainingRunWhereInput'
+    cursor: 'TrainingRunWhereUniqueInput'
+    distinct: List['TrainingRunScalarFieldKeys']
+    include: 'TrainingRunIncludeFromTrainingRunRecursive3'
+
+
+class FindManyTrainingRunArgsFromDatasetRecursive3(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['TrainingRunOrderByInput', List['TrainingRunOrderByInput']]
+    where: 'TrainingRunWhereInput'
+    cursor: 'TrainingRunWhereUniqueInput'
+    distinct: List['TrainingRunScalarFieldKeys']
+    include: 'TrainingRunIncludeFromTrainingRunRecursive4'
+
+
+class FindManyTrainingRunArgsFromDatasetRecursive4(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['TrainingRunOrderByInput', List['TrainingRunOrderByInput']]
+    where: 'TrainingRunWhereInput'
+    cursor: 'TrainingRunWhereUniqueInput'
+    distinct: List['TrainingRunScalarFieldKeys']
+    
+    
+
+class DatasetIncludeFromDataset(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    user: Union[bool, 'UserArgsFromDatasetRecursive1']
+
+
+class DatasetIncludeFromDatasetRecursive1(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    user: Union[bool, 'UserArgsFromDatasetRecursive2']
+
+
+class DatasetIncludeFromDatasetRecursive2(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    user: Union[bool, 'UserArgsFromDatasetRecursive3']
+
+
+class DatasetIncludeFromDatasetRecursive3(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+    user: Union[bool, 'UserArgsFromDatasetRecursive4']
+
+
+class DatasetIncludeFromDatasetRecursive4(TypedDict, total=False):
+    """Relational arguments for Dataset"""
+
+    
+
+class DatasetArgsFromDataset(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'DatasetIncludeFromDatasetRecursive1'
+
+
+class DatasetArgsFromDatasetRecursive1(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'DatasetIncludeFromDatasetRecursive2'
+
+
+class DatasetArgsFromDatasetRecursive2(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'DatasetIncludeFromDatasetRecursive3'
+
+
+class DatasetArgsFromDatasetRecursive3(TypedDict, total=False):
+    """Arguments for Dataset"""
+    include: 'DatasetIncludeFromDatasetRecursive4'
+
+
+class DatasetArgsFromDatasetRecursive4(TypedDict, total=False):
+    """Arguments for Dataset"""
+    
+    
+
+class FindManyDatasetArgsFromDataset(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive1'
+
+
+class FindManyDatasetArgsFromDatasetRecursive1(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive2'
+
+
+class FindManyDatasetArgsFromDatasetRecursive2(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive3'
+
+
+class FindManyDatasetArgsFromDatasetRecursive3(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    include: 'DatasetIncludeFromDatasetRecursive4'
+
+
+class FindManyDatasetArgsFromDatasetRecursive4(TypedDict, total=False):
+    """Arguments for Dataset"""
+    take: int
+    skip: int
+    order_by: Union['DatasetOrderByInput', List['DatasetOrderByInput']]
+    where: 'DatasetWhereInput'
+    cursor: 'DatasetWhereUniqueInput'
+    distinct: List['DatasetScalarFieldKeys']
+    
+
+
+FindManyDatasetArgs = FindManyDatasetArgsFromDataset
+FindFirstDatasetArgs = FindManyDatasetArgsFromDataset
+
+
+    
+
+class DatasetWhereInput(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringFilter']
+    userId: Union[_int, 'types.IntFilter']
+    user: 'UserRelationFilter'
+    filePath: Union[_str, 'types.StringFilter']
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
+    rowCount: Union[None, _int, 'types.IntFilter']
+    columnCount: Union[None, _int, 'types.IntFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
+
+    # should be noted that AND and NOT should be Union['DatasetWhereInputRecursive1', List['DatasetWhereInputRecursive1']]
+    # but this causes mypy to hang :/
+    AND: List['DatasetWhereInputRecursive1']
+    OR: List['DatasetWhereInputRecursive1']
+    NOT: List['DatasetWhereInputRecursive1']
+
+
+class DatasetWhereInputRecursive1(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringFilter']
+    userId: Union[_int, 'types.IntFilter']
+    user: 'UserRelationFilter'
+    filePath: Union[_str, 'types.StringFilter']
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
+    rowCount: Union[None, _int, 'types.IntFilter']
+    columnCount: Union[None, _int, 'types.IntFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
+
+    # should be noted that AND and NOT should be Union['DatasetWhereInputRecursive2', List['DatasetWhereInputRecursive2']]
+    # but this causes mypy to hang :/
+    AND: List['DatasetWhereInputRecursive2']
+    OR: List['DatasetWhereInputRecursive2']
+    NOT: List['DatasetWhereInputRecursive2']
+
+
+class DatasetWhereInputRecursive2(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringFilter']
+    userId: Union[_int, 'types.IntFilter']
+    user: 'UserRelationFilter'
+    filePath: Union[_str, 'types.StringFilter']
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
+    rowCount: Union[None, _int, 'types.IntFilter']
+    columnCount: Union[None, _int, 'types.IntFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
+
+    # should be noted that AND and NOT should be Union['DatasetWhereInputRecursive3', List['DatasetWhereInputRecursive3']]
+    # but this causes mypy to hang :/
+    AND: List['DatasetWhereInputRecursive3']
+    OR: List['DatasetWhereInputRecursive3']
+    NOT: List['DatasetWhereInputRecursive3']
+
+
+class DatasetWhereInputRecursive3(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringFilter']
+    userId: Union[_int, 'types.IntFilter']
+    user: 'UserRelationFilter'
+    filePath: Union[_str, 'types.StringFilter']
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
+    rowCount: Union[None, _int, 'types.IntFilter']
+    columnCount: Union[None, _int, 'types.IntFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
+
+    # should be noted that AND and NOT should be Union['DatasetWhereInputRecursive4', List['DatasetWhereInputRecursive4']]
+    # but this causes mypy to hang :/
+    AND: List['DatasetWhereInputRecursive4']
+    OR: List['DatasetWhereInputRecursive4']
+    NOT: List['DatasetWhereInputRecursive4']
+
+
+class DatasetWhereInputRecursive4(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringFilter']
+    userId: Union[_int, 'types.IntFilter']
+    user: 'UserRelationFilter'
+    filePath: Union[_str, 'types.StringFilter']
+    name: Union[_str, 'types.StringFilter']
+    description: Union[_str, 'types.StringFilter']
+    rowCount: Union[None, _int, 'types.IntFilter']
+    columnCount: Union[None, _int, 'types.IntFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
+
+
+
+# aggregate Dataset types
+
+
+    
+
+class DatasetScalarWhereWithAggregatesInput(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringWithAggregatesFilter']
+    userId: Union[_int, 'types.IntWithAggregatesFilter']
+    filePath: Union[_str, 'types.StringWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
+    rowCount: Union[_int, 'types.IntWithAggregatesFilter']
+    columnCount: Union[_int, 'types.IntWithAggregatesFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+
+    AND: List['DatasetScalarWhereWithAggregatesInputRecursive1']
+    OR: List['DatasetScalarWhereWithAggregatesInputRecursive1']
+    NOT: List['DatasetScalarWhereWithAggregatesInputRecursive1']
+
+
+class DatasetScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringWithAggregatesFilter']
+    userId: Union[_int, 'types.IntWithAggregatesFilter']
+    filePath: Union[_str, 'types.StringWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
+    rowCount: Union[_int, 'types.IntWithAggregatesFilter']
+    columnCount: Union[_int, 'types.IntWithAggregatesFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+
+    AND: List['DatasetScalarWhereWithAggregatesInputRecursive2']
+    OR: List['DatasetScalarWhereWithAggregatesInputRecursive2']
+    NOT: List['DatasetScalarWhereWithAggregatesInputRecursive2']
+
+
+class DatasetScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringWithAggregatesFilter']
+    userId: Union[_int, 'types.IntWithAggregatesFilter']
+    filePath: Union[_str, 'types.StringWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
+    rowCount: Union[_int, 'types.IntWithAggregatesFilter']
+    columnCount: Union[_int, 'types.IntWithAggregatesFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+
+    AND: List['DatasetScalarWhereWithAggregatesInputRecursive3']
+    OR: List['DatasetScalarWhereWithAggregatesInputRecursive3']
+    NOT: List['DatasetScalarWhereWithAggregatesInputRecursive3']
+
+
+class DatasetScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringWithAggregatesFilter']
+    userId: Union[_int, 'types.IntWithAggregatesFilter']
+    filePath: Union[_str, 'types.StringWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
+    rowCount: Union[_int, 'types.IntWithAggregatesFilter']
+    columnCount: Union[_int, 'types.IntWithAggregatesFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+
+    AND: List['DatasetScalarWhereWithAggregatesInputRecursive4']
+    OR: List['DatasetScalarWhereWithAggregatesInputRecursive4']
+    NOT: List['DatasetScalarWhereWithAggregatesInputRecursive4']
+
+
+class DatasetScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False):
+    """Dataset arguments for searching"""
+    id: Union[_str, 'types.StringWithAggregatesFilter']
+    userId: Union[_int, 'types.IntWithAggregatesFilter']
+    filePath: Union[_str, 'types.StringWithAggregatesFilter']
+    name: Union[_str, 'types.StringWithAggregatesFilter']
+    description: Union[_str, 'types.StringWithAggregatesFilter']
+    rowCount: Union[_int, 'types.IntWithAggregatesFilter']
+    columnCount: Union[_int, 'types.IntWithAggregatesFilter']
+    createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+    updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
+
+
+
+class DatasetGroupByOutput(TypedDict, total=False):
+    id: _str
+    userId: _int
+    filePath: _str
+    name: _str
+    description: _str
+    rowCount: _int
+    columnCount: _int
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
+    _sum: 'DatasetSumAggregateOutput'
+    _avg: 'DatasetAvgAggregateOutput'
+    _min: 'DatasetMinAggregateOutput'
+    _max: 'DatasetMaxAggregateOutput'
+    _count: 'DatasetCountAggregateOutput'
+
+
+class DatasetAvgAggregateOutput(TypedDict, total=False):
+    """Dataset output for aggregating averages"""
+    userId: float
+    rowCount: float
+    columnCount: float
+
+
+class DatasetSumAggregateOutput(TypedDict, total=False):
+    """Dataset output for aggregating sums"""
+    userId: _int
+    rowCount: _int
+    columnCount: _int
+
+
+class DatasetScalarAggregateOutput(TypedDict, total=False):
+    """Dataset output including scalar fields"""
+    id: _str
+    userId: _int
+    filePath: _str
+    name: _str
+    description: _str
+    rowCount: _int
+    columnCount: _int
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
+
+
+DatasetMinAggregateOutput = DatasetScalarAggregateOutput
+DatasetMaxAggregateOutput = DatasetScalarAggregateOutput
+
+
+class DatasetMaxAggregateInput(TypedDict, total=False):
+    """Dataset input for aggregating by max"""
+    id: bool
+    userId: bool
+    filePath: bool
+    name: bool
+    description: bool
+    rowCount: bool
+    columnCount: bool
+    createdAt: bool
+    updatedAt: bool
+
+
+class DatasetMinAggregateInput(TypedDict, total=False):
+    """Dataset input for aggregating by min"""
+    id: bool
+    userId: bool
+    filePath: bool
+    name: bool
+    description: bool
+    rowCount: bool
+    columnCount: bool
+    createdAt: bool
+    updatedAt: bool
+
+
+class DatasetNumberAggregateInput(TypedDict, total=False):
+    """Dataset input for aggregating numbers"""
+    userId: bool
+    rowCount: bool
+    columnCount: bool
+
+
+DatasetAvgAggregateInput = DatasetNumberAggregateInput
+DatasetSumAggregateInput = DatasetNumberAggregateInput
+
+
+DatasetCountAggregateInput = TypedDict(
+    'DatasetCountAggregateInput',
+    {
+        'id': bool,
+        'userId': bool,
+        'filePath': bool,
+        'name': bool,
+        'description': bool,
+        'rowCount': bool,
+        'columnCount': bool,
+        'createdAt': bool,
+        'updatedAt': bool,
+        '_all': bool,
+    },
+    total=False,
+)
+
+DatasetCountAggregateOutput = TypedDict(
+    'DatasetCountAggregateOutput',
+    {
+        'id': int,
+        'userId': int,
+        'filePath': int,
+        'name': int,
+        'description': int,
+        'rowCount': int,
+        'columnCount': int,
+        'createdAt': int,
+        'updatedAt': int,
+        '_all': int,
+    },
+    total=False,
+)
+
+
+DatasetKeys = Literal[
+    'id',
+    'userId',
+    'user',
+    'filePath',
+    'name',
+    'description',
+    'rowCount',
+    'columnCount',
+    'createdAt',
+    'updatedAt',
+]
+DatasetScalarFieldKeys = Literal[
+    'id',
+    'userId',
+    'filePath',
+    'name',
+    'description',
+    'rowCount',
+    'columnCount',
+    'createdAt',
+    'updatedAt',
+]
+DatasetScalarFieldKeysT = TypeVar('DatasetScalarFieldKeysT', bound=DatasetScalarFieldKeys)
+
+DatasetRelationalFieldKeys = Literal[
         'user',
     ]
 

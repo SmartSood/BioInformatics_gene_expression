@@ -15,6 +15,8 @@ const PREPROCESSING_OPTIONS = [
   "Log Transformation",
   "Batch Correction",
   "Quality Control Filtering",
+  "Encoding",
+  "Feature Selection"
 ];
 
 const MODEL_OPTIONS = [
@@ -28,9 +30,9 @@ const MODEL_OPTIONS = [
 
 const FEATURE_SELECTION_OPTIONS = [
   "None",
-  "Variance Threshold",
-  "Recursive Feature Elimination",
-  "LASSO",
+  "k_features",
+  "variance_threshold",
+  "importance_threshold",
   "Random Forest Importance",
   "Chi-Square Test",
 ];

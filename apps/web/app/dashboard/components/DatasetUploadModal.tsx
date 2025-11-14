@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Upload, FileText, CheckCircle2 } from "lucide-react";
-
+import axios from "axios";
+import { MODEL_BACKEND_URL } from "@repo/config";
 interface DatasetUploadModalProps {
   onClose: () => void;
   onUploadComplete: (datasetId: string) => void;
@@ -26,23 +27,20 @@ export function DatasetUploadModal({
     setUploading(true);
 
     try {
-      const newDatasetId = `dataset_${Date.now()}`;
-      const newDataset = {
-        id: newDatasetId,
-        name,
-        description,
-        uploadedAt: new Date().toISOString(),
-        rowCount: Math.floor(Math.random() * 200) + 50,
-        columnCount: Math.floor(Math.random() * 10000) + 10000,
-        fileName: file?.name || "unknown.csv",
-      };
-
-      const stored = sessionStorage.getItem("datasets");
-      const datasets = stored ? JSON.parse(stored) : [];
-      datasets.unshift(newDataset);
-      sessionStorage.setItem("datasets", JSON.stringify(datasets));
-
-      onUploadComplete(newDatasetId);
+      
+      
+        const formdata=new FormData();
+        formdata.append("name",name);
+        formdata.append("description",description);
+        if(file){
+          formdata.append("file",file);
+        }
+         const response = await axios.post(`${MODEL_BACKEND_URL}/datasets`,formdata,{
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+            'Content-Type':'multipart/form-data'
+          },
+        });
     } catch (error) {
       console.error("Upload error:", error);
       alert("Failed to upload dataset. Please try again.");

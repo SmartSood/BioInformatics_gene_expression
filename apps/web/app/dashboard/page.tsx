@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Sidebar } from "./components/Sidebar";
 import { ExperimentDetails } from "./components/ExperimentDetails";
 import { NewExperimentForm } from "./components/NewExperimentForm";
@@ -7,7 +7,8 @@ import { EmptyState } from "./components/EmptyState";
 import { DatasetSelectionModal } from "./components/DataSelectionUploadModal";
 import { DatasetUploadModal } from "./components/DatasetUploadModal";
 import { useRouter } from "next/navigation";
-
+import {MODEL_BACKEND_URL} from '@repo/config';
+import axios from "axios";
 export default function Dashboard() {
   const [userId, setUserId] = useState<string | null>(null);
   const [selectedExperimentId, setSelectedExperimentId] = useState<
@@ -35,6 +36,24 @@ export default function Dashboard() {
   const handleLogin = (id: string) => {
     setUserId(id);
   };
+  // fetch initial datasets on mount
+  
+useEffect(() => {
+    const fetchDatasets = async () => {
+      try {
+        const data = await axios.get(`${MODEL_BACKEND_URL}/dataset`, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+          },
+        });
+        //@ts-ignore
+        sessionStorage.setItem("datasets", JSON.stringify(data.data.datasets));
+      } catch (error) {
+        console.error("Failed to fetch datasets", error);
+      }
+    };
+    void fetchDatasets();
+  }, []);
 
   const handleLogout = () => {
     sessionStorage.removeItem("authToken");

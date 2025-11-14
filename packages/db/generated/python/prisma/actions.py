@@ -1515,11 +1515,11 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         # find the first 10 TrainingRun records
         trainingruns = await TrainingRun.prisma().find_many(take=10)
 
-        # find the first 5 TrainingRun records ordered by the status field
+        # find the first 5 TrainingRun records ordered by the name field
         trainingruns = await TrainingRun.prisma().find_many(
             take=5,
             order={
-                'status': 'desc',
+                'name': 'desc',
             },
         )
         ```
@@ -1580,11 +1580,11 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # find the second TrainingRun record ordered by the datasetUri field
+        # find the second TrainingRun record ordered by the description field
         trainingrun = await TrainingRun.prisma().find_first(
             skip=1,
             order={
-                'datasetUri': 'desc',
+                'description': 'desc',
             },
         )
         ```
@@ -1648,11 +1648,11 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # find the second TrainingRun record ordered by the modelPath field
+        # find the second TrainingRun record ordered by the status field
         trainingrun = await TrainingRun.prisma().find_first_or_raise(
             skip=1,
             order={
-                'modelPath': 'desc',
+                'status': 'desc',
             },
         )
         ```
@@ -1822,7 +1822,7 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         # update all TrainingRun records
         total = await TrainingRun.prisma().update_many(
             data={
-                'metrics': Json({'bghfciaafe': True})
+                'datasetUri': 'bghfciaafe'
             },
             where={}
         )
@@ -1886,7 +1886,7 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         results = await TrainingRun.prisma().count(
             select={
                 '_all': True,
-                'createdAt': True,
+                'modelPath': True,
             },
         )
         ```
@@ -1953,7 +1953,7 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         results = await TrainingRun.prisma().count(
             select={
                 '_all': True,
-                'updatedAt': True,
+                'metrics': True,
             },
         )
         ```
@@ -2093,10 +2093,1051 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # group TrainingRun records by id values
+        # group TrainingRun records by createdAt values
         # and count how many records are in each group
         results = await TrainingRun.prisma().group_by(
-            ['id'],
+            ['createdAt'],
+            count=True,
+        )
+        ```
+        """
+        if order is None:
+            if take is not None:
+                raise TypeError('Missing argument: \'order\' which is required when \'take\' is present')
+
+            if skip is not None:
+                raise TypeError('Missing argument: \'order\' which is required when \'skip\' is present')
+
+        root_selection: List[str] = [*by]
+        if avg is not None:
+            root_selection.append(_select_fields('_avg', avg))
+
+        if min is not None:
+            root_selection.append(_select_fields('_min', min))
+
+        if sum is not None:
+            root_selection.append(_select_fields('_sum', sum))
+
+        if max is not None:
+            root_selection.append(_select_fields('_max', max))
+
+        if count is not None:
+            if count is True:
+                root_selection.append('_count { _all }')
+            elif isinstance(count, dict):
+                root_selection.append(_select_fields('_count', count))
+
+        resp = await self._client._execute(
+            method='group_by',
+            model=self._model,
+            arguments={
+                'by': by,
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'having': having,
+                'orderBy': order,
+            },
+            root_selection=root_selection,
+        )
+        return resp['data']['result']  # type: ignore[no-any-return]
+
+
+class DatasetActions(Generic[_PrismaModelT]):
+    __slots__ = (
+        '_client',
+        '_model',
+    )
+
+    def __init__(self, client: Prisma, model: Type[_PrismaModelT]) -> None:
+        self._client = client
+        self._model = model
+
+    async def query_raw(
+        self,
+        query: LiteralString,
+        *args: Any,
+    ) -> List[_PrismaModelT]:
+        """Execute a raw SQL query
+
+        Parameters
+        ----------
+        query
+            The raw SQL query string to be executed
+        *args
+            Parameters to be passed to the SQL query, these MUST be used over
+            string formatting to avoid an SQL injection vulnerability
+
+        Returns
+        -------
+        List[prisma.models.Dataset]
+            The records returned by the SQL query
+
+        Raises
+        ------
+        prisma_errors.RawQueryError
+            This could be due to invalid syntax, mismatched number of parameters or any other error
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        users = await Dataset.prisma().query_raw(
+            'SELECT * FROM Dataset WHERE id = $1',
+            'bgchfhgceh',
+        )
+        ```
+        """
+        return await self._client.query_raw(query, *args, model=self._model)
+
+    async def query_first(
+        self,
+        query: LiteralString,
+        *args: Any,
+    ) -> Optional[_PrismaModelT]:
+        """Execute a raw SQL query, returning the first result
+
+        Parameters
+        ----------
+        query
+            The raw SQL query string to be executed
+        *args
+            Parameters to be passed to the SQL query, these MUST be used over
+            string formatting to avoid an SQL injection vulnerability
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The first record returned by the SQL query
+        None
+            The raw SQL query did not return any records
+
+        Raises
+        ------
+        prisma_errors.RawQueryError
+            This could be due to invalid syntax, mismatched number of parameters or any other error
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        user = await Dataset.prisma().query_first(
+            'SELECT * FROM Dataset WHERE userId = $1',
+            2054802212,
+        )
+        ```
+        """
+        return await self._client.query_first(query, *args, model=self._model)
+
+    async def create(
+        self,
+        data: types.DatasetCreateInput,
+        include: Optional[types.DatasetInclude] = None
+    ) -> _PrismaModelT:
+        """Create a new Dataset record.
+
+        Parameters
+        ----------
+        data
+            Dataset record data
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The created Dataset record
+
+        Raises
+        ------
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # create a Dataset record from just the required fields
+        dataset = await Dataset.prisma().create(
+            data={
+                # data to create a Dataset record
+                'id': 'gaddfhfh',
+                'userId': 684462146,
+                'filePath': 'bgcffadich',
+                'name': 'fcbichhci',
+                'description': 'bcggadccgf',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='create',
+            model=self._model,
+            arguments={
+                'data': data,
+                'include': include,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def create_many(
+        self,
+        data: List[types.DatasetCreateWithoutRelationsInput],
+        *,
+        skip_duplicates: Optional[bool] = None,
+    ) -> int:
+        """Create multiple Dataset records at once.
+
+        This function is *not* available when using SQLite.
+
+        Parameters
+        ----------
+        data
+            List of Dataset record data
+        skip_duplicates
+            Boolean flag for ignoring unique constraint errors
+
+        Returns
+        -------
+        int
+            The total number of records created
+
+        Raises
+        ------
+        prisma.errors.UnsupportedDatabaseError
+            Attempting to query when using SQLite
+        prisma.errors.UniqueViolationError
+            A unique constraint check has failed, these can be ignored with the `skip_duplicates` argument
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        total = await Dataset.prisma().create_many(
+            data=[
+                {
+                    # data to create a Dataset record
+                    'id': 'jdcfdcgc',
+                    'userId': 2053047983,
+                    'filePath': 'gifdddbia',
+                    'name': 'bchehecef',
+                    'description': 'jeijcbhfe',
+                },
+                {
+                    # data to create a Dataset record
+                    'id': 'bjgejjabff',
+                    'userId': 1228891816,
+                    'filePath': 'cffcachfd',
+                    'name': 'bccdfhdigc',
+                    'description': 'febcgjbfj',
+                },
+            ],
+            skip_duplicates=True,
+        )
+        ```
+        """
+        if skip_duplicates and self._client._active_provider in CREATE_MANY_SKIP_DUPLICATES_UNSUPPORTED:
+            raise errors.UnsupportedDatabaseError(self._client._active_provider, 'create_many_skip_duplicates')
+
+        resp = await self._client._execute(
+            method='create_many',
+            model=self._model,
+            arguments={
+                'data': data,
+                'skipDuplicates': skip_duplicates,
+            },
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    async def delete(
+        self,
+        where: types.DatasetWhereUniqueInput,
+        include: Optional[types.DatasetInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Delete a single Dataset record.
+
+        Parameters
+        ----------
+        where
+            Dataset filter to select the record to be deleted, must be unique
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The deleted Dataset record
+        None
+            Could not find a record to delete
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        dataset = await Dataset.prisma().delete(
+            where={
+                'id': 'bageiegghg',
+            },
+        )
+        ```
+        """
+        try:
+            resp = await self._client._execute(
+                method='delete',
+                model=self._model,
+                arguments={
+                    'where': where,
+                    'include': include,
+                },
+            )
+        except errors.RecordNotFoundError:
+            return None
+
+        return model_parse(self._model, resp['data']['result'])
+
+    async def find_unique(
+        self,
+        where: types.DatasetWhereUniqueInput,
+        include: Optional[types.DatasetInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Find a unique Dataset record.
+
+        Parameters
+        ----------
+        where
+            Dataset filter to find the record, must be unique
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The found Dataset record
+        None
+            No record matching the given input could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        dataset = await Dataset.prisma().find_unique(
+            where={
+                'id': 'faidicegb',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_unique',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+        result = resp['data']['result']
+        if result is None:
+            return None
+        return model_parse(self._model, result)
+
+    async def find_unique_or_raise(
+        self,
+        where: types.DatasetWhereUniqueInput,
+        include: Optional[types.DatasetInclude] = None
+    ) -> _PrismaModelT:
+        """Find a unique Dataset record. Raises `RecordNotFoundError` if no record is found.
+
+        Parameters
+        ----------
+        where
+            Dataset filter to find the record, must be unique
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The found Dataset record
+
+        Raises
+        ------
+        prisma.errors.RecordNotFoundError
+            No record was found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        dataset = await Dataset.prisma().find_unique_or_raise(
+            where={
+                'id': 'bacecgfhbe',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_unique_or_raise',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def find_many(
+        self,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.DatasetWhereInput] = None,
+        cursor: Optional[types.DatasetWhereUniqueInput] = None,
+        include: Optional[types.DatasetInclude] = None,
+        order: Optional[Union[types.DatasetOrderByInput, List[types.DatasetOrderByInput]]] = None,
+        distinct: Optional[List[types.DatasetScalarFieldKeys]] = None,
+    ) -> List[_PrismaModelT]:
+        """Find multiple Dataset records.
+
+        An empty list is returned if no records could be found.
+
+        Parameters
+        ----------
+        take
+            Limit the maximum number of Dataset records returned
+        skip
+            Ignore the first N results
+        where
+            Dataset filter to select records
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+        order
+            Order the returned Dataset records by any field
+        distinct
+            Filter Dataset records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        List[prisma.models.Dataset]
+            The list of all Dataset records that could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the first 10 Dataset records
+        datasets = await Dataset.prisma().find_many(take=10)
+
+        # find the first 5 Dataset records ordered by the filePath field
+        datasets = await Dataset.prisma().find_many(
+            take=5,
+            order={
+                'filePath': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_many',
+            model=self._model,
+            arguments={
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        return [model_parse(self._model, r) for r in resp['data']['result']]
+
+    async def find_first(
+        self,
+        skip: Optional[int] = None,
+        where: Optional[types.DatasetWhereInput] = None,
+        cursor: Optional[types.DatasetWhereUniqueInput] = None,
+        include: Optional[types.DatasetInclude] = None,
+        order: Optional[Union[types.DatasetOrderByInput, List[types.DatasetOrderByInput]]] = None,
+        distinct: Optional[List[types.DatasetScalarFieldKeys]] = None,
+    ) -> Optional[_PrismaModelT]:
+        """Find a single Dataset record.
+
+        Parameters
+        ----------
+        skip
+            Ignore the first N records
+        where
+            Dataset filter to select the record
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+        order
+            Order the returned Dataset records by any field
+        distinct
+            Filter Dataset records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The first Dataset record found, matching the given arguments
+        None
+            No record could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the second Dataset record ordered by the name field
+        dataset = await Dataset.prisma().find_first(
+            skip=1,
+            order={
+                'name': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_first',
+            model=self._model,
+            arguments={
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        result = resp['data']['result']
+        if result is None:
+            return None
+
+        return model_parse(self._model, result)
+
+    async def find_first_or_raise(
+        self,
+        skip: Optional[int] = None,
+        where: Optional[types.DatasetWhereInput] = None,
+        cursor: Optional[types.DatasetWhereUniqueInput] = None,
+        include: Optional[types.DatasetInclude] = None,
+        order: Optional[Union[types.DatasetOrderByInput, List[types.DatasetOrderByInput]]] = None,
+        distinct: Optional[List[types.DatasetScalarFieldKeys]] = None,
+    ) -> _PrismaModelT:
+        """Find a single Dataset record. Raises `RecordNotFoundError` if no record was found.
+
+        Parameters
+        ----------
+        skip
+            Ignore the first N records
+        where
+            Dataset filter to select the record
+        cursor
+            Specifies the position in the list to start returning results from, (typically an ID field)
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+        order
+            Order the returned Dataset records by any field
+        distinct
+            Filter Dataset records by either a single distinct field or distinct combinations of fields
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The first Dataset record found, matching the given arguments
+
+        Raises
+        ------
+        prisma.errors.RecordNotFoundError
+            No record was found
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # find the second Dataset record ordered by the description field
+        dataset = await Dataset.prisma().find_first_or_raise(
+            skip=1,
+            order={
+                'description': 'desc',
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='find_first_or_raise',
+            model=self._model,
+            arguments={
+                'skip': skip,
+                'where': where,
+                'order_by': order,
+                'cursor': cursor,
+                'include': include,
+                'distinct': distinct,
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def update(
+        self,
+        data: types.DatasetUpdateInput,
+        where: types.DatasetWhereUniqueInput,
+        include: Optional[types.DatasetInclude] = None
+    ) -> Optional[_PrismaModelT]:
+        """Update a single Dataset record.
+
+        Parameters
+        ----------
+        data
+            Dataset record data specifying what to update
+        where
+            Dataset filter to select the unique record to create / update
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The updated Dataset record
+        None
+            No record could be found
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        dataset = await Dataset.prisma().update(
+            where={
+                'id': 'ihcahiead',
+            },
+            data={
+                # data to update the Dataset record to
+            },
+        )
+        ```
+        """
+        try:
+            resp = await self._client._execute(
+                method='update',
+                model=self._model,
+                arguments={
+                    'data': data,
+                    'where': where,
+                    'include': include,
+                },
+            )
+        except errors.RecordNotFoundError:
+            return None
+
+        return model_parse(self._model, resp['data']['result'])
+
+    async def upsert(
+        self,
+        where: types.DatasetWhereUniqueInput,
+        data: types.DatasetUpsertInput,
+        include: Optional[types.DatasetInclude] = None,
+    ) -> _PrismaModelT:
+        """Updates an existing record or create a new one
+
+        Parameters
+        ----------
+        where
+            Dataset filter to select the unique record to create / update
+        data
+            Data specifying what fields to set on create and update
+        include
+            Specifies which relations should be loaded on the returned Dataset model
+
+        Returns
+        -------
+        prisma.models.Dataset
+            The created or updated Dataset record
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+        prisma.errors.MissingRequiredValueError
+            Value is required but was not found
+
+        Example
+        -------
+        ```py
+        dataset = await Dataset.prisma().upsert(
+            where={
+                'id': 'biheheiajg',
+            },
+            data={
+                'create': {
+                    'id': 'biheheiajg',
+                    'userId': 1228891816,
+                    'filePath': 'cffcachfd',
+                    'name': 'bccdfhdigc',
+                    'description': 'febcgjbfj',
+                },
+                'update': {
+                    'userId': 1228891816,
+                    'filePath': 'cffcachfd',
+                    'name': 'bccdfhdigc',
+                    'description': 'febcgjbfj',
+                },
+            },
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='upsert',
+            model=self._model,
+            arguments={
+                'where': where,
+                'include': include,
+                'create': data.get('create'),
+                'update': data.get('update'),
+            },
+        )
+        return model_parse(self._model, resp['data']['result'])
+
+    async def update_many(
+        self,
+        data: types.DatasetUpdateManyMutationInput,
+        where: types.DatasetWhereInput,
+    ) -> int:
+        """Update multiple Dataset records
+
+        Parameters
+        ----------
+        data
+            Dataset data to update the selected Dataset records to
+        where
+            Filter to select the Dataset records to update
+
+        Returns
+        -------
+        int
+            The total number of Dataset records that were updated
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # update all Dataset records
+        total = await Dataset.prisma().update_many(
+            data={
+                'rowCount': 916896761
+            },
+            where={}
+        )
+        ```
+        """
+        resp = await self._client._execute(
+            method='update_many',
+            model=self._model,
+            arguments={'data': data, 'where': where,},
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    @overload
+    async def count(
+        self,
+        select: None = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.DatasetWhereInput] = None,
+        cursor: Optional[types.DatasetWhereUniqueInput] = None,
+    ) -> int:
+        """Count the number of Dataset records present in the database
+
+        Parameters
+        ----------
+        select
+            Select the Dataset fields to be counted
+        take
+            Limit the maximum result
+        skip
+            Ignore the first N records
+        where
+            Dataset filter to find records
+        cursor
+            Specifies the position in the list to start counting results from, (typically an ID field)
+        order
+            This parameter is deprecated and will be removed in a future release
+
+        Returns
+        -------
+        int
+            The total number of records found, returned if `select` is not given
+
+        prisma.types.DatasetCountAggregateOutput
+            Data returned when `select` is used, the fields present in this dictionary will
+            match the fields passed in the `select` argument
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # total: int
+        total = await Dataset.prisma().count()
+
+        # results: prisma.types.DatasetCountAggregateOutput
+        results = await Dataset.prisma().count(
+            select={
+                '_all': True,
+                'columnCount': True,
+            },
+        )
+        ```
+        """
+
+
+    @overload
+    async def count(
+        self,
+        select: types.DatasetCountAggregateInput,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.DatasetWhereInput] = None,
+        cursor: Optional[types.DatasetWhereUniqueInput] = None,
+    ) -> types.DatasetCountAggregateOutput:
+        ...
+
+    async def count(
+        self,
+        select: Optional[types.DatasetCountAggregateInput] = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        where: Optional[types.DatasetWhereInput] = None,
+        cursor: Optional[types.DatasetWhereUniqueInput] = None,
+    ) -> Union[int, types.DatasetCountAggregateOutput]:
+        """Count the number of Dataset records present in the database
+
+        Parameters
+        ----------
+        select
+            Select the Dataset fields to be counted
+        take
+            Limit the maximum result
+        skip
+            Ignore the first N records
+        where
+            Dataset filter to find records
+        cursor
+            Specifies the position in the list to start counting results from, (typically an ID field)
+        order
+            This parameter is deprecated and will be removed in a future release
+
+        Returns
+        -------
+        int
+            The total number of records found, returned if `select` is not given
+
+        prisma.types.DatasetCountAggregateOutput
+            Data returned when `select` is used, the fields present in this dictionary will
+            match the fields passed in the `select` argument
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # total: int
+        total = await Dataset.prisma().count()
+
+        # results: prisma.types.DatasetCountAggregateOutput
+        results = await Dataset.prisma().count(
+            select={
+                '_all': True,
+                'createdAt': True,
+            },
+        )
+        ```
+        """
+
+        # TODO: this selection building should be moved to the QueryBuilder
+        #
+        # note the distinction between checking for `not select` here and `select is None`
+        # later is to handle the case that the given select dictionary is empty, this
+        # is a limitation of our types.
+        if not select:
+            root_selection = ['_count { _all }']
+        else:
+
+            root_selection = [
+                '_count {{ {0} }}'.format(' '.join(k for k, v in select.items() if v is True))
+            ]
+
+        resp = await self._client._execute(
+            method='count',
+            model=self._model,
+            arguments={
+                'take': take,
+                'skip': skip,
+                'where': where,
+                'cursor': cursor,
+            },
+            root_selection=root_selection,
+        )
+
+        if select is None:
+            return cast(int, resp['data']['result']['_count']['_all'])
+        else:
+            return cast(types.DatasetCountAggregateOutput, resp['data']['result']['_count'])
+
+    async def delete_many(
+        self,
+        where: Optional[types.DatasetWhereInput] = None
+    ) -> int:
+        """Delete multiple Dataset records.
+
+        Parameters
+        ----------
+        where
+            Optional Dataset filter to find the records to be deleted
+
+        Returns
+        -------
+        int
+            The total number of Dataset records that were deleted
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # delete all Dataset records
+        total = await Dataset.prisma().delete_many()
+        ```
+        """
+        resp = await self._client._execute(
+            method='delete_many',
+            model=self._model,
+            arguments={'where': where},
+            root_selection=['count'],
+        )
+        return int(resp['data']['result']['count'])
+
+    # TODO: make this easier to work with safely, currently output fields are typed as
+    #       not required, we should refactor the return type
+    # TODO: consider returning a Dict where the keys are a Tuple of the `by` selection
+    # TODO: statically type that the order argument is required when take or skip are present
+    async def group_by(
+        self,
+        by: List['types.DatasetScalarFieldKeys'],
+        *,
+        where: Optional['types.DatasetWhereInput'] = None,
+        take: Optional[int] = None,
+        skip: Optional[int] = None,
+        avg: Optional['types.DatasetAvgAggregateInput'] = None,
+        sum: Optional['types.DatasetSumAggregateInput'] = None,
+        min: Optional['types.DatasetMinAggregateInput'] = None,
+        max: Optional['types.DatasetMaxAggregateInput'] = None,
+        having: Optional['types.DatasetScalarWhereWithAggregatesInput'] = None,
+        count: Optional[Union[bool, 'types.DatasetCountAggregateInput']] = None,
+        order: Optional[Union[Mapping['types.DatasetScalarFieldKeys', 'types.SortOrder'], List[Mapping['types.DatasetScalarFieldKeys', 'types.SortOrder']]]] = None,
+    ) -> List['types.DatasetGroupByOutput']:
+        """Group Dataset records by one or more field values and perform aggregations
+        each group such as finding the average.
+
+        Parameters
+        ----------
+        by
+            List of scalar Dataset fields to group records by
+        where
+            Dataset filter to select records
+        take
+            Limit the maximum number of Dataset records returned
+        skip
+            Ignore the first N records
+        avg
+            Adds the average of all values of the specified fields to the `_avg` field
+            in the returned data.
+        sum
+            Adds the sum of all values of the specified fields to the `_sum` field
+            in the returned data.
+        min
+            Adds the smallest available value for the specified fields to the `_min` field
+            in the returned data.
+        max
+            Adds the largest available value for the specified fields to the `_max` field
+            in the returned data.
+        count
+            Adds a count of non-fields to the `_count` field in the returned data.
+        having
+            Allows you to filter groups by an aggregate value - for example only return
+            groups having an average age less than 50.
+        order
+            Lets you order the returned list by any property that is also present in `by`.
+            Only **one** field is allowed at a time.
+
+        Returns
+        -------
+        List[prisma.types.DatasetGroupByOutput]
+            A list of dictionaries representing the Dataset record,
+            this will also have additional fields present if aggregation arguments
+            are used (see the above parameters)
+
+        Raises
+        ------
+        prisma.errors.PrismaError
+            Catch all for every exception raised by Prisma Client Python
+
+        Example
+        -------
+        ```py
+        # group Dataset records by updatedAt values
+        # and count how many records are in each group
+        results = await Dataset.prisma().group_by(
+            ['updatedAt'],
             count=True,
         )
         ```

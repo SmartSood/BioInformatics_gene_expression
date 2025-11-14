@@ -42,13 +42,13 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
       failed: { icon: XCircle, text: 'Failed', className: 'bg-red-500/20 text-red-400 border-red-500/50' },
       pending: { icon: Clock, text: 'Pending', className: 'bg-amber-500/20 text-amber-400 border-amber-500/50' },
     };
-
+    //@ts-ignore
     const config = statusConfig[experiment.status];
     const Icon = config.icon;
 
     return (
       <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border ${config.className}`}>
-        <Icon className={`w-4 h-4 ${experiment.status === 'running' ? 'animate-spin' : ''}`} />
+        <Icon className={`w-4 h-4 ${experiment.status === 'started' ? 'animate-spin' : ''}`} />
         <span className="text-sm font-medium">{config.text}</span>
       </div>
     );
@@ -72,13 +72,13 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
             <div>
               <span className="text-slate-500">Created:</span>
               <span className="text-white ml-2">
-                {new Date(experiment.created_at).toLocaleString()}
+                {new Date(experiment.createdAt).toLocaleString()}
               </span>
             </div>
             <div>
               <span className="text-slate-500">Updated:</span>
               <span className="text-white ml-2">
-                {new Date(experiment.updated_at).toLocaleString()}
+                {new Date(experiment.updatedAt).toLocaleString()}
               </span>
             </div>
           </div>
@@ -184,7 +184,7 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
           </>
         )}
 
-        {!results && experiment.status === 'completed' && (
+        {!results && experiment.status === 'finished' && (
           <Card className="text-center">
             <Activity className="w-12 h-12 text-slate-600 mx-auto mb-3" />
             <p className="text-slate-400">No results available for this experiment</p>

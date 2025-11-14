@@ -6,8 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "exports":"./src/index.ts",
-
+  "exports": "./src/index.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,6 +15,6 @@
     "prisma": "^6.17.0"
   },
   "dependencies": {
-    "@prisma/client": "^6.17.0"
+    "@prisma/client": "^6.19.0"
   }
 }

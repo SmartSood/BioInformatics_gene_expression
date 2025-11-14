@@ -23,13 +23,14 @@ export const SideCard = ({
   className = "" 
 }: SideCardProps) => {
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-US', {
+    const cleaned = dateString.replace(/(\.\d{3})\d+Z$/, "$1Z");
+    
+    return new Date(cleaned).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-    }).format(date);
+    });
   };
 
   return (

@@ -4,25 +4,26 @@ import {
   ExperimentParameters,
   ExperimentResults,
 } from "../utils/scemma";
-
+import axios from "axios";
+import { MODEL_BACKEND_URL } from "@repo/config";
 const MOCK_EXPERIMENTS: Experiment[] = [
   {
     id: "1",
     user_id: "00000000-0000-0000-0000-000000000000",
     name: "Cancer Drug Target Analysis",
     description: "Identifying potential drug targets in lung cancer",
-    status: "completed",
-    created_at: new Date(Date.now() - 86400000).toISOString(),
-    updated_at: new Date(Date.now() - 86400000).toISOString(),
+    status: "finished",
+    createdAt: new Date(Date.now() - 86400000).toISOString(),
+    updatedAt : new Date(Date.now() - 86400000).toISOString(),
   },
   {
     id: "2",
     user_id: "00000000-0000-0000-0000-000000000000",
     name: "Alzheimer Gene Expression",
     description: "Analysis of differential gene expression in AD patients",
-    status: "completed",
-    created_at: new Date(Date.now() - 172800000).toISOString(),
-    updated_at: new Date(Date.now() - 172800000).toISOString(),
+    status: "finished",
+    createdAt: new Date(Date.now() - 172800000).toISOString(),
+    updatedAt: new Date(Date.now() - 172800000).toISOString(),
   },
 ];
 
@@ -36,9 +37,17 @@ export function useExperiments() {
 
   const fetchExperiments = async () => {
     try {
-      const stored = sessionStorage.getItem("experiments");
+      const stored = await axios.get(`${MODEL_BACKEND_URL}/experiments`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
+      });
+
+      console.log("Fetched experiments:", stored);
+
       if (stored) {
-        setExperiments(JSON.parse(stored));
+        //@ts-ignore
+        setExperiments(stored.data.experiments);
       } else {
         sessionStorage.setItem("experiments", JSON.stringify(MOCK_EXPERIMENTS));
         setExperiments(MOCK_EXPERIMENTS);

@@ -96,10 +96,12 @@ class Prisma(AsyncBasePrisma):
     # https://prisma-client-py.readthedocs.io/en/stable/reference/schema-extensions/#instance_name
     user: 'actions.UserActions[models.User]'
     trainingrun: 'actions.TrainingRunActions[models.TrainingRun]'
+    dataset: 'actions.DatasetActions[models.Dataset]'
 
     __slots__ = (
         'user',
         'trainingrun',
+        'dataset',
     )
 
     def __init__(
@@ -132,6 +134,7 @@ class Prisma(AsyncBasePrisma):
 
         self.user = actions.UserActions[models.User](self, models.User)
         self.trainingrun = actions.TrainingRunActions[models.TrainingRun](self, models.TrainingRun)
+        self.dataset = actions.DatasetActions[models.Dataset](self, models.Dataset)
 
         if auto_register:
             register(self)
@@ -284,6 +287,7 @@ TransactionManager = AsyncTransactionManager[Prisma]
 class Batch:
     user: 'UserBatchActions'
     trainingrun: 'TrainingRunBatchActions'
+    dataset: 'DatasetBatchActions'
 
     def __init__(self, client: Prisma) -> None:
         self.__client = client
@@ -291,6 +295,7 @@ class Batch:
         self._active_provider = client._active_provider
         self.user = UserBatchActions(self)
         self.trainingrun = TrainingRunBatchActions(self)
+        self.dataset = DatasetBatchActions(self)
 
     def _add(self, **kwargs: Any) -> None:
         builder = QueryBuilder(
@@ -559,6 +564,117 @@ class TrainingRunBatchActions:
         self._batcher._add(
             method='delete_many',
             model=models.TrainingRun,
+            arguments={'where': where},
+            root_selection=['count'],
+        )
+
+
+
+# NOTE: some arguments are meaningless in this context but are included
+# for completeness sake
+class DatasetBatchActions:
+    def __init__(self, batcher: Batch) -> None:
+        self._batcher = batcher
+
+    def create(
+        self,
+        data: types.DatasetCreateInput,
+        include: Optional[types.DatasetInclude] = None
+    ) -> None:
+        self._batcher._add(
+            method='create',
+            model=models.Dataset,
+            arguments={
+                'data': data,
+                'include': include,
+            },
+        )
+
+    def create_many(
+        self,
+        data: List[types.DatasetCreateWithoutRelationsInput],
+        *,
+        skip_duplicates: Optional[bool] = None,
+    ) -> None:
+        if skip_duplicates and self._batcher._active_provider in CREATE_MANY_SKIP_DUPLICATES_UNSUPPORTED:
+            raise errors.UnsupportedDatabaseError(self._batcher._active_provider, 'create_many_skip_duplicates')
+
+        self._batcher._add(
+            method='create_many',
+            model=models.Dataset,
+            arguments={
+                'data': data,
+                'skipDuplicates': skip_duplicates,
+            },
+            root_selection=['count'],
+        )
+
+    def delete(
+        self,
+        where: types.DatasetWhereUniqueInput,
+        include: Optional[types.DatasetInclude] = None,
+    ) -> None:
+        self._batcher._add(
+            method='delete',
+            model=models.Dataset,
+            arguments={
+                'where': where,
+                'include': include,
+            },
+        )
+
+    def update(
+        self,
+        data: types.DatasetUpdateInput,
+        where: types.DatasetWhereUniqueInput,
+        include: Optional[types.DatasetInclude] = None
+    ) -> None:
+        self._batcher._add(
+            method='update',
+            model=models.Dataset,
+            arguments={
+                'data': data,
+                'where': where,
+                'include': include,
+            },
+        )
+
+    def upsert(
+        self,
+        where: types.DatasetWhereUniqueInput,
+        data: types.DatasetUpsertInput,
+        include: Optional[types.DatasetInclude] = None,
+    ) -> None:
+        self._batcher._add(
+            method='upsert',
+            model=models.Dataset,
+            arguments={
+                'where': where,
+                'include': include,
+                'create': data.get('create'),
+                'update': data.get('update'),
+            },
+        )
+
+    def update_many(
+        self,
+        data: types.DatasetUpdateManyMutationInput,
+        where: types.DatasetWhereInput,
+    ) -> None:
+        self._batcher._add(
+            method='update_many',
+            model=models.Dataset,
+            arguments={'data': data, 'where': where,},
+            root_selection=['count'],
+        )
+
+    def delete_many(
+        self,
+        where: Optional[types.DatasetWhereInput] = None,
+    ) -> None:
+        self._batcher._add(
+            method='delete_many',
+            model=models.Dataset,
             arguments={'where': where},
             root_selection=['count'],
         )

@@ -96,7 +96,8 @@ class TrainRequest(BaseModel):
     dataset_id: str
     dataset_uri: str
     config: TrainConfig
-
+    name: str
+    description: Optional[str] = None
 class TrainResponse(BaseModel):
     job_id: str
 
@@ -112,3 +113,18 @@ class PredictRequest(BaseModel):
 class PredictResponse(BaseModel):
     predictions: list
     probabilities: Optional[list] = None
+from pydantic import BaseModel
+from fastapi import Form
+
+class DatasetInfoRequest(BaseModel):
+    name: str
+    description: Optional[str] = None
+
+    @classmethod
+    def as_form(
+        cls,
+        name: str = Form(...),
+        description: Optional[str] = Form(None),
+    ):
+        return cls(name=name, description=description)
+

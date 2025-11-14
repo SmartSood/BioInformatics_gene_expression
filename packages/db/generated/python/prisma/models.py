@@ -70,6 +70,7 @@ class User(bases.BaseUser):
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
     runs: Optional[List['models.TrainingRun']] = None
+    datasets: Optional[List['models.Dataset']] = None
 
     # take *args and **kwargs so that other metaclasses can define arguments
     def __init_subclass__(
@@ -200,6 +201,8 @@ class TrainingRun(bases.BaseTrainingRun):
     id: _str
     userId: _int
     user: Optional['models.User'] = None
+    name: _str
+    description: _str
     status: _str
     datasetUri: _str
     modelPath: Optional[_str] = None
@@ -330,9 +333,147 @@ class TrainingRun(bases.BaseTrainingRun):
         _created_partial_types.add(name)
 
 
+class Dataset(bases.BaseDataset):
+    """Represents a Dataset record"""
+
+    id: _str
+    userId: _int
+    user: Optional['models.User'] = None
+    filePath: _str
+    name: _str
+    description: _str
+    rowCount: Optional[_int] = None
+    columnCount: Optional[_int] = None
+    createdAt: datetime.datetime
+    updatedAt: datetime.datetime
+
+    # take *args and **kwargs so that other metaclasses can define arguments
+    def __init_subclass__(
+        cls,
+        *args: Any,
+        warn_subclass: Optional[bool] = None,
+        **kwargs: Any,
+    ) -> None:
+        super().__init_subclass__()
+        if warn_subclass is not None:
+            warnings.warn(
+                'The `warn_subclass` argument is deprecated as it is no longer necessary and will be removed in the next release',
+                DeprecationWarning,
+                stacklevel=3,
+            )
+
+
+    @staticmethod
+    def create_partial(
+        name: str,
+        include: Optional[Iterable['types.DatasetKeys']] = None,
+        exclude: Optional[Iterable['types.DatasetKeys']] = None,
+        required: Optional[Iterable['types.DatasetKeys']] = None,
+        optional: Optional[Iterable['types.DatasetKeys']] = None,
+        relations: Optional[Mapping['types.DatasetRelationalFieldKeys', str]] = None,
+        exclude_relational_fields: bool = False,
+    ) -> None:
+        if not os.environ.get('PRISMA_GENERATOR_INVOCATION'):
+            raise RuntimeError(
+                'Attempted to create a partial type outside of client generation.'
+            )
+
+        if name in _created_partial_types:
+            raise ValueError(f'Partial type "{name}" has already been created.')
+
+        if include is not None:
+            if exclude is not None:
+                raise TypeError('Exclude and include are mutually exclusive.')
+            if exclude_relational_fields is True:
+                raise TypeError('Include and exclude_relational_fields=True are mutually exclusive.')
+
+        if required and optional:
+            shared = set(required) & set(optional)
+            if shared:
+                raise ValueError(f'Cannot make the same field(s) required and optional {shared}')
+
+        if exclude_relational_fields and relations:
+            raise ValueError(
+                'exclude_relational_fields and relations are mutually exclusive'
+            )
+
+        fields: Dict['types.DatasetKeys', PartialModelField] = OrderedDict()
+
+        try:
+            if include:
+                for field in include:
+                    fields[field] = _Dataset_fields[field].copy()
+            elif exclude:
+                for field in exclude:
+                    if field not in _Dataset_fields:
+                        raise KeyError(field)
+
+                fields = {
+                    key: data.copy()
+                    for key, data in _Dataset_fields.items()
+                    if key not in exclude
+                }
+            else:
+                fields = {
+                    key: data.copy()
+                    for key, data in _Dataset_fields.items()
+                }
+
+            if required:
+                for field in required:
+                    fields[field]['optional'] = False
+
+            if optional:
+                for field in optional:
+                    fields[field]['optional'] = True
+
+            if exclude_relational_fields:
+                fields = {
+                    key: data
+                    for key, data in fields.items()
+                    if key not in _Dataset_relational_fields
+                }
+
+            if relations:
+                for field, type_ in relations.items():
+                    if field not in _Dataset_relational_fields:
+                        raise errors.UnknownRelationalFieldError('Dataset', field)
+
+                    # TODO: this method of validating types is not ideal
+                    # as it means we cannot two create partial types that
+                    # reference each other
+                    if type_ not in _created_partial_types:
+                        raise ValueError(
+                            f'Unknown partial type: "{type_}". '
+                            f'Did you remember to generate the {type_} type before this one?'
+                        )
+
+                    # TODO: support non prisma.partials models
+                    info = fields[field]
+                    if info['is_list']:
+                        info['type'] = f'List[\'partials.{type_}\']'
+                    else:
+                        info['type'] = f'\'partials.{type_}\''
+        except KeyError as exc:
+            raise ValueError(
+                f'{exc.args[0]} is not a valid Dataset / {name} field.'
+            ) from None
+
+        models = partial_models_ctx.get()
+        models.append(
+            {
+                'name': name,
+                'fields': cast(Mapping[str, PartialModelField], fields),
+                'from_model': 'Dataset',
+            }
+        )
+        _created_partial_types.add(name)
+
+
 
 _User_relational_fields: Set[str] = {
         'runs',
+        'datasets',
     }
 _User_fields: Dict['types.UserKeys', PartialModelField] = OrderedDict(
     [
@@ -424,6 +565,14 @@ _User_fields: Dict['types.UserKeys', PartialModelField] = OrderedDict(
             'is_relational': True,
             'documentation': None,
         }),
+        ('datasets', {
+            'name': 'datasets',
+            'is_list': True,
+            'optional': True,
+            'type': 'List[\'models.Dataset\']',
+            'is_relational': True,
+            'documentation': None,
+        }),
     ],
 )
 
@@ -454,6 +603,22 @@ _TrainingRun_fields: Dict['types.TrainingRunKeys', PartialModelField] = OrderedD
             'optional': True,
             'type': 'models.User',
             'is_relational': True,
+            'documentation': None,
+        }),
+        ('name', {
+            'name': 'name',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('description', {
+            'name': 'description',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
             'documentation': None,
         }),
         ('status', {
@@ -507,6 +672,94 @@ _TrainingRun_fields: Dict['types.TrainingRunKeys', PartialModelField] = OrderedD
     ],
 )
 
+_Dataset_relational_fields: Set[str] = {
+        'user',
+    }
+_Dataset_fields: Dict['types.DatasetKeys', PartialModelField] = OrderedDict(
+    [
+        ('id', {
+            'name': 'id',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('userId', {
+            'name': 'userId',
+            'is_list': False,
+            'optional': False,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('user', {
+            'name': 'user',
+            'is_list': False,
+            'optional': True,
+            'type': 'models.User',
+            'is_relational': True,
+            'documentation': None,
+        }),
+        ('filePath', {
+            'name': 'filePath',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('name', {
+            'name': 'name',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('description', {
+            'name': 'description',
+            'is_list': False,
+            'optional': False,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('rowCount', {
+            'name': 'rowCount',
+            'is_list': False,
+            'optional': True,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('columnCount', {
+            'name': 'columnCount',
+            'is_list': False,
+            'optional': True,
+            'type': '_int',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('createdAt', {
+            'name': 'createdAt',
+            'is_list': False,
+            'optional': False,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('updatedAt', {
+            'name': 'updatedAt',
+            'is_list': False,
+            'optional': False,
+            'type': 'datetime.datetime',
+            'is_relational': False,
+            'documentation': None,
+        }),
+    ],
+)
+
 
 
 # we have to import ourselves as relation types are namespaced to models
@@ -516,3 +769,4 @@ from . import models, actions
 # required to support relationships between models
 model_rebuild(User)
 model_rebuild(TrainingRun)
+model_rebuild(Dataset)
