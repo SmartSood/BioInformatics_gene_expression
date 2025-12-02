@@ -7,24 +7,6 @@ import {
 import axios from "axios";
 import { MODEL_BACKEND_URL } from "@repo/config";
 const MOCK_EXPERIMENTS: Experiment[] = [
-  {
-    id: "1",
-    user_id: "00000000-0000-0000-0000-000000000000",
-    name: "Cancer Drug Target Analysis",
-    description: "Identifying potential drug targets in lung cancer",
-    status: "finished",
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-    updatedAt : new Date(Date.now() - 86400000).toISOString(),
-  },
-  {
-    id: "2",
-    user_id: "00000000-0000-0000-0000-000000000000",
-    name: "Alzheimer Gene Expression",
-    description: "Analysis of differential gene expression in AD patients",
-    status: "finished",
-    createdAt: new Date(Date.now() - 172800000).toISOString(),
-    updatedAt: new Date(Date.now() - 172800000).toISOString(),
-  },
 ];
 
 export function useExperiments() {
@@ -147,44 +129,130 @@ export function useExperimentDetails(experimentId: string | null) {
     null
   );
   const [results, setResults] = useState<ExperimentResults | null>(null);
+  const [errors, setErrors] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (experimentId) {
-      fetchExperimentDetails(experimentId);
-    } else {
+    if (!experimentId) {
       setExperiment(null);
       setParameters(null);
       setResults(null);
+      setErrors(null);
+      return;
     }
+
+    let intervalId: NodeJS.Timeout | null = null;
+    let isMounted = true;
+
+    const shouldPoll = (status: string | undefined): boolean => {
+      if (!status) return false;
+      // Only poll if experiment is still running/queued
+      return status === "running" || status === "started" || status === "pending" || status === "queued";
+    };
+
+    const stopPolling = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const startPolling = () => {
+      // Clear any existing interval
+      stopPolling();
+      
+      // Start new polling interval
+      intervalId = setInterval(async () => {
+        if (!isMounted) {
+          stopPolling();
+          return;
+        }
+        
+        // Fetch and check status
+        const status = await fetchExperimentDetails(experimentId);
+        
+        // Stop polling if experiment is completed or failed
+        if (!shouldPoll(status)) {
+          stopPolling();
+        }
+      }, 5000); // Poll every 5 seconds
+    };
+
+    const fetchAndPoll = async () => {
+      if (!isMounted) return;
+      
+      const status = await fetchExperimentDetails(experimentId);
+      
+      // Check status after fetch to decide if we should poll
+      if (isMounted && shouldPoll(status)) {
+        startPolling();
+      } else {
+        // Make sure polling is stopped if status is completed/failed
+        stopPolling();
+      }
+    };
+
+    fetchAndPoll();
+
+    return () => {
+      isMounted = false;
+      if (intervalId) clearInterval(intervalId);
+    };
   }, [experimentId]);
 
   const fetchExperimentDetails = async (id: string) => {
     setLoading(true);
     try {
-      const stored = sessionStorage.getItem("experiments");
-      const experiments = stored ? JSON.parse(stored) : MOCK_EXPERIMENTS;
-      const exp = experiments.find((e: Experiment) => e.id === id);
+      const response = await axios.get(`${MODEL_BACKEND_URL}/experiments/${id}`, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("authToken")}`,
+        },
+      });
 
-      const paramsKey = `params_${id}`;
-      const resultsKey = `results_${id}`;
-
-      const storedParams = sessionStorage.getItem(paramsKey);
-      const storedResults = sessionStorage.getItem(resultsKey);
-
-      setExperiment(exp || null);
-      setParameters(
-        storedParams ? JSON.parse(storedParams) : MOCK_PARAMETERS[id] || null
-      );
-      setResults(
-        storedResults ? JSON.parse(storedResults) : MOCK_RESULTS[id] || null
-      );
-    } catch (error) {
+      const data = response.data as {
+        experiment?: Experiment | null;
+        parameters?: any;
+        results?: any;
+        errors?: any;
+      };
+      
+      // Map the response to match the expected format
+      const exp = data.experiment || null;
+      setExperiment(exp);
+      setParameters(data.parameters || null);
+      setResults(data.results || null);
+      setErrors(data.errors || null);
+      
+      // Return status for polling logic
+      return exp?.status;
+    } catch (error: any) {
       console.error("Error fetching experiment details:", error);
+      // Fallback to sessionStorage if API fails
+      try {
+        const stored = sessionStorage.getItem("experiments");
+        const experiments = stored ? JSON.parse(stored) : MOCK_EXPERIMENTS;
+        const exp = experiments.find((e: Experiment) => e.id === id);
+
+        const paramsKey = `params_${id}`;
+        const resultsKey = `results_${id}`;
+
+        const storedParams = sessionStorage.getItem(paramsKey);
+        const storedResults = sessionStorage.getItem(resultsKey);
+
+        setExperiment(exp || null);
+        setParameters(
+          storedParams ? JSON.parse(storedParams) : MOCK_PARAMETERS[id] || null
+        );
+        setResults(
+          storedResults ? JSON.parse(storedResults) : MOCK_RESULTS[id] || null
+        );
+      } catch (fallbackError) {
+        console.error("Fallback also failed:", fallbackError);
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  return { experiment, parameters, results, loading };
+  return { experiment, parameters, results, errors, loading };
 }

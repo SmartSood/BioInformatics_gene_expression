@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from auth.deps import get_current_user
 from client.db import db
+from workers.queue_worker import get_queue
+from typing import Optional, Dict, Any
 router = APIRouter(prefix="/experiments", tags=["experiments"])
 
 @router.get("")
@@ -8,9 +10,253 @@ async def list_experiments(user=Depends(get_current_user)):
     if not user["sub"]:
         raise HTTPException(401, "No subject in token")
 
-    # Placeholder: Fetch experiments from the database
+    # Fetch experiments from the database
     experiments = await db.trainingrun.find_many(
-        where={"userId": int(user["sub"])}
+        where={"userId": int(user["sub"])},
+        order={"createdAt": "desc"}
     )
 
     return {"experiments": experiments}
+
+@router.get("/{experiment_id}")
+async def get_experiment_details(experiment_id: str, user=Depends(get_current_user)):
+    if not user["sub"]:
+        raise HTTPException(401, "No subject in token")
+
+    # First check if job is still in Redis queue
+    q = get_queue()
+    job = q.fetch_job(experiment_id)
+    
+    # Get experiment from database
+    experiment = await db.trainingrun.find_unique(
+        where={"id": experiment_id}
+    )
+    
+    if not experiment:
+        raise HTTPException(404, "Experiment not found")
+    
+    # Verify ownership
+    if str(experiment.userId) != str(user["sub"]):
+        raise HTTPException(403, "Access denied")
+    
+    # Get current status from Redis if available
+    current_status = experiment.status
+    if job:
+        redis_status = job.get_status(refresh=True)
+        # Map Redis statuses to our statuses
+        status_map = {
+            "queued": "queued",
+            "deferred": "queued",
+            "started": "started",
+            "finished": "finished",
+            "failed": "failed"
+        }
+        current_status = status_map.get(redis_status, experiment.status)
+    
+    # Map status for UI compatibility
+    status_map_ui = {
+        "finished": "completed",
+        "started": "running",
+        "queued": "pending",
+        "failed": "failed"
+    }
+    ui_status = status_map_ui.get(current_status, current_status)
+    
+    # Extract metrics
+    metrics = experiment.metrics if experiment.metrics else {}
+    if isinstance(metrics, dict):
+        metrics = dict(metrics)
+    
+    # Build parameters from database parameters field (preferred) or fallback to job/metrics
+    parameters = None
+    problem_type = None
+    
+    # First try to get config from database parameters field
+    if experiment.parameters:
+        config_from_db = dict(experiment.parameters) if isinstance(experiment.parameters, dict) else experiment.parameters
+        if isinstance(config_from_db, dict):
+            preprocessing_steps = _extract_preprocessing_steps_from_config(config_from_db)
+            problem_type = config_from_db.get("problem_type", "classification")
+            parameters = {
+                "model_type": config_from_db.get("model", "unknown"),
+                "problem_type": problem_type,
+                "num_folds": config_from_db.get("split", {}).get("cv_folds", 5),
+                "train_test_split": config_from_db.get("split", {}).get("test_size", 0.2),
+                "feature_selection": config_from_db.get("preprocessing", {}).get("feature_selection", {}).get("method") or None,
+                "preprocessing_steps": preprocessing_steps,
+                "hyperparameters": config_from_db.get("hyperparams", {}),
+            }
+    
+    # Fallback to job args if database parameters not available
+    if not parameters:
+        config_from_job = None
+        if job and hasattr(job, 'args') and job.args and len(job.args) >= 2:
+            try:
+                # job.args should be (dataset_uri, config, owner_id)
+                config_from_job = job.args[1] if isinstance(job.args[1], dict) else None
+            except Exception:
+                pass
+        
+        if config_from_job:
+            preprocessing_steps = _extract_preprocessing_steps_from_config(config_from_job)
+            problem_type = config_from_job.get("problem_type", "classification")
+            parameters = {
+                "model_type": config_from_job.get("model", "unknown"),
+                "problem_type": problem_type,
+                "num_folds": config_from_job.get("split", {}).get("cv_folds", 5),
+                "train_test_split": config_from_job.get("split", {}).get("test_size", 0.2),
+                "feature_selection": config_from_job.get("preprocessing", {}).get("feature_selection", {}).get("method") or None,
+                "preprocessing_steps": preprocessing_steps,
+                "hyperparameters": config_from_job.get("hyperparams", {}),
+            }
+        elif metrics:
+            # Last fallback to metrics (MLflow logged params)
+            preprocessing_steps = _extract_preprocessing_steps(metrics)
+            problem_type = metrics.get("problem_type", "classification")
+            parameters = {
+                "model_type": metrics.get("model") or metrics.get("model_type") or "unknown",
+                "problem_type": problem_type,
+                "num_folds": metrics.get("cv_folds") or metrics.get("cv_folds") or 5,
+                "train_test_split": metrics.get("test_size") or metrics.get("split", {}).get("test_size") if isinstance(metrics.get("split"), dict) else 0.2,
+                "feature_selection": metrics.get("feature_selection", {}).get("method") if isinstance(metrics.get("feature_selection"), dict) else None,
+                "preprocessing_steps": preprocessing_steps if preprocessing_steps else [],
+                "hyperparameters": metrics.get("hyperparams") or {},
+            }
+    
+    # Build results from metrics
+    results = None
+    if metrics and current_status in ["finished", "failed"]:
+        # Extract selected feature names for top_genes if available
+        top_genes = []
+        feature_selection_info = metrics.get("feature_selection")
+        if isinstance(feature_selection_info, dict):
+            selected_features = feature_selection_info.get("selected_feature_names", [])
+            if selected_features and isinstance(selected_features, list):
+                # Convert feature names to Gene-like objects
+                # This is a simplified version - you may want to enhance this with actual expression data
+                top_genes = [
+                    {
+                        "symbol": str(feat),
+                        "expression": 0.0,  # Placeholder - would need actual expression data
+                        "pvalue": 0.0,  # Placeholder
+                        "foldChange": 0.0  # Placeholder
+                    }
+                    for feat in selected_features[:20]  # Limit to top 20
+                ]
+        
+        # Determine problem type from parameters or default to classification
+        problem_type = "classification"
+        if parameters and parameters.get("problem_type"):
+            problem_type = parameters.get("problem_type")
+        elif metrics.get("problem_type"):
+            problem_type = metrics.get("problem_type")
+        
+        results = {
+            "problem_type": problem_type,
+            # Classification metrics
+            "accuracy": metrics.get("accuracy"),
+            "precision_score": metrics.get("precision"),
+            "recall_score": metrics.get("recall"),
+            "f1_score": metrics.get("f1"),
+            "roc_auc": metrics.get("roc_auc"),
+            # Regression metrics
+            "r2_score": metrics.get("r2"),
+            "mse": metrics.get("mse"),
+            "rmse": metrics.get("rmse"),
+            # Common metrics
+            "cv_mean": metrics.get("cv_mean"),
+            "cv_std": metrics.get("cv_std"),
+            "n_features_original": metrics.get("n_features_original"),
+            "n_features_selected": metrics.get("n_features_selected"),
+            "feature_selection": metrics.get("feature_selection"),
+            "warnings": metrics.get("warnings"),
+            "warnings_count": metrics.get("warnings_count"),
+            "top_genes": top_genes,  # Always include, even if empty
+            "additional_metrics": {k: v for k, v in metrics.items() 
+                                 if k not in ["accuracy", "precision", "recall", "f1", "roc_auc", 
+                                             "r2", "mse", "rmse", "cv_mean", "cv_std",
+                                             "n_features_original", "n_features_selected",
+                                             "feature_selection", "warnings", "warnings_count", "problem_type"]},
+        }
+    
+    # Extract errors if failed
+    errors = None
+    if current_status == "failed":
+        if metrics:
+            errors = {
+                "error": metrics.get("error") or metrics.get("fit_error") or metrics.get("cv_error"),
+                "traceback": metrics.get("traceback"),
+                "warnings": metrics.get("warnings", []),
+            }
+        elif job and job.result:
+            errors = {
+                "error": str(job.result.get("error", "Unknown error")),
+            }
+    
+    return {
+        "experiment": {
+            "id": experiment.id,
+            "user_id": str(experiment.userId),
+            "name": experiment.name or f"Experiment {experiment.id[:8]}",
+            "description": experiment.description or "",
+            "status": ui_status,  # Use UI-compatible status
+            "createdAt": experiment.createdAt.isoformat() if experiment.createdAt else None,
+            "updatedAt": experiment.updatedAt.isoformat() if experiment.updatedAt else None,
+            "datasetUri": experiment.datasetUri,
+            "modelPath": experiment.modelPath,
+        },
+        "parameters": parameters,
+        "results": results,
+        "errors": errors,
+    }
+
+def _extract_preprocessing_steps(metrics: Dict[str, Any]) -> list:
+    """Extract preprocessing steps from metrics/config"""
+    steps = []
+    
+    # Check for preprocessing config in metrics
+    prep_config = metrics.get("preprocessing") or {}
+    
+    if prep_config.get("missing_values", {}).get("strategy_numeric"):
+        steps.append("Missing Value Imputation")
+    if prep_config.get("scaling", {}).get("method") and prep_config.get("scaling", {}).get("method") != "none":
+        steps.append("Scaling")
+    if prep_config.get("log_transform", {}).get("enabled"):
+        steps.append("Log Transform")
+    if prep_config.get("outlier_removal", {}).get("method") and prep_config.get("outlier_removal", {}).get("method") != "none":
+        steps.append("Outlier Removal")
+    if prep_config.get("batch_correction", {}).get("enabled"):
+        steps.append("Batch Correction")
+    if prep_config.get("qc_filtering", {}).get("enabled"):
+        steps.append("QC Filtering")
+    if prep_config.get("encoding", {}).get("method") and prep_config.get("encoding", {}).get("method") != "none":
+        steps.append("Encoding")
+    if prep_config.get("feature_selection", {}).get("method") and prep_config.get("feature_selection", {}).get("method") != "none":
+        steps.append("Feature Selection")
+    
+    return steps
+
+def _extract_preprocessing_steps_from_config(config: Dict[str, Any]) -> list:
+    """Extract preprocessing steps from training config"""
+    steps = []
+    
+    prep_config = config.get("preprocessing", {})
+    
+    if prep_config.get("missing_values", {}).get("strategy_numeric"):
+        steps.append("Missing Value Imputation")
+    if prep_config.get("scaling", {}).get("method") and prep_config.get("scaling", {}).get("method") != "none":
+        steps.append("Scaling")
+    if prep_config.get("log_transform", {}).get("enabled"):
+        steps.append("Log Transform")
+    if prep_config.get("outlier_removal", {}).get("method") and prep_config.get("outlier_removal", {}).get("method") != "none":
+        steps.append("Outlier Removal")
+    if prep_config.get("batch_correction", {}).get("enabled"):
+        steps.append("Batch Correction")
+    if prep_config.get("qc_filtering", {}).get("enabled"):
+        steps.append("QC Filtering")
+    if prep_config.get("encoding", {}).get("method") and prep_config.get("encoding", {}).get("method") != "none":
+        steps.append("Encoding")
+    if prep_config.get("feature_selection", {}).get("method") and prep_config.get("feature_selection", {}).get("method") != "none":
+        steps.append("Feature Selection")
+    
+    return steps

@@ -207,6 +207,7 @@ class TrainingRun(bases.BaseTrainingRun):
     datasetUri: _str
     modelPath: Optional[_str] = None
     metrics: Optional['fields.Json'] = None
+    parameters: Optional['fields.Json'] = None
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -647,6 +648,14 @@ _TrainingRun_fields: Dict['types.TrainingRunKeys', PartialModelField] = OrderedD
         }),
         ('metrics', {
             'name': 'metrics',
+            'is_list': False,
+            'optional': True,
+            'type': 'fields.Json',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('parameters', {
+            'name': 'parameters',
             'is_list': False,
             'optional': True,
             'type': 'fields.Json',

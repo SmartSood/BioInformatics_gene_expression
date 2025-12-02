@@ -45,6 +45,7 @@ model TrainingRun {
   datasetUri   String
   modelPath    String?
   metrics      Json?
+  parameters   Json?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

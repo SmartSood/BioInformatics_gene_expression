@@ -2115,6 +2115,7 @@ class TrainingRunOptionalCreateInput(TypedDict, total=False):
     description: _str
     modelPath: Optional[_str]
     metrics: Optional['fields.Json']
+    parameters: Optional['fields.Json']
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2136,6 +2137,7 @@ class TrainingRunOptionalCreateWithoutRelationsInput(TypedDict, total=False):
     description: _str
     modelPath: Optional[_str]
     metrics: Optional['fields.Json']
+    parameters: Optional['fields.Json']
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2182,6 +2184,7 @@ class TrainingRunUpdateInput(TypedDict, total=False):
     datasetUri: _str
     modelPath: Optional[_str]
     metrics: Optional['fields.Json']
+    parameters: Optional['fields.Json']
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2195,6 +2198,7 @@ class TrainingRunUpdateManyMutationInput(TypedDict, total=False):
     datasetUri: _str
     modelPath: Optional[_str]
     metrics: Optional['fields.Json']
+    parameters: Optional['fields.Json']
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2295,6 +2299,14 @@ _TrainingRun_metrics_OrderByInput = TypedDict(
     total=True
 )
 
+_TrainingRun_parameters_OrderByInput = TypedDict(
+    '_TrainingRun_parameters_OrderByInput',
+    {
+        'parameters': 'SortOrder',
+    },
+    total=True
+)
+
 _TrainingRun_createdAt_OrderByInput = TypedDict(
     '_TrainingRun_createdAt_OrderByInput',
     {
@@ -2338,6 +2350,7 @@ TrainingRunOrderByInput = Union[
     '_TrainingRun_datasetUri_OrderByInput',
     '_TrainingRun_modelPath_OrderByInput',
     '_TrainingRun_metrics_OrderByInput',
+    '_TrainingRun_parameters_OrderByInput',
     '_TrainingRun_createdAt_OrderByInput',
     '_TrainingRun_updatedAt_OrderByInput',
     '_TrainingRun_RelevanceOrderByInput',
@@ -2712,6 +2725,7 @@ class TrainingRunWhereInput(TypedDict, total=False):
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
+    parameters: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2733,6 +2747,7 @@ class TrainingRunWhereInputRecursive1(TypedDict, total=False):
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
+    parameters: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2754,6 +2769,7 @@ class TrainingRunWhereInputRecursive2(TypedDict, total=False):
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
+    parameters: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2775,6 +2791,7 @@ class TrainingRunWhereInputRecursive3(TypedDict, total=False):
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
+    parameters: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2796,6 +2813,7 @@ class TrainingRunWhereInputRecursive4(TypedDict, total=False):
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
+    parameters: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2816,6 +2834,7 @@ class TrainingRunScalarWhereWithAggregatesInput(TypedDict, total=False):
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2834,6 +2853,7 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2852,6 +2872,7 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2870,6 +2891,7 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2888,6 +2910,7 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2902,6 +2925,7 @@ class TrainingRunGroupByOutput(TypedDict, total=False):
     datasetUri: _str
     modelPath: _str
     metrics: 'fields.Json'
+    parameters: 'fields.Json'
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
     _sum: 'TrainingRunSumAggregateOutput'
@@ -2931,6 +2955,7 @@ class TrainingRunScalarAggregateOutput(TypedDict, total=False):
     datasetUri: _str
     modelPath: _str
     metrics: 'fields.Json'
+    parameters: 'fields.Json'
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2949,6 +2974,7 @@ class TrainingRunMaxAggregateInput(TypedDict, total=False):
     datasetUri: bool
     modelPath: bool
     metrics: bool
+    parameters: bool
     createdAt: bool
     updatedAt: bool
 
@@ -2963,6 +2989,7 @@ class TrainingRunMinAggregateInput(TypedDict, total=False):
     datasetUri: bool
     modelPath: bool
     metrics: bool
+    parameters: bool
     createdAt: bool
     updatedAt: bool
 
@@ -2987,6 +3014,7 @@ TrainingRunCountAggregateInput = TypedDict(
         'datasetUri': bool,
         'modelPath': bool,
         'metrics': bool,
+        'parameters': bool,
         'createdAt': bool,
         'updatedAt': bool,
         '_all': bool,
@@ -3005,6 +3033,7 @@ TrainingRunCountAggregateOutput = TypedDict(
         'datasetUri': int,
         'modelPath': int,
         'metrics': int,
+        'parameters': int,
         'createdAt': int,
         'updatedAt': int,
         '_all': int,
@@ -3023,6 +3052,7 @@ TrainingRunKeys = Literal[
     'datasetUri',
     'modelPath',
     'metrics',
+    'parameters',
     'createdAt',
     'updatedAt',
 ]
@@ -3035,6 +3065,7 @@ TrainingRunScalarFieldKeys = Literal[
     'datasetUri',
     'modelPath',
     'metrics',
+    'parameters',
     'createdAt',
     'updatedAt',
 ]

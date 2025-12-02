@@ -211,8 +211,11 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
             raw_metrics = (result or {}).get("metrics")
             metrics = None
 
+            logger.info(f"Raw metrics from result: {type(raw_metrics)}, keys: {list(raw_metrics.keys()) if isinstance(raw_metrics, dict) else 'N/A'}")
+
             if isinstance(raw_metrics, dict):
                 metrics = raw_metrics
+                logger.info(f"Metrics extracted: {list(metrics.keys())}")
                 # Ensure feature selection info is preserved if it exists
                 if "feature_selection" in metrics:
                     feature_selection_info = metrics.get("feature_selection")
@@ -280,6 +283,19 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
 
             # Coerce to JSON-safe structure for Prisma
             metrics_clean = _coerce_metrics_for_prisma(metrics)
+            
+            # Log what metrics we're about to save
+            if metrics_clean:
+                metric_keys = list(metrics_clean.keys()) if isinstance(metrics_clean, dict) else "N/A"
+                logger.info(f"Metrics to save to DB (keys): {metric_keys}")
+                # Log classification metrics specifically
+                if isinstance(metrics_clean, dict):
+                    classification_metrics = ["accuracy", "precision", "recall", "f1", "roc_auc"]
+                    found_metrics = {k: v for k, v in metrics_clean.items() if k in classification_metrics}
+                    if found_metrics:
+                        logger.info(f"Classification metrics found: {found_metrics}")
+                    else:
+                        logger.warning(f"No classification metrics found! Available keys: {list(metrics_clean.keys())}")
 
             # Prepare payload and update DB (awaiting the async update helper)
             if prisma:

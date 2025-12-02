@@ -15,7 +15,8 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler, MinMaxScaler, R
 from sklearn.feature_selection import VarianceThreshold, SelectFromModel, RFE, SelectKBest, chi2
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import (
-    accuracy_score, f1_score, roc_auc_score, r2_score, mean_squared_error
+    accuracy_score, f1_score, roc_auc_score, r2_score, mean_squared_error,
+    precision_score, recall_score
 )
 from joblib import dump
 import mlflow
@@ -484,6 +485,8 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
 
             # Fit on full training split, evaluate on test
             feature_selection_info = {}
+            original_feature_names = X_tr.columns.tolist()  # Store original column names
+            
             try:
                 n_features_before = X_tr.shape[1]
                 pipe.fit(X_tr, y_tr)
@@ -501,18 +504,35 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                             prep_step = pipe.named_steps["prep"]
                             X_tr_prep = prep_step.transform(X_tr)
                             
-                            # Try to get feature names - this depends on the transformer output
+                            # Try to get feature names after preprocessing
                             feature_names_after_prep = None
                             try:
-                                if hasattr(X_tr_prep, 'columns'):
-                                    feature_names_after_prep = X_tr_prep.columns.tolist()
-                                elif hasattr(prep_step, 'get_feature_names_out'):
+                                # Try get_feature_names_out first (sklearn 1.0+)
+                                if hasattr(prep_step, 'get_feature_names_out'):
                                     feature_names_after_prep = prep_step.get_feature_names_out().tolist()
-                                elif hasattr(X_tr_prep, 'shape'):
-                                    # Fallback: use indices
-                                    feature_names_after_prep = [f"feature_{i}" for i in range(X_tr_prep.shape[1])]
-                            except Exception:
-                                feature_names_after_prep = [f"feature_{i}" for i in range(X_tr_prep.shape[1])]
+                                # Fallback: try to reconstruct from ColumnTransformer
+                                elif hasattr(prep_step, 'transformers_'):
+                                    # ColumnTransformer - reconstruct feature names
+                                    feature_names_list = []
+                                    for name, transformer, cols in prep_step.transformers_:
+                                        if transformer == 'drop':
+                                            continue
+                                        if hasattr(transformer, 'get_feature_names_out'):
+                                            trans_names = transformer.get_feature_names_out(cols)
+                                            feature_names_list.extend(trans_names.tolist() if hasattr(trans_names, 'tolist') else list(trans_names))
+                                        else:
+                                            # Fallback: use original column names
+                                            feature_names_list.extend(cols if isinstance(cols, list) else list(cols))
+                                    feature_names_after_prep = feature_names_list
+                                elif hasattr(X_tr_prep, 'columns'):
+                                    feature_names_after_prep = X_tr_prep.columns.tolist()
+                                else:
+                                    # Last resort: use original column names (may not match exactly after encoding)
+                                    feature_names_after_prep = original_feature_names[:X_tr_prep.shape[1]] if X_tr_prep.shape[1] <= len(original_feature_names) else [f"feature_{i}" for i in range(X_tr_prep.shape[1])]
+                            except Exception as e:
+                                logger.warning(f"Could not extract feature names after preprocessing: {e}")
+                                # Use original column names as fallback
+                                feature_names_after_prep = original_feature_names[:X_tr_prep.shape[1]] if X_tr_prep.shape[1] <= len(original_feature_names) else [f"feature_{i}" for i in range(X_tr_prep.shape[1])]
                             
                             if hasattr(fs_step, 'get_support'):
                                 # Get support after fit
@@ -521,22 +541,46 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                                 
                                 # Get selected feature names/indices
                                 selected_indices = np.where(support)[0].tolist()
-                                if feature_names_after_prep:
-                                    selected_feature_names = [feature_names_after_prep[i] for i in selected_indices]
+                                if feature_names_after_prep and len(feature_names_after_prep) > 0:
+                                    selected_feature_names = [feature_names_after_prep[i] for i in selected_indices if i < len(feature_names_after_prep)]
                                 else:
-                                    selected_feature_names = selected_indices
+                                    # Fallback to original column names if available
+                                    if len(selected_indices) <= len(original_feature_names):
+                                        selected_feature_names = [original_feature_names[i] for i in selected_indices if i < len(original_feature_names)]
+                                    else:
+                                        selected_feature_names = [f"feature_{i}" for i in selected_indices]
                                 
-                                # Store in feature_selection_info
+                                # Store in feature_selection_info (store all names, not just first 100)
                                 feature_selection_info = {
                                     "n_features_original": int(n_features_before),
                                     "n_features_selected": n_features_selected,
-                                    "selected_feature_indices": selected_indices,
-                                    "selected_feature_names": selected_feature_names[:100],  # Limit to first 100 to avoid huge JSON
+                                    "selected_feature_names": selected_feature_names,  # Store all selected feature names
                                 }
                                 
                                 mlflow.log_metric("n_features_selected", float(n_features_selected))
                                 mlflow.log_metric("n_features_original", float(n_features_before))
                                 mlflow.log_param("n_features_selected", str(n_features_selected))
+                                
+                                # Save selected features to artifacts folder as JSON file
+                                try:
+                                    # Ensure artifacts_dir exists
+                                    Path(artifacts_dir).mkdir(parents=True, exist_ok=True)
+                                    features_file = Path(artifacts_dir) / "selected_features.json"
+                                    features_data = {
+                                        "n_features_original": int(n_features_before),
+                                        "n_features_selected": n_features_selected,
+                                        "selected_feature_names": selected_feature_names,
+                                        "original_feature_names": original_feature_names,
+                                    }
+                                    features_file.write_text(json.dumps(features_data, indent=2))
+                                    # Log to MLflow (this should work within the run context)
+                                    try:
+                                        mlflow.log_artifact(str(features_file), artifact_path="features")
+                                    except Exception as mlflow_err:
+                                        logger.warning(f"MLflow artifact logging failed (file still saved): {mlflow_err}")
+                                    logger.info(f"Saved selected features to {features_file}")
+                                except Exception as e:
+                                    logger.error(f"Failed to save features file: {e}", exc_info=True)
                                 
                                 # Log selected features as JSON string (MLflow params have size limits)
                                 try:
@@ -577,13 +621,30 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                             "extraction_error": str(e)[:200]
                         }
                 else:
-                    # No feature selection - store original count
+                    # No feature selection - store original count and all feature names
                     feature_selection_info = {
                         "n_features_original": int(n_features_before),
                         "n_features_selected": int(n_features_before),
+                        "selected_feature_names": original_feature_names,  # All features selected
                     }
                     mlflow.log_metric("n_features_original", float(n_features_before))
                     mlflow.log_metric("n_features_selected", float(n_features_before))
+                    
+                    # Save all features to artifacts folder
+                    try:
+                        Path(artifacts_dir).mkdir(parents=True, exist_ok=True)
+                        features_file = Path(artifacts_dir) / "selected_features.json"
+                        features_data = {
+                            "n_features_original": int(n_features_before),
+                            "n_features_selected": int(n_features_before),
+                            "selected_feature_names": original_feature_names,
+                            "original_feature_names": original_feature_names,
+                        }
+                        features_file.write_text(json.dumps(features_data, indent=2))
+                        mlflow.log_artifact(str(features_file), artifact_path="features")
+                        logger.info(f"Saved all features to {features_file}")
+                    except Exception as e:
+                        logger.warning(f"Failed to save features file: {e}")
                 
             except Exception as e:
                 error_msg = f"Model fitting failed: {str(e)}\n{traceback.format_exc()}"
@@ -593,22 +654,52 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                 
             if problem_type == "classification":
                 try:
+                    logger.info("Starting classification metrics calculation...")
                     preds = pipe.predict(X_te)
+                    logger.info(f"Predictions made. Computing metrics for {len(y_te)} test samples...")
+                    
+                    accuracy = float(accuracy_score(y_te, preds))
+                    precision = float(precision_score(y_te, preds, average="weighted", zero_division=0))
+                    recall = float(recall_score(y_te, preds, average="weighted", zero_division=0))
+                    f1 = float(f1_score(y_te, preds, average="weighted", zero_division=0))
+                    
                     metrics = {
-                        "accuracy": float(accuracy_score(y_te, preds)),
-                        "f1": float(f1_score(y_te, preds, average="weighted"))
+                        "accuracy": accuracy,
+                        "precision": precision,
+                        "recall": recall,
+                        "f1": f1
                     }
+                    logger.info(f"Classification metrics calculated: accuracy={accuracy:.4f}, precision={precision:.4f}, recall={recall:.4f}, f1={f1:.4f}")
+                    
                     proba_ok = hasattr(pipe, "predict_proba") and callable(getattr(pipe, "predict_proba"))
                     if proba_ok:
                         try:
                             p = pipe.predict_proba(X_te)
-                            pp = p[:, 1] if p.shape[1] == 2 else p.max(axis=1)
-                            metrics["roc_auc"] = float(roc_auc_score(y_te, pp))
-                        except Exception:
-                            pass
+                            # Check if binary or multi-class
+                            n_classes = len(np.unique(y_te))
+                            logger.info(f"Computing ROC AUC for {n_classes}-class problem...")
+                            if n_classes == 2:
+                                # Binary classification: use probabilities for positive class
+                                pp = p[:, 1]
+                                roc_auc = float(roc_auc_score(y_te, pp))
+                                metrics["roc_auc"] = roc_auc
+                                logger.info(f"ROC AUC (binary) calculated: {roc_auc:.4f}")
+                            else:
+                                # Multi-class: use one-vs-rest approach
+                                roc_auc = float(roc_auc_score(y_te, p, average="weighted", multi_class="ovr"))
+                                metrics["roc_auc"] = roc_auc
+                                logger.info(f"ROC AUC (multi-class) calculated: {roc_auc:.4f}")
+                        except Exception as e:
+                            # Log the error but don't fail the entire training
+                            warning_msg = f"ROC AUC calculation failed: {str(e)}"
+                            warnings_capture.append(warning_msg)
+                            logger.warning(warning_msg, exc_info=True)
+                    else:
+                        logger.warning("Model does not support predict_proba, skipping ROC AUC calculation")
                 except Exception as e:
                     error_msg = f"Prediction failed: {str(e)}\n{traceback.format_exc()}"
                     warnings_capture.append(error_msg)
+                    logger.error(error_msg, exc_info=True)
                     raise ValueError(error_msg) from e
             else:
                 try:
@@ -634,9 +725,24 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
             model_path = str(Path(artifacts_dir) / "model.joblib")
             dump(pipe, model_path)
             mlflow.log_artifact(model_path, artifact_path="model")
+            
+            # Save metrics to artifacts directory as individual files
+            metrics_dir = Path(artifacts_dir) / "metrics"
+            metrics_dir.mkdir(parents=True, exist_ok=True)
+            for metric_name, metric_value in metrics.items():
+                try:
+                    metric_file = metrics_dir / f"{metric_name}.txt"
+                    metric_file.write_text(str(metric_value))
+                    logger.info(f"Saved metric {metric_name} = {metric_value} to {metric_file}")
+                except Exception as e:
+                    logger.warning(f"Failed to save metric {metric_name}: {e}")
 
             # Build return value
             result_metrics = {**metrics, "cv_mean": cv_mean, "cv_std": cv_std}
+            
+            # Log what metrics are being returned
+            logger.info(f"Building result_metrics. Base metrics keys: {list(metrics.keys())}")
+            logger.info(f"Result metrics keys before feature selection: {list(result_metrics.keys())}")
             
             # Add feature selection info to metrics
             if feature_selection_info:
@@ -649,6 +755,13 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
             if warnings_capture:
                 result_metrics["warnings"] = warnings_capture
                 result_metrics["warnings_count"] = len(warnings_capture)
+
+            # Final log of what's being returned
+            logger.info(f"Final result_metrics keys: {list(result_metrics.keys())}")
+            if problem_type == "classification":
+                classification_keys = ["accuracy", "precision", "recall", "f1", "roc_auc"]
+                found = {k: result_metrics.get(k) for k in classification_keys if k in result_metrics}
+                logger.info(f"Classification metrics in return: {found}")
 
             return {
                 "run_id": run.info.run_id,

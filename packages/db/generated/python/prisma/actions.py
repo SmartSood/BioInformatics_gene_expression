@@ -2093,10 +2093,10 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # group TrainingRun records by createdAt values
+        # group TrainingRun records by parameters values
         # and count how many records are in each group
         results = await TrainingRun.prisma().group_by(
-            ['createdAt'],
+            ['parameters'],
             count=True,
         )
         ```

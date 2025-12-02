@@ -21,20 +21,24 @@ async def start_training(req: TrainRequest, user=Depends(get_current_user)):
 )
 
     # Record the run immediately
+    from prisma import Json
+    
     await db.trainingrun.upsert(
         where={"id": job.id},
         data={
             "create": {
                 "id": job.id,
-                "userId": int(user["sub"]),          # adjust if sub isn’t an int
+                "userId": int(user["sub"]),          # adjust if sub isn't an int
                 "status": "queued",
                 "datasetUri": req.dataset_uri,
+                "parameters": Json(req.config.model_dump()),
                 "name": req.name,
                 "description": req.description,
             },
             "update": {
                 "status": "queued",
                 "datasetUri": req.dataset_uri,
+                "parameters": Json(req.config.model_dump()),
             },
         },
     )
