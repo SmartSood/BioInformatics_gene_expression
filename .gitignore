@@ -20,7 +20,7 @@ coverage
 
 # Vercel
 .vercel
-
+.vscode
 # Build Outputs
 .next/
 out/
@@ -38,9 +38,13 @@ yarn-error.log*
 *.pem
 
 # files uploaded by users
-uploads/
-data/
-mlruns/
+uploads
+data
+mlruns
+mlruns
 
 #models trained
-artifacts/
+artifacts
+
+embedding_bundle
+dataset

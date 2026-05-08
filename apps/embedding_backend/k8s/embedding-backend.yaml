@@ -1,0 +1,123 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: embedding-backend-config
+data:
+  REDIS_URL: redis://redis:6379/0
+  EMBEDDING_DEVICE: cpu
+  EMBEDDING_MODELS_DIR: /opt/embedding/models
+  EMBEDDING_HF_CACHE_DIR: /opt/embedding/hf_cache
+  EMBEDDING_OUTPUT_DIR: /opt/embedding/outputs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: embedding-backend-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: embedding-backend-api
+  template:
+    metadata:
+      labels:
+        app: embedding-backend-api
+    spec:
+      containers:
+        - name: api
+          image: your-image:latest
+          command: ["python", "-m", "uvicorn", "apps.embedding_backend.server:app", "--host", "0.0.0.0", "--port", "8002"]
+          ports:
+            - containerPort: 8002
+          envFrom:
+            - configMapRef:
+                name: embedding-backend-config
+            - secretRef:
+                name: auth-jwt-secret
+          volumeMounts:
+            - name: embedding-models
+              mountPath: /opt/embedding/models
+              readOnly: true
+            - name: embedding-hf-cache
+              mountPath: /opt/embedding/hf_cache
+            - name: embedding-output
+              mountPath: /opt/embedding/outputs
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "2Gi"
+            limits:
+              cpu: "2"
+              memory: "8Gi"
+      volumes:
+        - name: embedding-models
+          persistentVolumeClaim:
+            claimName: embedding-models-pvc
+        - name: embedding-hf-cache
+          persistentVolumeClaim:
+            claimName: embedding-hf-cache-pvc
+        - name: embedding-output
+          persistentVolumeClaim:
+            claimName: embedding-output-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: embedding-backend-api
+spec:
+  selector:
+    app: embedding-backend-api
+  ports:
+    - protocol: TCP
+      port: 8002
+      targetPort: 8002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: embedding-backend-worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: embedding-backend-worker
+  template:
+    metadata:
+      labels:
+        app: embedding-backend-worker
+    spec:
+      containers:
+        - name: worker
+          image: your-image:latest
+          command: ["python", "-m", "apps.embedding_backend.workers.run_rq_worker"]
+          envFrom:
+            - configMapRef:
+                name: embedding-backend-config
+            - secretRef:
+                name: auth-jwt-secret
+          volumeMounts:
+            - name: embedding-models
+              mountPath: /opt/embedding/models
+              readOnly: true
+            - name: embedding-hf-cache
+              mountPath: /opt/embedding/hf_cache
+            - name: embedding-output
+              mountPath: /opt/embedding/outputs
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "2Gi"
+            limits:
+              cpu: "2"
+              memory: "8Gi"
+      volumes:
+        - name: embedding-models
+          persistentVolumeClaim:
+            claimName: embedding-models-pvc
+        - name: embedding-hf-cache
+          persistentVolumeClaim:
+            claimName: embedding-hf-cache-pvc
+        - name: embedding-output
+          persistentVolumeClaim:
+            claimName: embedding-output-pvc
+

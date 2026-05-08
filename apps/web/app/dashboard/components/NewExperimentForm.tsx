@@ -41,13 +41,13 @@ const MODEL_OPTIONS = [
 ];
 
 // Feature selection options follow FeatureSelectionMethod in schema + pipeline support
+// Focused on gene-importance methods useful in bioinformatics.
 const FEATURE_SELECTION_OPTIONS = [
   { value: "none", label: "None" },
-  { value: "variance_threshold", label: "Variance Threshold" },
-  { value: "rfe", label: "RFE (recursive feature elimination)" },
   { value: "lasso", label: "LASSO (L1) selection" },
   { value: "random_forest_importance", label: "Random Forest Importance" },
-  { value: "chi2", label: "Chi-Square Test (non-negative features only)" },
+  { value: "permutation_importance", label: "Permutation Importance (model-agnostic)" },
+  { value: "integrated_gradients", label: "Integrated Gradients (for linear/NN models)" },
 ];
 
 // Batch correction method options
@@ -273,7 +273,10 @@ export function NewExperimentForm({
           : null,
       },
       encoding: {
-        method: encodingConfig.method,
+        // Only apply encoding if user explicitly enabled this preprocessing step
+        method: selectedPreprocessing.includes("encoding")
+          ? encodingConfig.method
+          : "none",
         drop_first: encodingConfig.drop_first,
       },
       feature_selection: {
@@ -990,6 +993,7 @@ export function NewExperimentForm({
                               ))}
                             </select>
                           </div>
+                          {/* k_features only used by some methods; keep for extensibility */}
                           {(featureSelection === "rfe" || featureSelection === "chi2") && (
                             <div>
                               <label className="block text-sm font-medium text-slate-300 mb-2">

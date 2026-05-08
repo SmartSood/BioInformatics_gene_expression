@@ -1482,3 +1482,492 @@ ValueError: The least populated class in y has only 1 member, which is too few. 
 2025-11-18 15:57:18,805 INFO: Prisma update attempt for job c149e8eb-5e81-486b-b92a-9702b8323dde; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/c149e8eb-5e81-486b-b92a-9702b8323dde/model.joblib", "metrics": "Json"}
 2025-11-18 15:57:19,169 INFO: Prisma update successful for job c149e8eb-5e81-486b-b92a-9702b8323dde on attempt 1
 2025-11-18 15:57:19,169 INFO: DB updated to finished for job c149e8eb-5e81-486b-b92a-9702b8323dde
+2025-12-18 17:03:44,656 INFO: Raw metrics from result: <class 'dict'>, keys: ['r2', 'rmse', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:03:44,657 INFO: Metrics extracted: ['r2', 'rmse', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:03:44,657 INFO: Metrics to save to DB (keys): ['r2', 'rmse', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:03:44,657 WARNING: No classification metrics found! Available keys: ['r2', 'rmse', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:03:44,657 INFO: Attempting final DB update for job 9be1fa1c-8961-4cf4-98e8-b64e1544df49; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9be1fa1c-8961-4cf4-98e8-b64e1544df49/model.joblib", "metrics": {"r2": -0.1905878932624081, "rmse": 0.31285081866601905, "cv_mean": -0.15386405078951232, "cv_std": 0.018119685835979005, "feature_selection": {"n_features_original": 2, "n_features_selected": 2, "selected_feature_names": ["x1", "x2"]}, "n_features_original": 2, "n_features_selected": 2}}
+2025-12-18 17:03:44,657 INFO: Prisma update attempt for job 9be1fa1c-8961-4cf4-98e8-b64e1544df49; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9be1fa1c-8961-4cf4-98e8-b64e1544df49/model.joblib", "metrics": "Json"}
+2025-12-18 17:03:44,874 INFO: Prisma update successful for job 9be1fa1c-8961-4cf4-98e8-b64e1544df49 on attempt 1
+2025-12-18 17:03:44,876 INFO: DB updated to finished for job 9be1fa1c-8961-4cf4-98e8-b64e1544df49
+2025-12-18 17:06:04,480 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:06:04,480 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:06:04,481 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:06:04,481 INFO: Classification metrics found: {'accuracy': 1.0, 'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'roc_auc': 1.0}
+2025-12-18 17:06:04,481 INFO: Attempting final DB update for job d88ba764-6324-4419-a1a4-2602bdda7f5c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/d88ba764-6324-4419-a1a4-2602bdda7f5c/model.joblib", "metrics": {"accuracy": 1.0, "precision": 1.0, "recall": 1.0, "f1": 1.0, "roc_auc": 1.0, "cv_mean": 1.0, "cv_std": 0.0, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": ["Gene_1", "Gene_2", "Gene_3", "Gene_4", "Gene_5", "Gene_6", "Gene_7", "Gene_8", "Gene_9", "Gene_10", "Gene_11", "Gene_12", "Gene_13", "Gene_14", "Gene_15", "Gene_16", "Gene_17", "Gene_18", "Gene_19", "Gene_20", "Gene_21", "Gene_22", "Gene_23", "Gene_24", "Gene_25", "Gene_26", "Gene_27", "Gene_28", "Gene_29", "Gene_30", "Gene_31", "Gene_32", "Gene_33", "Gene_34", "Gene_35", "Gene_36", "Gene_37", "Gene_38", "Gene_39", "Gene_40", "Gene_41", "Gene_42", "Gene_43", "Gene_44", "Gene_45", "Gene_46", "Gene_47", "Gene_48", "Gene_49", "Gene_50", "Gene_51", "Gene_52", "Gene_53", "Gene_54", "Gene_55", "Gene_56", "Gene_57", "Gene_58", "Gene_59", "Gene_60", "Gene_61", "Gene_62", "Gene_63", "Gene_64", "Gene_65", "Gene_66", "Gene_67", "Gene_68", "Gene_69", "Gene_70", "Gene_71", "Gene_72", "Gene_73", "Gene_74", "Gene_75", "Gene_76", "Gene_77", "Gene_78", "Gene_79", "Gene_80", "Gene_81", "Gene_82", "Gene_83", "Gene_84", "Gene_85", "Gene_86", "Gene_87", "Gene_88", "Gene_89", "Gene_90", "Gene_91", "Gene_92", "Gene_93", "Gene_94", "Gene_95", "Gene_96", "Gene_97", "Gene_98", "Gene_99", "Gene_100", "Gene_101", "Gene_102", "Gene_103", "Gene_104", "Gene_105", "Gene_106", "Gene_107", "Gene_108", "Gene_109", "Gene_110", "Gene_111", "Gene_112", "Gene_113", "Gene_114", "Gene_115", "Gene_116", "Gene_117", "Gene_118", "Gene_119", "Gene_120", "Gene_121", "Gene_122", "Gene_123", "Gene_124", "Gene_125", "Gene_126", "Gene_127", "Gene_128", "Gene_129", "Gene_130", "Gene_131", "Gene_132", "Gene_133", "Gene_134", "Gene_135", "Gene_136", "Gene_137", "Gene_138", "Gene_139", "Gene_140", "Gene_141", "Gene_142", "Gene_143", "Gene_144", "Gene_145", "Gene_146", "Gene_147", "Gene_148", "Ge
+2025-12-18 17:06:04,481 INFO: Prisma update attempt for job d88ba764-6324-4419-a1a4-2602bdda7f5c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/d88ba764-6324-4419-a1a4-2602bdda7f5c/model.joblib", "metrics": "Json"}
+2025-12-18 17:06:04,777 INFO: Prisma update successful for job d88ba764-6324-4419-a1a4-2602bdda7f5c on attempt 1
+2025-12-18 17:06:04,778 INFO: DB updated to finished for job d88ba764-6324-4419-a1a4-2602bdda7f5c
+2025-12-18 17:17:18,186 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:17:18,186 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:17:18,187 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:17:18,187 INFO: Classification metrics found: {'accuracy': 1.0, 'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'roc_auc': 1.0}
+2025-12-18 17:17:18,188 INFO: Attempting final DB update for job ad28c8fa-d226-443c-b618-79851d667742; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/ad28c8fa-d226-443c-b618-79851d667742/model.joblib", "metrics": {"accuracy": 1.0, "precision": 1.0, "recall": 1.0, "f1": 1.0, "roc_auc": 1.0, "cv_mean": 1.0, "cv_std": 0.0, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": ["Gene_1", "Gene_2", "Gene_3", "Gene_4", "Gene_5", "Gene_6", "Gene_7", "Gene_8", "Gene_9", "Gene_10", "Gene_11", "Gene_12", "Gene_13", "Gene_14", "Gene_15", "Gene_16", "Gene_17", "Gene_18", "Gene_19", "Gene_20", "Gene_21", "Gene_22", "Gene_23", "Gene_24", "Gene_25", "Gene_26", "Gene_27", "Gene_28", "Gene_29", "Gene_30", "Gene_31", "Gene_32", "Gene_33", "Gene_34", "Gene_35", "Gene_36", "Gene_37", "Gene_38", "Gene_39", "Gene_40", "Gene_41", "Gene_42", "Gene_43", "Gene_44", "Gene_45", "Gene_46", "Gene_47", "Gene_48", "Gene_49", "Gene_50", "Gene_51", "Gene_52", "Gene_53", "Gene_54", "Gene_55", "Gene_56", "Gene_57", "Gene_58", "Gene_59", "Gene_60", "Gene_61", "Gene_62", "Gene_63", "Gene_64", "Gene_65", "Gene_66", "Gene_67", "Gene_68", "Gene_69", "Gene_70", "Gene_71", "Gene_72", "Gene_73", "Gene_74", "Gene_75", "Gene_76", "Gene_77", "Gene_78", "Gene_79", "Gene_80", "Gene_81", "Gene_82", "Gene_83", "Gene_84", "Gene_85", "Gene_86", "Gene_87", "Gene_88", "Gene_89", "Gene_90", "Gene_91", "Gene_92", "Gene_93", "Gene_94", "Gene_95", "Gene_96", "Gene_97", "Gene_98", "Gene_99", "Gene_100", "Gene_101", "Gene_102", "Gene_103", "Gene_104", "Gene_105", "Gene_106", "Gene_107", "Gene_108", "Gene_109", "Gene_110", "Gene_111", "Gene_112", "Gene_113", "Gene_114", "Gene_115", "Gene_116", "Gene_117", "Gene_118", "Gene_119", "Gene_120", "Gene_121", "Gene_122", "Gene_123", "Gene_124", "Gene_125", "Gene_126", "Gene_127", "Gene_128", "Gene_129", "Gene_130", "Gene_131", "Gene_132", "Gene_133", "Gene_134", "Gene_135", "Gene_136", "Gene_137", "Gene_138", "Gene_139", "Gene_140", "Gene_141", "Gene_142", "Gene_143", "Gene_144", "Gene_145", "Gene_146", "Gene_147", "Gene_148", "Ge
+2025-12-18 17:17:18,188 INFO: Prisma update attempt for job ad28c8fa-d226-443c-b618-79851d667742; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/ad28c8fa-d226-443c-b618-79851d667742/model.joblib", "metrics": "Json"}
+2025-12-18 17:17:18,538 INFO: Prisma update successful for job ad28c8fa-d226-443c-b618-79851d667742 on attempt 1
+2025-12-18 17:17:18,539 INFO: DB updated to finished for job ad28c8fa-d226-443c-b618-79851d667742
+2025-12-18 17:21:53,402 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:21:53,402 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:21:53,403 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:21:53,403 INFO: Classification metrics found: {'accuracy': 1.0, 'precision': 1.0, 'recall': 1.0, 'f1': 1.0, 'roc_auc': 1.0}
+2025-12-18 17:21:53,403 INFO: Attempting final DB update for job 9e98219b-3a1b-40b7-947b-8721d1bbe5ab; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9e98219b-3a1b-40b7-947b-8721d1bbe5ab/model.joblib", "metrics": {"accuracy": 1.0, "precision": 1.0, "recall": 1.0, "f1": 1.0, "roc_auc": 1.0, "cv_mean": 1.0, "cv_std": 0.0, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": ["Gene_1", "Gene_2", "Gene_3", "Gene_4", "Gene_5", "Gene_6", "Gene_7", "Gene_8", "Gene_9", "Gene_10", "Gene_11", "Gene_12", "Gene_13", "Gene_14", "Gene_15", "Gene_16", "Gene_17", "Gene_18", "Gene_19", "Gene_20", "Gene_21", "Gene_22", "Gene_23", "Gene_24", "Gene_25", "Gene_26", "Gene_27", "Gene_28", "Gene_29", "Gene_30", "Gene_31", "Gene_32", "Gene_33", "Gene_34", "Gene_35", "Gene_36", "Gene_37", "Gene_38", "Gene_39", "Gene_40", "Gene_41", "Gene_42", "Gene_43", "Gene_44", "Gene_45", "Gene_46", "Gene_47", "Gene_48", "Gene_49", "Gene_50", "Gene_51", "Gene_52", "Gene_53", "Gene_54", "Gene_55", "Gene_56", "Gene_57", "Gene_58", "Gene_59", "Gene_60", "Gene_61", "Gene_62", "Gene_63", "Gene_64", "Gene_65", "Gene_66", "Gene_67", "Gene_68", "Gene_69", "Gene_70", "Gene_71", "Gene_72", "Gene_73", "Gene_74", "Gene_75", "Gene_76", "Gene_77", "Gene_78", "Gene_79", "Gene_80", "Gene_81", "Gene_82", "Gene_83", "Gene_84", "Gene_85", "Gene_86", "Gene_87", "Gene_88", "Gene_89", "Gene_90", "Gene_91", "Gene_92", "Gene_93", "Gene_94", "Gene_95", "Gene_96", "Gene_97", "Gene_98", "Gene_99", "Gene_100", "Gene_101", "Gene_102", "Gene_103", "Gene_104", "Gene_105", "Gene_106", "Gene_107", "Gene_108", "Gene_109", "Gene_110", "Gene_111", "Gene_112", "Gene_113", "Gene_114", "Gene_115", "Gene_116", "Gene_117", "Gene_118", "Gene_119", "Gene_120", "Gene_121", "Gene_122", "Gene_123", "Gene_124", "Gene_125", "Gene_126", "Gene_127", "Gene_128", "Gene_129", "Gene_130", "Gene_131", "Gene_132", "Gene_133", "Gene_134", "Gene_135", "Gene_136", "Gene_137", "Gene_138", "Gene_139", "Gene_140", "Gene_141", "Gene_142", "Gene_143", "Gene_144", "Gene_145", "Gene_146", "Gene_147", "Gene_148", "Ge
+2025-12-18 17:21:53,403 INFO: Prisma update attempt for job 9e98219b-3a1b-40b7-947b-8721d1bbe5ab; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9e98219b-3a1b-40b7-947b-8721d1bbe5ab/model.joblib", "metrics": "Json"}
+2025-12-18 17:21:53,714 INFO: Prisma update successful for job 9e98219b-3a1b-40b7-947b-8721d1bbe5ab on attempt 1
+2025-12-18 17:21:53,715 INFO: DB updated to finished for job 9e98219b-3a1b-40b7-947b-8721d1bbe5ab
+2025-12-18 17:31:45,680 ERROR: Training error for job a688710b-f934-4427-a937-42f9963e8859: Training failed: Cross-validation failed: could not convert string to float: 'GSM5571068'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 407, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM5571068'
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 407, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM5571068'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 462, in train
+    raise ValueError(error_msg) from e
+ValueError: Cross-validation failed: could not convert string to float: 'GSM5571068'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 407, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM5571068'
+
+
+2025-12-18 17:31:45,681 INFO: Prisma update attempt for job a688710b-f934-4427-a937-42f9963e8859; payload (truncated): {"status": "failed", "metrics": "Json"}
+2025-12-18 17:31:46,014 INFO: Prisma update successful for job a688710b-f934-4427-a937-42f9963e8859 on attempt 1
+2025-12-18 17:31:46,016 INFO: Prisma update attempt for job a688710b-f934-4427-a937-42f9963e8859; payload (truncated): {"status": "failed"}
+2025-12-18 17:31:46,230 INFO: Prisma update successful for job a688710b-f934-4427-a937-42f9963e8859 on attempt 1
+2025-12-18 17:34:53,015 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:34:53,015 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:34:53,015 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:34:53,015 INFO: Classification metrics found: {'accuracy': 0.7755102040816326, 'precision': 0.7757296466973885, 'recall': 0.7755102040816326, 'f1': 0.7725833488545353, 'roc_auc': 0.8435374149659863}
+2025-12-18 17:34:53,016 INFO: Attempting final DB update for job 189d9a2e-1de6-4c26-8d2d-cbafe93fda94; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/189d9a2e-1de6-4c26-8d2d-cbafe93fda94/model.joblib", "metrics": {"accuracy": 0.7755102040816326, "precision": 0.7757296466973885, "recall": 0.7755102040816326, "f1": 0.7725833488545353, "roc_auc": 0.8435374149659863, "cv_mean": 0.8024291497975709, "cv_std": 0.05713205886055927, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": [" ACADSB ", " ACOT1 ", " ACOT2 ", " ACP5 ", " ACY3 ", " ADAMTS8 ", " ADSSL1 ", " AKAP10 ", " ALOXE3 ", " ALPK1 ", " ALS2CR11 ", " AMN1 ", " AMOTL1 ", " ANGEL1 ", " ANKEF1 ", " ANKRD40 ", " ANXA4 ", " AP4E1 ", " APBB1 ", " APH1A ", " APOLD1 ", " AQR ", " ARHGAP24 ", " ARHGEF2 ", " ASGR1 ", " ASIC1 ", " ATG4D ", " ATP1A2 ", " ATP2A3 ", " ATP6V1C2 ", " ATP6V1E1 ", " ATP7B ", " ATP8A2 ", " ATXN7 ", " ATXN7L3B ", " AVPR1B ", " B3GAT3 ", " B4GALT6 ", " BAHCC1 ", " BAI2 ", " BBS2 ", " BCAR1 ", " BDNF ", " BEND7 ", " BFSP1 ", " BIN1 ", " BLM ", " BTF3P11 ", " C10orf90 ", " C11orf31 ", " C11orf87 ", " C12orf49 ", " C12orf75 ", " C14orf183 ", " C15orf48 ", " C16orf70 ", " C19orf44 ", " C1orf105 ", " C1orf111 ", " C1orf122 ", " C1orf210 ", " C1orf50 ", " C1QL3 ", " C2CD4B ", " C3orf14 ", " C4orf6 ", " C5AR1 ", " C5orf22 ", " C5orf27 ", " CABP1 ", " CACNA1A ", " CACNA1D ", " CACNG6 ", " CACTIN-AS1 ", " CAMSAP2 ", " CAMSAP3 ", " CARF ", " CARKD ", " CARS2 ", " CASC2 ", " CASP4 ", " CASP9 ", " CBLC ", " CCDC102A ", " CCDC113 ", " CCDC19 ", " CCDC53 ", " CCL7 ", " CCND3 ", " CCNDBP1 ", " CD19 ", " CD2BP2 ", " CD34 ", " CD53 ", " CD74 ", " CD86 ", " CDC123 ", " CDC25B ", " CDH1 ", " CDH20 ", " CDH4 ", " CDH5 ", " CDK12 ", " CDK5R1 ", " CDKN3 ", " CEP170B ", " CEP68 ", " CEP76 ", " CEP95 ", " CHAT ", " CHD8 ", " CHFR ", " CHP2 ", " CHTF18 ", " CHUK ", " CKMT2 ", " CLCA2 ", " CLCA4 ", " CLCNKB ", " CLEC16A ", " CLEC17A ", " CLEC3B ", " CLEC4G ", " CLHC1 ", " CLIC1P1 ", " CMTM4 ", " CMTM5 ", " CNN2 ", " CNN3 ", " CNOT1 ", " CNR2 ", " CNTN2 ", " COG3 ", " COG
+2025-12-18 17:34:53,016 INFO: Prisma update attempt for job 189d9a2e-1de6-4c26-8d2d-cbafe93fda94; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/189d9a2e-1de6-4c26-8d2d-cbafe93fda94/model.joblib", "metrics": "Json"}
+2025-12-18 17:34:53,387 INFO: Prisma update successful for job 189d9a2e-1de6-4c26-8d2d-cbafe93fda94 on attempt 1
+2025-12-18 17:34:53,387 INFO: DB updated to finished for job 189d9a2e-1de6-4c26-8d2d-cbafe93fda94
+2025-12-18 17:37:16,227 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:37:16,228 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:37:16,228 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:37:16,228 INFO: Classification metrics found: {'accuracy': 0.7755102040816326, 'precision': 0.7757296466973885, 'recall': 0.7755102040816326, 'f1': 0.7725833488545353, 'roc_auc': 0.8409863945578232}
+2025-12-18 17:37:16,229 INFO: Attempting final DB update for job 849c5a54-eeee-423f-8e18-d26588fe89b3; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/849c5a54-eeee-423f-8e18-d26588fe89b3/model.joblib", "metrics": {"accuracy": 0.7755102040816326, "precision": 0.7757296466973885, "recall": 0.7755102040816326, "f1": 0.7725833488545353, "roc_auc": 0.8409863945578232, "cv_mean": 0.8021592442645075, "cv_std": 0.09062899708842018, "feature_selection": {"n_features_original": 1000, "n_features_selected": 500, "selected_feature_names": ["num__ ACADSB ", "num__ ACY3 ", "num__ ADAMTS8 ", "num__ ADSSL1 ", "num__ AKAP10 ", "num__ ALOXE3 ", "num__ ALS2CR11 ", "num__ AMN1 ", "num__ AMOTL1 ", "num__ ANGEL1 ", "num__ ANKRD40 ", "num__ ARHGAP24 ", "num__ ARHGEF2 ", "num__ ASGR1 ", "num__ ASIC1 ", "num__ ATP2A3 ", "num__ ATP8A2 ", "num__ ATXN7 ", "num__ AVPR1B ", "num__ B3GAT3 ", "num__ BDNF ", "num__ BEND7 ", "num__ BIN1 ", "num__ C11orf31 ", "num__ C11orf87 ", "num__ C12orf75 ", "num__ C15orf48 ", "num__ C1orf105 ", "num__ C1orf111 ", "num__ C1orf122 ", "num__ C1orf210 ", "num__ C4orf6 ", "num__ C5orf27 ", "num__ CABP1 ", "num__ CACNA1A ", "num__ CACNA1D ", "num__ CACTIN-AS1 ", "num__ CAMSAP2 ", "num__ CARKD ", "num__ CASP9 ", "num__ CBLC ", "num__ CCDC102A ", "num__ CCDC113 ", "num__ CCDC19 ", "num__ CCDC53 ", "num__ CCND3 ", "num__ CCNDBP1 ", "num__ CD19 ", "num__ CD2BP2 ", "num__ CD34 ", "num__ CD53 ", "num__ CDC123 ", "num__ CDH20 ", "num__ CDH5 ", "num__ CDK12 ", "num__ CHAT ", "num__ CLCA4 ", "num__ CLCNKB ", "num__ CLEC4G ", "num__ CLHC1 ", "num__ CMTM5 ", "num__ CNR2 ", "num__ COQ5 ", "num__ CRYAB ", "num__ CTRC ", "num__ CUTC ", "num__ CX3CL1 ", "num__ CYCSP39 ", "num__ CYFIP2 ", "num__ CYP26C1 ", "num__ DBT ", "num__ DDN ", "num__ DDX18P6 ", "num__ DENND6B ", "num__ DLST ", "num__ DNAJA4 ", "num__ DNAJC27 ", "num__ DNAJC9 ", "num__ DNER ", "num__ DNMT3L ", "num__ DOC2B ", "num__ EIF4E2 ", "num__ ELSPBP1 ", "num__ ENPEP ", "num__ ERCC3 ", "num__ EVPL ", "num__ EXOSC10 ", "num__ FAM24B ", "num__ FAM58BP ", "num__ FANCM ", "num__ FAP ", "num__ FLJ25758 ", "num__ FOXR1 ", "n
+2025-12-18 17:37:16,229 INFO: Prisma update attempt for job 849c5a54-eeee-423f-8e18-d26588fe89b3; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/849c5a54-eeee-423f-8e18-d26588fe89b3/model.joblib", "metrics": "Json"}
+2025-12-18 17:37:16,518 INFO: Prisma update successful for job 849c5a54-eeee-423f-8e18-d26588fe89b3 on attempt 1
+2025-12-18 17:37:16,519 INFO: DB updated to finished for job 849c5a54-eeee-423f-8e18-d26588fe89b3
+2025-12-18 17:44:12,146 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected', 'warnings', 'warnings_count']
+2025-12-18 17:44:12,146 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected', 'warnings', 'warnings_count']
+2025-12-18 17:44:12,147 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected', 'warnings', 'warnings_count']
+2025-12-18 17:44:12,147 INFO: Classification metrics found: {'accuracy': 0.7959183673469388, 'precision': 0.8084033613445377, 'recall': 0.7959183673469388, 'f1': 0.7887864823348694, 'roc_auc': 0.8350340136054422}
+2025-12-18 17:44:12,147 INFO: Attempting final DB update for job d3940fe3-2570-4062-9c71-c38c1b3e894b; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/d3940fe3-2570-4062-9c71-c38c1b3e894b/model.joblib", "metrics": {"accuracy": 0.7959183673469388, "precision": 0.8084033613445377, "recall": 0.7959183673469388, "f1": 0.7887864823348694, "roc_auc": 0.8350340136054422, "cv_mean": 0.7668016194331984, "cv_std": 0.12268505459240742, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": [" ACADSB ", " ACOT1 ", " ACOT2 ", " ACP5 ", " ACY3 ", " ADAMTS8 ", " ADSSL1 ", " AKAP10 ", " ALOXE3 ", " ALPK1 ", " ALS2CR11 ", " AMN1 ", " AMOTL1 ", " ANGEL1 ", " ANKEF1 ", " ANKRD40 ", " ANXA4 ", " AP4E1 ", " APBB1 ", " APH1A ", " APOLD1 ", " AQR ", " ARHGAP24 ", " ARHGEF2 ", " ASGR1 ", " ASIC1 ", " ATG4D ", " ATP1A2 ", " ATP2A3 ", " ATP6V1C2 ", " ATP6V1E1 ", " ATP7B ", " ATP8A2 ", " ATXN7 ", " ATXN7L3B ", " AVPR1B ", " B3GAT3 ", " B4GALT6 ", " BAHCC1 ", " BAI2 ", " BBS2 ", " BCAR1 ", " BDNF ", " BEND7 ", " BFSP1 ", " BIN1 ", " BLM ", " BTF3P11 ", " C10orf90 ", " C11orf31 ", " C11orf87 ", " C12orf49 ", " C12orf75 ", " C14orf183 ", " C15orf48 ", " C16orf70 ", " C19orf44 ", " C1orf105 ", " C1orf111 ", " C1orf122 ", " C1orf210 ", " C1orf50 ", " C1QL3 ", " C2CD4B ", " C3orf14 ", " C4orf6 ", " C5AR1 ", " C5orf22 ", " C5orf27 ", " CABP1 ", " CACNA1A ", " CACNA1D ", " CACNG6 ", " CACTIN-AS1 ", " CAMSAP2 ", " CAMSAP3 ", " CARF ", " CARKD ", " CARS2 ", " CASC2 ", " CASP4 ", " CASP9 ", " CBLC ", " CCDC102A ", " CCDC113 ", " CCDC19 ", " CCDC53 ", " CCL7 ", " CCND3 ", " CCNDBP1 ", " CD19 ", " CD2BP2 ", " CD34 ", " CD53 ", " CD74 ", " CD86 ", " CDC123 ", " CDC25B ", " CDH1 ", " CDH20 ", " CDH4 ", " CDH5 ", " CDK12 ", " CDK5R1 ", " CDKN3 ", " CEP170B ", " CEP68 ", " CEP76 ", " CEP95 ", " CHAT ", " CHD8 ", " CHFR ", " CHP2 ", " CHTF18 ", " CHUK ", " CKMT2 ", " CLCA2 ", " CLCA4 ", " CLCNKB ", " CLEC16A ", " CLEC17A ", " CLEC3B ", " CLEC4G ", " CLHC1 ", " CLIC1P1 ", " CMTM4 ", " CMTM5 ", " CNN2 ", " CNN3 ", " CNOT1 ", " CNR2 ", " CNTN2 ", " COG3 ", " COG
+2025-12-18 17:44:12,147 INFO: Prisma update attempt for job d3940fe3-2570-4062-9c71-c38c1b3e894b; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/d3940fe3-2570-4062-9c71-c38c1b3e894b/model.joblib", "metrics": "Json"}
+2025-12-18 17:44:12,508 INFO: Prisma update successful for job d3940fe3-2570-4062-9c71-c38c1b3e894b on attempt 1
+2025-12-18 17:44:12,509 INFO: DB updated to finished for job d3940fe3-2570-4062-9c71-c38c1b3e894b
+2025-12-18 17:47:28,923 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:47:28,923 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:47:28,924 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 17:47:28,924 INFO: Classification metrics found: {'accuracy': 0.7551020408163265, 'precision': 0.7551020408163265, 'recall': 0.7551020408163265, 'f1': 0.7551020408163265, 'roc_auc': 0.8622448979591837}
+2025-12-18 17:47:28,924 INFO: Attempting final DB update for job 6958fb2f-c666-443e-8d70-1cadf4e177fc; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/6958fb2f-c666-443e-8d70-1cadf4e177fc/model.joblib", "metrics": {"accuracy": 0.7551020408163265, "precision": 0.7551020408163265, "recall": 0.7551020408163265, "f1": 0.7551020408163265, "roc_auc": 0.8622448979591837, "cv_mean": 0.7603238866396761, "cv_std": 0.12644102008233032, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": [" ACADSB ", " ACOT1 ", " ACOT2 ", " ACP5 ", " ACY3 ", " ADAMTS8 ", " ADSSL1 ", " AKAP10 ", " ALOXE3 ", " ALPK1 ", " ALS2CR11 ", " AMN1 ", " AMOTL1 ", " ANGEL1 ", " ANKEF1 ", " ANKRD40 ", " ANXA4 ", " AP4E1 ", " APBB1 ", " APH1A ", " APOLD1 ", " AQR ", " ARHGAP24 ", " ARHGEF2 ", " ASGR1 ", " ASIC1 ", " ATG4D ", " ATP1A2 ", " ATP2A3 ", " ATP6V1C2 ", " ATP6V1E1 ", " ATP7B ", " ATP8A2 ", " ATXN7 ", " ATXN7L3B ", " AVPR1B ", " B3GAT3 ", " B4GALT6 ", " BAHCC1 ", " BAI2 ", " BBS2 ", " BCAR1 ", " BDNF ", " BEND7 ", " BFSP1 ", " BIN1 ", " BLM ", " BTF3P11 ", " C10orf90 ", " C11orf31 ", " C11orf87 ", " C12orf49 ", " C12orf75 ", " C14orf183 ", " C15orf48 ", " C16orf70 ", " C19orf44 ", " C1orf105 ", " C1orf111 ", " C1orf122 ", " C1orf210 ", " C1orf50 ", " C1QL3 ", " C2CD4B ", " C3orf14 ", " C4orf6 ", " C5AR1 ", " C5orf22 ", " C5orf27 ", " CABP1 ", " CACNA1A ", " CACNA1D ", " CACNG6 ", " CACTIN-AS1 ", " CAMSAP2 ", " CAMSAP3 ", " CARF ", " CARKD ", " CARS2 ", " CASC2 ", " CASP4 ", " CASP9 ", " CBLC ", " CCDC102A ", " CCDC113 ", " CCDC19 ", " CCDC53 ", " CCL7 ", " CCND3 ", " CCNDBP1 ", " CD19 ", " CD2BP2 ", " CD34 ", " CD53 ", " CD74 ", " CD86 ", " CDC123 ", " CDC25B ", " CDH1 ", " CDH20 ", " CDH4 ", " CDH5 ", " CDK12 ", " CDK5R1 ", " CDKN3 ", " CEP170B ", " CEP68 ", " CEP76 ", " CEP95 ", " CHAT ", " CHD8 ", " CHFR ", " CHP2 ", " CHTF18 ", " CHUK ", " CKMT2 ", " CLCA2 ", " CLCA4 ", " CLCNKB ", " CLEC16A ", " CLEC17A ", " CLEC3B ", " CLEC4G ", " CLHC1 ", " CLIC1P1 ", " CMTM4 ", " CMTM5 ", " CNN2 ", " CNN3 ", " CNOT1 ", " CNR2 ", " CNTN2 ", " COG3 ", " COG
+2025-12-18 17:47:28,924 INFO: Prisma update attempt for job 6958fb2f-c666-443e-8d70-1cadf4e177fc; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/6958fb2f-c666-443e-8d70-1cadf4e177fc/model.joblib", "metrics": "Json"}
+2025-12-18 17:47:29,222 INFO: Prisma update successful for job 6958fb2f-c666-443e-8d70-1cadf4e177fc on attempt 1
+2025-12-18 17:47:29,223 INFO: DB updated to finished for job 6958fb2f-c666-443e-8d70-1cadf4e177fc
+2025-12-18 18:03:27,059 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 18:03:27,060 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 18:03:27,060 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 18:03:27,060 INFO: Classification metrics found: {'accuracy': 0.8367346938775511, 'precision': 0.837092731829574, 'recall': 0.8367346938775511, 'f1': 0.8354679802955665, 'roc_auc': 0.8639455782312925}
+2025-12-18 18:03:27,060 INFO: Attempting final DB update for job 0cefb752-ab5f-4609-9b92-ba6e855a586c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/0cefb752-ab5f-4609-9b92-ba6e855a586c/model.joblib", "metrics": {"accuracy": 0.8367346938775511, "precision": 0.837092731829574, "recall": 0.8367346938775511, "f1": 0.8354679802955665, "roc_auc": 0.8639455782312925, "cv_mean": 0.8233468286099865, "cv_std": 0.08497567539982971, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": [" ACADSB ", " ACOT1 ", " ACOT2 ", " ACP5 ", " ACY3 ", " ADAMTS8 ", " ADSSL1 ", " AKAP10 ", " ALOXE3 ", " ALPK1 ", " ALS2CR11 ", " AMN1 ", " AMOTL1 ", " ANGEL1 ", " ANKEF1 ", " ANKRD40 ", " ANXA4 ", " AP4E1 ", " APBB1 ", " APH1A ", " APOLD1 ", " AQR ", " ARHGAP24 ", " ARHGEF2 ", " ASGR1 ", " ASIC1 ", " ATG4D ", " ATP1A2 ", " ATP2A3 ", " ATP6V1C2 ", " ATP6V1E1 ", " ATP7B ", " ATP8A2 ", " ATXN7 ", " ATXN7L3B ", " AVPR1B ", " B3GAT3 ", " B4GALT6 ", " BAHCC1 ", " BAI2 ", " BBS2 ", " BCAR1 ", " BDNF ", " BEND7 ", " BFSP1 ", " BIN1 ", " BLM ", " BTF3P11 ", " C10orf90 ", " C11orf31 ", " C11orf87 ", " C12orf49 ", " C12orf75 ", " C14orf183 ", " C15orf48 ", " C16orf70 ", " C19orf44 ", " C1orf105 ", " C1orf111 ", " C1orf122 ", " C1orf210 ", " C1orf50 ", " C1QL3 ", " C2CD4B ", " C3orf14 ", " C4orf6 ", " C5AR1 ", " C5orf22 ", " C5orf27 ", " CABP1 ", " CACNA1A ", " CACNA1D ", " CACNG6 ", " CACTIN-AS1 ", " CAMSAP2 ", " CAMSAP3 ", " CARF ", " CARKD ", " CARS2 ", " CASC2 ", " CASP4 ", " CASP9 ", " CBLC ", " CCDC102A ", " CCDC113 ", " CCDC19 ", " CCDC53 ", " CCL7 ", " CCND3 ", " CCNDBP1 ", " CD19 ", " CD2BP2 ", " CD34 ", " CD53 ", " CD74 ", " CD86 ", " CDC123 ", " CDC25B ", " CDH1 ", " CDH20 ", " CDH4 ", " CDH5 ", " CDK12 ", " CDK5R1 ", " CDKN3 ", " CEP170B ", " CEP68 ", " CEP76 ", " CEP95 ", " CHAT ", " CHD8 ", " CHFR ", " CHP2 ", " CHTF18 ", " CHUK ", " CKMT2 ", " CLCA2 ", " CLCA4 ", " CLCNKB ", " CLEC16A ", " CLEC17A ", " CLEC3B ", " CLEC4G ", " CLHC1 ", " CLIC1P1 ", " CMTM4 ", " CMTM5 ", " CNN2 ", " CNN3 ", " CNOT1 ", " CNR2 ", " CNTN2 ", " COG3 ", " COG4
+2025-12-18 18:03:27,061 INFO: Prisma update attempt for job 0cefb752-ab5f-4609-9b92-ba6e855a586c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/0cefb752-ab5f-4609-9b92-ba6e855a586c/model.joblib", "metrics": "Json", "resultsPath": "artifacts/11/0cefb752-ab5f-4609-9b92-ba6e855a586c/ranked_genes.csv"}
+2025-12-18 18:03:27,063 WARNING: Warning: update attempt 1/3 failed for job 0cefb752-ab5f-4609-9b92-ba6e855a586c: Could not find field at `updateOneTrainingRun.data.resultsPath`
+2025-12-18 18:03:27,065 WARNING: Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/db_utils.py", line 200, in update_trainingrun_with_retries
+    result = await prisma_client.trainingrun.update(where={"id": job_id}, data=data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/actions.py", line 1717, in update
+    resp = await self._client._execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/_base_client.py", line 543, in _execute
+    return await self._engine.query(builder.build(), tx_id=self._tx_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_query.py", line 402, in query
+    return await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_http.py", line 233, in request
+    return self._process_response_data(data=data, response=response)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_http.py", line 87, in _process_response_data
+    return utils.handle_response_errors(response, errors_data)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/utils.py", line 175, in handle_response_errors
+    raise exc(error)
+prisma.errors.FieldNotFoundError: Could not find field at `updateOneTrainingRun.data.resultsPath`
+
+2025-12-18 18:03:27,065 INFO: Sleeping 0.50s before next update attempt for job 0cefb752-ab5f-4609-9b92-ba6e855a586c
+2025-12-18 18:03:27,571 WARNING: Warning: update attempt 2/3 failed for job 0cefb752-ab5f-4609-9b92-ba6e855a586c: Could not find field at `updateOneTrainingRun.data.resultsPath`
+2025-12-18 18:03:27,575 WARNING: Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/db_utils.py", line 200, in update_trainingrun_with_retries
+    result = await prisma_client.trainingrun.update(where={"id": job_id}, data=data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/actions.py", line 1717, in update
+    resp = await self._client._execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/_base_client.py", line 543, in _execute
+    return await self._engine.query(builder.build(), tx_id=self._tx_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_query.py", line 402, in query
+    return await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_http.py", line 233, in request
+    return self._process_response_data(data=data, response=response)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_http.py", line 87, in _process_response_data
+    return utils.handle_response_errors(response, errors_data)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/utils.py", line 175, in handle_response_errors
+    raise exc(error)
+prisma.errors.FieldNotFoundError: Could not find field at `updateOneTrainingRun.data.resultsPath`
+
+2025-12-18 18:03:27,576 INFO: Sleeping 1.00s before next update attempt for job 0cefb752-ab5f-4609-9b92-ba6e855a586c
+2025-12-18 18:03:28,585 WARNING: Warning: update attempt 3/3 failed for job 0cefb752-ab5f-4609-9b92-ba6e855a586c: Could not find field at `updateOneTrainingRun.data.resultsPath`
+2025-12-18 18:03:28,588 WARNING: Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/db_utils.py", line 200, in update_trainingrun_with_retries
+    result = await prisma_client.trainingrun.update(where={"id": job_id}, data=data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/actions.py", line 1717, in update
+    resp = await self._client._execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/_base_client.py", line 543, in _execute
+    return await self._engine.query(builder.build(), tx_id=self._tx_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_query.py", line 402, in query
+    return await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_http.py", line 233, in request
+    return self._process_response_data(data=data, response=response)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_http.py", line 87, in _process_response_data
+    return utils.handle_response_errors(response, errors_data)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/utils.py", line 175, in handle_response_errors
+    raise exc(error)
+prisma.errors.FieldNotFoundError: Could not find field at `updateOneTrainingRun.data.resultsPath`
+
+2025-12-18 18:03:28,588 ERROR: Final update attempt failed for job 0cefb752-ab5f-4609-9b92-ba6e855a586c after 3 attempts
+2025-12-18 18:03:28,589 ERROR: CRITICAL: final DB update failed for job 0cefb752-ab5f-4609-9b92-ba6e855a586c — see traceback below:
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 317, in _run
+    await update_trainingrun_with_retries(prisma, job_id, payload, attempts=3, base_delay=0.5)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/db_utils.py", line 215, in update_trainingrun_with_retries
+    raise last_exc
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/db_utils.py", line 200, in update_trainingrun_with_retries
+    result = await prisma_client.trainingrun.update(where={"id": job_id}, data=data)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/actions.py", line 1717, in update
+    resp = await self._client._execute(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/_base_client.py", line 543, in _execute
+    return await self._engine.query(builder.build(), tx_id=self._tx_id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_query.py", line 402, in query
+    return await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_http.py", line 233, in request
+    return self._process_response_data(data=data, response=response)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/_http.py", line 87, in _process_response_data
+    return utils.handle_response_errors(response, errors_data)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/packages/db/generated/python/prisma/engine/utils.py", line 175, in handle_response_errors
+    raise exc(error)
+prisma.errors.FieldNotFoundError: Could not find field at `updateOneTrainingRun.data.resultsPath`
+2025-12-18 18:03:28,594 INFO: Prisma update attempt for job 0cefb752-ab5f-4609-9b92-ba6e855a586c; payload (truncated): {"status": "failed"}
+2025-12-18 18:03:28,832 INFO: Prisma update successful for job 0cefb752-ab5f-4609-9b92-ba6e855a586c on attempt 1
+2025-12-18 18:06:51,512 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 18:06:51,513 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 18:06:51,513 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2025-12-18 18:06:51,513 INFO: Classification metrics found: {'accuracy': 0.5714285714285714, 'precision': 0.32653061224489793, 'recall': 0.5714285714285714, 'f1': 0.41558441558441556, 'roc_auc': 0.858843537414966}
+2025-12-18 18:06:51,514 INFO: Attempting final DB update for job b4426e93-be9a-4468-875a-e0264394eb30; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b4426e93-be9a-4468-875a-e0264394eb30/model.joblib", "metrics": {"accuracy": 0.5714285714285714, "precision": 0.32653061224489793, "recall": 0.5714285714285714, "f1": 0.41558441558441556, "roc_auc": 0.858843537414966, "cv_mean": 0.739136302294197, "cv_std": 0.0985521163976899, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": [" ACADSB ", " ACOT1 ", " ACOT2 ", " ACP5 ", " ACY3 ", " ADAMTS8 ", " ADSSL1 ", " AKAP10 ", " ALOXE3 ", " ALPK1 ", " ALS2CR11 ", " AMN1 ", " AMOTL1 ", " ANGEL1 ", " ANKEF1 ", " ANKRD40 ", " ANXA4 ", " AP4E1 ", " APBB1 ", " APH1A ", " APOLD1 ", " AQR ", " ARHGAP24 ", " ARHGEF2 ", " ASGR1 ", " ASIC1 ", " ATG4D ", " ATP1A2 ", " ATP2A3 ", " ATP6V1C2 ", " ATP6V1E1 ", " ATP7B ", " ATP8A2 ", " ATXN7 ", " ATXN7L3B ", " AVPR1B ", " B3GAT3 ", " B4GALT6 ", " BAHCC1 ", " BAI2 ", " BBS2 ", " BCAR1 ", " BDNF ", " BEND7 ", " BFSP1 ", " BIN1 ", " BLM ", " BTF3P11 ", " C10orf90 ", " C11orf31 ", " C11orf87 ", " C12orf49 ", " C12orf75 ", " C14orf183 ", " C15orf48 ", " C16orf70 ", " C19orf44 ", " C1orf105 ", " C1orf111 ", " C1orf122 ", " C1orf210 ", " C1orf50 ", " C1QL3 ", " C2CD4B ", " C3orf14 ", " C4orf6 ", " C5AR1 ", " C5orf22 ", " C5orf27 ", " CABP1 ", " CACNA1A ", " CACNA1D ", " CACNG6 ", " CACTIN-AS1 ", " CAMSAP2 ", " CAMSAP3 ", " CARF ", " CARKD ", " CARS2 ", " CASC2 ", " CASP4 ", " CASP9 ", " CBLC ", " CCDC102A ", " CCDC113 ", " CCDC19 ", " CCDC53 ", " CCL7 ", " CCND3 ", " CCNDBP1 ", " CD19 ", " CD2BP2 ", " CD34 ", " CD53 ", " CD74 ", " CD86 ", " CDC123 ", " CDC25B ", " CDH1 ", " CDH20 ", " CDH4 ", " CDH5 ", " CDK12 ", " CDK5R1 ", " CDKN3 ", " CEP170B ", " CEP68 ", " CEP76 ", " CEP95 ", " CHAT ", " CHD8 ", " CHFR ", " CHP2 ", " CHTF18 ", " CHUK ", " CKMT2 ", " CLCA2 ", " CLCA4 ", " CLCNKB ", " CLEC16A ", " CLEC17A ", " CLEC3B ", " CLEC4G ", " CLHC1 ", " CLIC1P1 ", " CMTM4 ", " CMTM5 ", " CNN2 ", " CNN3 ", " CNOT1 ", " CNR2 ", " CNTN2 ", " COG3 ", " COG4
+2025-12-18 18:06:51,514 INFO: Prisma update attempt for job b4426e93-be9a-4468-875a-e0264394eb30; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/b4426e93-be9a-4468-875a-e0264394eb30/model.joblib", "metrics": "Json", "resultsPath": "artifacts/11/b4426e93-be9a-4468-875a-e0264394eb30/ranked_genes.csv"}
+2025-12-18 18:06:51,794 INFO: Prisma update successful for job b4426e93-be9a-4468-875a-e0264394eb30 on attempt 1
+2025-12-18 18:06:51,795 INFO: DB updated to finished for job b4426e93-be9a-4468-875a-e0264394eb30
+2026-01-07 16:33:25,877 ERROR: Training error for job 06bcb85f-a5fb-4ffc-9fed-689846a2f948: Training failed: 'y'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'y'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 278, in train
+    y = df[target]
+        ~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'y'
+
+2026-01-07 16:33:25,878 INFO: Prisma update attempt for job 06bcb85f-a5fb-4ffc-9fed-689846a2f948; payload (truncated): {"status": "failed", "metrics": "Json"}
+2026-01-07 16:33:26,295 INFO: Prisma update successful for job 06bcb85f-a5fb-4ffc-9fed-689846a2f948 on attempt 1
+2026-01-07 16:33:26,296 INFO: Prisma update attempt for job 06bcb85f-a5fb-4ffc-9fed-689846a2f948; payload (truncated): {"status": "failed"}
+2026-01-07 16:33:26,713 INFO: Prisma update successful for job 06bcb85f-a5fb-4ffc-9fed-689846a2f948 on attempt 1
+2026-01-07 16:35:30,528 ERROR: Training error for job c9d76f08-1d78-4f16-bd53-77d5264189c1: Training failed: 'label'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'label'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 278, in train
+    y = df[target]
+        ~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'label'
+
+2026-01-07 16:35:30,529 INFO: Prisma update attempt for job c9d76f08-1d78-4f16-bd53-77d5264189c1; payload (truncated): {"status": "failed", "metrics": "Json"}
+2026-01-07 16:35:30,909 INFO: Prisma update successful for job c9d76f08-1d78-4f16-bd53-77d5264189c1 on attempt 1
+2026-01-07 16:35:30,910 INFO: Prisma update attempt for job c9d76f08-1d78-4f16-bd53-77d5264189c1; payload (truncated): {"status": "failed"}
+2026-01-07 16:35:31,383 INFO: Prisma update successful for job c9d76f08-1d78-4f16-bd53-77d5264189c1 on attempt 1
+2026-01-07 16:35:59,322 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-01-07 16:35:59,322 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-01-07 16:35:59,323 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-01-07 16:35:59,323 INFO: Classification metrics found: {'accuracy': 0.7959183673469388, 'precision': 0.7993697478991597, 'recall': 0.7959183673469388, 'f1': 0.7919799498746868, 'roc_auc': 0.8452380952380952}
+2026-01-07 16:35:59,323 INFO: Attempting final DB update for job 531b66c4-1a31-434e-a65b-44808d541979; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/531b66c4-1a31-434e-a65b-44808d541979/model.joblib", "metrics": {"accuracy": 0.7959183673469388, "precision": 0.7993697478991597, "recall": 0.7959183673469388, "f1": 0.7919799498746868, "roc_auc": 0.8452380952380952, "cv_mean": 0.8074224021592442, "cv_std": 0.06641486208618104, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": [" ACADSB ", " ACOT1 ", " ACOT2 ", " ACP5 ", " ACY3 ", " ADAMTS8 ", " ADSSL1 ", " AKAP10 ", " ALOXE3 ", " ALPK1 ", " ALS2CR11 ", " AMN1 ", " AMOTL1 ", " ANGEL1 ", " ANKEF1 ", " ANKRD40 ", " ANXA4 ", " AP4E1 ", " APBB1 ", " APH1A ", " APOLD1 ", " AQR ", " ARHGAP24 ", " ARHGEF2 ", " ASGR1 ", " ASIC1 ", " ATG4D ", " ATP1A2 ", " ATP2A3 ", " ATP6V1C2 ", " ATP6V1E1 ", " ATP7B ", " ATP8A2 ", " ATXN7 ", " ATXN7L3B ", " AVPR1B ", " B3GAT3 ", " B4GALT6 ", " BAHCC1 ", " BAI2 ", " BBS2 ", " BCAR1 ", " BDNF ", " BEND7 ", " BFSP1 ", " BIN1 ", " BLM ", " BTF3P11 ", " C10orf90 ", " C11orf31 ", " C11orf87 ", " C12orf49 ", " C12orf75 ", " C14orf183 ", " C15orf48 ", " C16orf70 ", " C19orf44 ", " C1orf105 ", " C1orf111 ", " C1orf122 ", " C1orf210 ", " C1orf50 ", " C1QL3 ", " C2CD4B ", " C3orf14 ", " C4orf6 ", " C5AR1 ", " C5orf22 ", " C5orf27 ", " CABP1 ", " CACNA1A ", " CACNA1D ", " CACNG6 ", " CACTIN-AS1 ", " CAMSAP2 ", " CAMSAP3 ", " CARF ", " CARKD ", " CARS2 ", " CASC2 ", " CASP4 ", " CASP9 ", " CBLC ", " CCDC102A ", " CCDC113 ", " CCDC19 ", " CCDC53 ", " CCL7 ", " CCND3 ", " CCNDBP1 ", " CD19 ", " CD2BP2 ", " CD34 ", " CD53 ", " CD74 ", " CD86 ", " CDC123 ", " CDC25B ", " CDH1 ", " CDH20 ", " CDH4 ", " CDH5 ", " CDK12 ", " CDK5R1 ", " CDKN3 ", " CEP170B ", " CEP68 ", " CEP76 ", " CEP95 ", " CHAT ", " CHD8 ", " CHFR ", " CHP2 ", " CHTF18 ", " CHUK ", " CKMT2 ", " CLCA2 ", " CLCA4 ", " CLCNKB ", " CLEC16A ", " CLEC17A ", " CLEC3B ", " CLEC4G ", " CLHC1 ", " CLIC1P1 ", " CMTM4 ", " CMTM5 ", " CNN2 ", " CNN3 ", " CNOT1 ", " CNR2 ", " CNTN2 ", " COG3 ", " COG
+2026-01-07 16:35:59,323 INFO: Prisma update attempt for job 531b66c4-1a31-434e-a65b-44808d541979; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/531b66c4-1a31-434e-a65b-44808d541979/model.joblib", "metrics": "Json", "resultsPath": "artifacts/11/531b66c4-1a31-434e-a65b-44808d541979/ranked_genes.csv"}
+2026-01-07 16:35:59,964 INFO: Prisma update successful for job 531b66c4-1a31-434e-a65b-44808d541979 on attempt 1
+2026-01-07 16:35:59,965 INFO: DB updated to finished for job 531b66c4-1a31-434e-a65b-44808d541979
+2026-01-07 16:36:20,453 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-01-07 16:36:20,454 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-01-07 16:36:20,454 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-01-07 16:36:20,454 INFO: Classification metrics found: {'accuracy': 0.7959183673469388, 'precision': 0.7954887218045112, 'recall': 0.7959183673469388, 'f1': 0.7943349753694581, 'roc_auc': 0.8503401360544217}
+2026-01-07 16:36:20,454 INFO: Attempting final DB update for job 9de54458-241e-4a47-aff6-51f75f579bf1; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9de54458-241e-4a47-aff6-51f75f579bf1/model.joblib", "metrics": {"accuracy": 0.7959183673469388, "precision": 0.7954887218045112, "recall": 0.7959183673469388, "f1": 0.7943349753694581, "roc_auc": 0.8503401360544217, "cv_mean": 0.8024291497975709, "cv_std": 0.07722718493341846, "feature_selection": {"n_features_original": 1000, "n_features_selected": 1000, "selected_feature_names": [" ACADSB ", " ACOT1 ", " ACOT2 ", " ACP5 ", " ACY3 ", " ADAMTS8 ", " ADSSL1 ", " AKAP10 ", " ALOXE3 ", " ALPK1 ", " ALS2CR11 ", " AMN1 ", " AMOTL1 ", " ANGEL1 ", " ANKEF1 ", " ANKRD40 ", " ANXA4 ", " AP4E1 ", " APBB1 ", " APH1A ", " APOLD1 ", " AQR ", " ARHGAP24 ", " ARHGEF2 ", " ASGR1 ", " ASIC1 ", " ATG4D ", " ATP1A2 ", " ATP2A3 ", " ATP6V1C2 ", " ATP6V1E1 ", " ATP7B ", " ATP8A2 ", " ATXN7 ", " ATXN7L3B ", " AVPR1B ", " B3GAT3 ", " B4GALT6 ", " BAHCC1 ", " BAI2 ", " BBS2 ", " BCAR1 ", " BDNF ", " BEND7 ", " BFSP1 ", " BIN1 ", " BLM ", " BTF3P11 ", " C10orf90 ", " C11orf31 ", " C11orf87 ", " C12orf49 ", " C12orf75 ", " C14orf183 ", " C15orf48 ", " C16orf70 ", " C19orf44 ", " C1orf105 ", " C1orf111 ", " C1orf122 ", " C1orf210 ", " C1orf50 ", " C1QL3 ", " C2CD4B ", " C3orf14 ", " C4orf6 ", " C5AR1 ", " C5orf22 ", " C5orf27 ", " CABP1 ", " CACNA1A ", " CACNA1D ", " CACNG6 ", " CACTIN-AS1 ", " CAMSAP2 ", " CAMSAP3 ", " CARF ", " CARKD ", " CARS2 ", " CASC2 ", " CASP4 ", " CASP9 ", " CBLC ", " CCDC102A ", " CCDC113 ", " CCDC19 ", " CCDC53 ", " CCL7 ", " CCND3 ", " CCNDBP1 ", " CD19 ", " CD2BP2 ", " CD34 ", " CD53 ", " CD74 ", " CD86 ", " CDC123 ", " CDC25B ", " CDH1 ", " CDH20 ", " CDH4 ", " CDH5 ", " CDK12 ", " CDK5R1 ", " CDKN3 ", " CEP170B ", " CEP68 ", " CEP76 ", " CEP95 ", " CHAT ", " CHD8 ", " CHFR ", " CHP2 ", " CHTF18 ", " CHUK ", " CKMT2 ", " CLCA2 ", " CLCA4 ", " CLCNKB ", " CLEC16A ", " CLEC17A ", " CLEC3B ", " CLEC4G ", " CLHC1 ", " CLIC1P1 ", " CMTM4 ", " CMTM5 ", " CNN2 ", " CNN3 ", " CNOT1 ", " CNR2 ", " CNTN2 ", " COG3 ", " COG
+2026-01-07 16:36:20,455 INFO: Prisma update attempt for job 9de54458-241e-4a47-aff6-51f75f579bf1; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9de54458-241e-4a47-aff6-51f75f579bf1/model.joblib", "metrics": "Json", "resultsPath": "artifacts/11/9de54458-241e-4a47-aff6-51f75f579bf1/ranked_genes.csv"}
+2026-01-07 16:36:21,060 INFO: Prisma update successful for job 9de54458-241e-4a47-aff6-51f75f579bf1 on attempt 1
+2026-01-07 16:36:21,061 INFO: DB updated to finished for job 9de54458-241e-4a47-aff6-51f75f579bf1

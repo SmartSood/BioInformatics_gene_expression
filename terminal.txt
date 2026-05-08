@@ -1,4 +1,34 @@
 npx prisma migrate dev --name add_name_description_training
 python -m prisma generate   # if you are using python client
 cd /Users/smarthsood/Desktop/Gene_startup/gene_web
+source apps/model_backend/venv/bin/activate
 python -m uvicorn apps.model_backend.server:app --reload
+
+
+
+
+redis-server
+
+cd /Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend
+source venv/bin/activate
+export DATABASE_URL="postgresql://neondb_owner:npg_SLnUFq83GAMd@ep-mute-lab-a1q4lff7-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+export OMP_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export NUMEXPR_NUM_THREADS=1
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+PYTHONUNBUFFERED=1
+rq worker -u "$REDIS_URL" train
+
+
+
+python -m uvicorn apps.depmap_backend.server:app --reload --port 8001
+
+
+
+
+cd /Users/smarthsood/Desktop/Gene_startup/gene_web
+source apps/model_backend/venv/bin/activate
+export REDIS_URL="${REDIS_URL:-redis://localhost:6379/0}"
+# Use SimpleWorker on macOS (no per-job fork). Plain `rq worker` often still crashes with objc+fork even if OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES.
+python -m apps.depmap_backend.workers.run_rq_worker

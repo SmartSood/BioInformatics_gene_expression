@@ -206,8 +206,10 @@ class TrainingRun(bases.BaseTrainingRun):
     status: _str
     datasetUri: _str
     modelPath: Optional[_str] = None
+    resultsPath: Optional[_str] = None
     metrics: Optional['fields.Json'] = None
     parameters: Optional['fields.Json'] = None
+    geneDepmapResults: Optional['fields.Json'] = None
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -646,6 +648,14 @@ _TrainingRun_fields: Dict['types.TrainingRunKeys', PartialModelField] = OrderedD
             'is_relational': False,
             'documentation': None,
         }),
+        ('resultsPath', {
+            'name': 'resultsPath',
+            'is_list': False,
+            'optional': True,
+            'type': '_str',
+            'is_relational': False,
+            'documentation': None,
+        }),
         ('metrics', {
             'name': 'metrics',
             'is_list': False,
@@ -656,6 +666,14 @@ _TrainingRun_fields: Dict['types.TrainingRunKeys', PartialModelField] = OrderedD
         }),
         ('parameters', {
             'name': 'parameters',
+            'is_list': False,
+            'optional': True,
+            'type': 'fields.Json',
+            'is_relational': False,
+            'documentation': None,
+        }),
+        ('geneDepmapResults', {
+            'name': 'geneDepmapResults',
             'is_list': False,
             'optional': True,
             'type': 'fields.Json',

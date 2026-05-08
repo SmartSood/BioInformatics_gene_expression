@@ -299,10 +299,12 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
 
             # Prepare payload and update DB (awaiting the async update helper)
             if prisma:
+                ranked_genes_csv = (result or {}).get("ranked_genes_csv")
                 payload = {
                     "status": "finished",
                     "modelPath": actual_model_path,
                     "metrics": metrics_clean,
+                    "resultsPath": ranked_genes_csv,
                 }
                 # Log the payload truncated (so you can inspect in logs)
                 try:

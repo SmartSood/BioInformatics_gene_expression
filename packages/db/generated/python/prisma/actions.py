@@ -1953,7 +1953,7 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         results = await TrainingRun.prisma().count(
             select={
                 '_all': True,
-                'metrics': True,
+                'resultsPath': True,
             },
         )
         ```
@@ -2093,10 +2093,10 @@ class TrainingRunActions(Generic[_PrismaModelT]):
         Example
         -------
         ```py
-        # group TrainingRun records by parameters values
+        # group TrainingRun records by metrics values
         # and count how many records are in each group
         results = await TrainingRun.prisma().group_by(
-            ['parameters'],
+            ['metrics'],
             count=True,
         )
         ```

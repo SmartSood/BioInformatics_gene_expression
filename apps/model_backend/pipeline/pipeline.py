@@ -19,6 +19,7 @@ from sklearn.metrics import (
     precision_score, recall_score
 )
 from joblib import dump
+import csv
 import mlflow
 import importlib
 import warnings
@@ -136,6 +137,10 @@ def _build_feature_selector(method: str, problem_type: str, cfg: Dict[str, Any])
     k = cfg.get("k_features")
     if method == "variance_threshold":
         return VarianceThreshold(threshold=cfg.get("variance_threshold", 0.0))
+    # New methods like permutation_importance / integrated_gradients are handled
+    # post-hoc after model fitting, so they don't use a sklearn selector here.
+    if method in ["permutation_importance", "integrated_gradients"]:
+        return None
     if method == "lasso":
         # L1 model for selection
         # Use more lenient threshold if not specified - use "median" instead of "mean" (default)
@@ -182,12 +187,27 @@ def _build_feature_selector(method: str, problem_type: str, cfg: Dict[str, Any])
 
 
 def _load_estimator(problem_type: str, model_key: str, hyperparams: Dict[str, Any]):
+    """
+    Construct the underlying sklearn/xgboost estimator with sensible defaults.
+    For neural networks we bump max_iter to reduce convergence warnings while
+    still allowing the user to override it via hyperparams.
+    """
+    # Copy to avoid mutating caller's dict
+    hp = dict(hyperparams or {})
+
+    # Increase default training iterations for neural networks if user
+    # didn't explicitly set max_iter.
+    if model_key == "neural_network" and "max_iter" not in hp:
+        # 1000 is a good compromise: much higher than sklearn default (200)
+        # but not so high that runs become extremely slow by default.
+        hp["max_iter"] = 1000
+
     kind, module_name, class_name = MODEL_MAP[model_key]
     if kind == "both" and problem_type == "regression":
         module_name, class_name = REG_SWAP.get((module_name, class_name), (module_name, class_name))
     module = importlib.import_module(module_name)
     Estimator = getattr(module, class_name)
-    return Estimator(**hyperparams)
+    return Estimator(**hp)
 
 
 def _apply_outlier_removal(df: pd.DataFrame, cfg: Dict[str, Any]) -> pd.DataFrame:
@@ -359,6 +379,8 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
 
             # Early validation: Check if preprocessing would result in empty features
             # This gives better error messages before attempting CV
+            ranked_genes_csv_path = None
+
             try:
                 # Fit the preprocessing steps to see output shape
                 if "prep" in pipe.named_steps:
@@ -538,29 +560,37 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                                 # Get support after fit
                                 support = fs_step.get_support()
                                 n_features_selected = int(np.sum(support))
-                                
+
                                 # Get selected feature names/indices
                                 selected_indices = np.where(support)[0].tolist()
                                 if feature_names_after_prep and len(feature_names_after_prep) > 0:
-                                    selected_feature_names = [feature_names_after_prep[i] for i in selected_indices if i < len(feature_names_after_prep)]
+                                    selected_feature_names = [
+                                        feature_names_after_prep[i]
+                                        for i in selected_indices
+                                        if i < len(feature_names_after_prep)
+                                    ]
                                 else:
                                     # Fallback to original column names if available
                                     if len(selected_indices) <= len(original_feature_names):
-                                        selected_feature_names = [original_feature_names[i] for i in selected_indices if i < len(original_feature_names)]
+                                        selected_feature_names = [
+                                            original_feature_names[i]
+                                            for i in selected_indices
+                                            if i < len(original_feature_names)
+                                        ]
                                     else:
                                         selected_feature_names = [f"feature_{i}" for i in selected_indices]
-                                
+
                                 # Store in feature_selection_info (store all names, not just first 100)
                                 feature_selection_info = {
                                     "n_features_original": int(n_features_before),
                                     "n_features_selected": n_features_selected,
                                     "selected_feature_names": selected_feature_names,  # Store all selected feature names
                                 }
-                                
+
                                 mlflow.log_metric("n_features_selected", float(n_features_selected))
                                 mlflow.log_metric("n_features_original", float(n_features_before))
                                 mlflow.log_param("n_features_selected", str(n_features_selected))
-                                
+
                                 # Save selected features to artifacts folder as JSON file
                                 try:
                                     # Ensure artifacts_dir exists
@@ -581,7 +611,19 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                                     logger.info(f"Saved selected features to {features_file}")
                                 except Exception as e:
                                     logger.error(f"Failed to save features file: {e}", exc_info=True)
-                                
+
+                                # Also save a simple ranked-genes CSV for downstream download
+                                try:
+                                    ranked_genes_csv_path = str(Path(artifacts_dir) / "ranked_genes.csv")
+                                    with open(ranked_genes_csv_path, "w", newline="") as f:
+                                        writer = csv.writer(f)
+                                        writer.writerow(["rank", "gene"])
+                                        for idx, name in enumerate(selected_feature_names, start=1):
+                                            writer.writerow([idx, name])
+                                    logger.info(f"Saved ranked genes CSV to {ranked_genes_csv_path}")
+                                except Exception as e:
+                                    logger.warning(f"Failed to save ranked genes CSV: {e}")
+
                                 # Log selected features as JSON string (MLflow params have size limits)
                                 try:
                                     features_json = json.dumps(selected_feature_names[:50])  # First 50 features
@@ -590,7 +632,7 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                                     mlflow.log_param("selected_features_sample", features_json[:500])  # Truncate to 500 chars
                                 except Exception:
                                     pass
-                                
+
                             elif hasattr(fs_step, 'n_features_'):
                                 n_selected = fs_step.n_features_
                                 feature_selection_info = {
@@ -645,6 +687,18 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                         logger.info(f"Saved all features to {features_file}")
                     except Exception as e:
                         logger.warning(f"Failed to save features file: {e}")
+
+                    # Also save ranked-genes CSV when no explicit feature selection is used
+                    try:
+                        ranked_genes_csv_path = str(Path(artifacts_dir) / "ranked_genes.csv")
+                        with open(ranked_genes_csv_path, "w", newline="") as f:
+                            writer = csv.writer(f)
+                            writer.writerow(["rank", "gene"])
+                            for idx, name in enumerate(original_feature_names, start=1):
+                                writer.writerow([idx, name])
+                        logger.info(f"Saved ranked genes CSV (all features) to {ranked_genes_csv_path}")
+                    except Exception as e:
+                        logger.warning(f"Failed to save ranked genes CSV: {e}")
                 
             except Exception as e:
                 error_msg = f"Model fitting failed: {str(e)}\n{traceback.format_exc()}"
@@ -768,5 +822,6 @@ def train(dataset_path: str, config: Dict[str, Any], artifacts_dir: str):
                 "metrics": result_metrics,
                 "model_path": model_path,
                 "warnings": warnings_capture if warnings_capture else None,
-                "feature_selection": feature_selection_info if feature_selection_info else None
+                "feature_selection": feature_selection_info if feature_selection_info else None,
+                "ranked_genes_csv": ranked_genes_csv_path,
             }

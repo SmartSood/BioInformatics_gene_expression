@@ -44,13 +44,14 @@ class EncodingConfig(BaseModel):
     drop_first: bool = False
 
 # ---------------- Feature selection -----------------
+# For bioinformatics-style gene importance we focus on a smaller set of
+# interpretable methods plus post-hoc attribution methods.
 FeatureSelectionMethod = Literal[
     "none",
-    "variance_threshold",
-    "rfe",
     "lasso",
     "random_forest_importance",
-    "chi2"
+    "permutation_importance",
+    "integrated_gradients",
 ]
 
 class FeatureSelectionConfig(BaseModel):

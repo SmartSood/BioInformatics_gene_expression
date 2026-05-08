@@ -44,8 +44,11 @@ model TrainingRun {
   status       String   // queued | started | finished | failed
   datasetUri   String
   modelPath    String?
+  resultsPath  String?  // Local or remote path to ranked-genes/results CSV
   metrics      Json?
   parameters   Json?
+  geneDepmapResults Json?  // JSON mapping gene names to DepMap CSV file paths
+  // Format: { "GENE_NAME": "/path/to/file.csv", ... }
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

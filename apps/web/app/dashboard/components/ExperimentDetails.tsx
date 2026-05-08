@@ -8,9 +8,14 @@ import {
   Loader,
   CheckCircle,
   XCircle,
-  Clock
+  Clock,
+  Download,
+  ExternalLink,
 } from 'lucide-react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { Gene } from '../../../utils/scemma';
+import { MODEL_BACKEND_URL, DEPMAP_BACKEND_URL } from '@repo/config';
 
 interface ExperimentDetailsProps {
   experimentId: string;
@@ -18,9 +23,40 @@ interface ExperimentDetailsProps {
 
 export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
   const { experiment, parameters, results, errors, loading } = useExperimentDetails(experimentId);
-  console.log("sbnckdjbnekbcekc");
-  console.log(results);
-  console.log(parameters);
+
+  const handleDownloadGenesCsv = async () => {
+    if (!experiment) return;
+
+    try {
+      const token = sessionStorage.getItem('authToken') || undefined;
+
+      const response = await axios.get<Blob>(
+        `${MODEL_BACKEND_URL}/experiments/${experiment.id}/genes/download`,
+        {
+          responseType: 'blob',
+          headers: {
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+        }
+      );
+
+      const blob = new Blob([response.data], { type: 'text/csv;charset=utf-8;' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute(
+        'download',
+        `experiment_${experiment.id}_genes.csv`
+      );
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error downloading genes CSV:', error);
+      alert('Failed to download CSV. Please ensure you are logged in and try again.');
+    }
+  };
 
   if (loading) {
     return (
@@ -205,10 +241,20 @@ export function ExperimentDetails({ experimentId }: ExperimentDetailsProps) {
               color="slate"
               iconColor="emerald"
             >
+              <div className="flex justify-end mb-4">
+                <button
+                  type="button"
+                  onClick={handleDownloadGenesCsv}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-lg bg-emerald-500/10 text-emerald-300 border border-emerald-500/40 hover:bg-emerald-500/20 transition-colors"
+                >
+                  <Download className="w-4 h-4" />
+                  Download ranked genes (CSV)
+                </button>
+              </div>
               <div className="space-y-3">
                 {results.top_genes && results.top_genes.length > 0 ? (
                   results.top_genes.map((gene: Gene, index: number) => (
-                    <GeneCard key={index} gene={gene} rank={index + 1} />
+                    <GeneCard key={index} gene={gene} rank={index + 1} experimentId={experimentId} />
                   ))
                 ) : (
                   <div className="text-center py-8 text-slate-400">
@@ -334,20 +380,50 @@ function MetricCard({ label, value, color, isPercentage = true }: { label: strin
   );
 }
 
-function GeneCard({ gene, rank }: { gene: Gene; rank: number }) {
-  const getExpressionColor = (expression: number) => {
+function GeneCard({ gene, rank, experimentId }: { gene: Gene; rank: number; experimentId?: string }) {
+  const router = useRouter();
+
+  const getExpressionColor = (expression?: number | null) => {
+    if (expression == null || isNaN(expression)) {
+      return 'from-slate-700/50 to-slate-800/50 border-slate-600/60';
+    }
     if (expression >= 0.8) return 'from-red-500/20 to-pink-500/20 border-red-500/40';
     if (expression >= 0.6) return 'from-orange-500/20 to-amber-500/20 border-orange-500/40';
     if (expression >= 0.4) return 'from-yellow-500/20 to-lime-500/20 border-yellow-500/40';
     return 'from-green-500/20 to-emerald-500/20 border-green-500/40';
   };
 
-  const getExpressionText = (expression: number) => {
+  const getExpressionText = (expression?: number | null) => {
+    if (expression == null || isNaN(expression)) {
+      return 'text-slate-300';
+    }
     if (expression >= 0.8) return 'text-red-400';
     if (expression >= 0.6) return 'text-orange-400';
     if (expression >= 0.4) return 'text-yellow-400';
     return 'text-green-400';
   };
+
+  const handleExportToDepMap = () => {
+    // Navigate to DepMap results page with gene symbol and experiment ID (trim whitespace)
+    const cleanedSymbol = (gene.symbol || "").trim();
+    const expId = experimentId || "default";
+    router.push(`/dashboard/depmap?gene=${encodeURIComponent(cleanedSymbol)}&experimentId=${encodeURIComponent(expId)}`);
+  };
+
+  const foldChangeDisplay =
+    gene.foldChange != null && !isNaN(gene.foldChange)
+      ? gene.foldChange.toFixed(2)
+      : 'N/A';
+
+  const pvalueDisplay =
+    gene.pvalue != null && !isNaN(gene.pvalue)
+      ? gene.pvalue.toExponential(2)
+      : 'N/A';
+
+  const expressionDisplay =
+    gene.expression != null && !isNaN(gene.expression)
+      ? `${(gene.expression * 100).toFixed(1)}%`
+      : 'N/A';
 
   return (
     <div className={`bg-gradient-to-r ${getExpressionColor(gene.expression)} rounded-lg border p-4`}>
@@ -359,16 +435,32 @@ function GeneCard({ gene, rank }: { gene: Gene; rank: number }) {
           <div>
             <h3 className="text-lg font-bold text-white">{gene.symbol}</h3>
             <div className="flex gap-4 text-sm text-slate-300 mt-1">
-              <span>Fold Change: <span className="font-medium">{gene.foldChange.toFixed(2)}</span></span>
-              <span>p-value: <span className="font-medium">{gene.pvalue.toExponential(2)}</span></span>
+              <span>
+                Fold Change:{' '}
+                <span className="font-medium">{foldChangeDisplay}</span>
+              </span>
+              <span>
+                p-value:{' '}
+                <span className="font-medium">{pvalueDisplay}</span>
+              </span>
             </div>
           </div>
         </div>
-        <div className="text-right">
-          <div className="text-sm text-slate-400">Expression</div>
-          <div className={`text-2xl font-bold ${getExpressionText(gene.expression)}`}>
-            {(gene.expression * 100).toFixed(1)}%
+        <div className="flex items-center gap-4">
+          <div className="text-right">
+            <div className="text-sm text-slate-400">Expression</div>
+            <div className={`text-2xl font-bold ${getExpressionText(gene.expression)}`}>
+              {expressionDisplay}
+            </div>
           </div>
+          <button
+            onClick={handleExportToDepMap}
+            className="inline-flex items-center gap-2 px-3 py-2 text-xs font-medium rounded-lg bg-purple-500/10 text-purple-300 border border-purple-500/40 hover:bg-purple-500/20 transition-colors"
+            title="Export to DepMap"
+          >
+            <ExternalLink className="w-4 h-4" />
+            DepMap
+          </button>
         </div>
       </div>
     </div>

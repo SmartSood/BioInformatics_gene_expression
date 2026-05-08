@@ -2114,8 +2114,10 @@ class TrainingRunOptionalCreateInput(TypedDict, total=False):
     name: _str
     description: _str
     modelPath: Optional[_str]
+    resultsPath: Optional[_str]
     metrics: Optional['fields.Json']
     parameters: Optional['fields.Json']
+    geneDepmapResults: Optional['fields.Json']
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2136,8 +2138,10 @@ class TrainingRunOptionalCreateWithoutRelationsInput(TypedDict, total=False):
     name: _str
     description: _str
     modelPath: Optional[_str]
+    resultsPath: Optional[_str]
     metrics: Optional['fields.Json']
     parameters: Optional['fields.Json']
+    geneDepmapResults: Optional['fields.Json']
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2183,8 +2187,10 @@ class TrainingRunUpdateInput(TypedDict, total=False):
     status: _str
     datasetUri: _str
     modelPath: Optional[_str]
+    resultsPath: Optional[_str]
     metrics: Optional['fields.Json']
     parameters: Optional['fields.Json']
+    geneDepmapResults: Optional['fields.Json']
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2197,8 +2203,10 @@ class TrainingRunUpdateManyMutationInput(TypedDict, total=False):
     status: _str
     datasetUri: _str
     modelPath: Optional[_str]
+    resultsPath: Optional[_str]
     metrics: Optional['fields.Json']
     parameters: Optional['fields.Json']
+    geneDepmapResults: Optional['fields.Json']
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2291,6 +2299,14 @@ _TrainingRun_modelPath_OrderByInput = TypedDict(
     total=True
 )
 
+_TrainingRun_resultsPath_OrderByInput = TypedDict(
+    '_TrainingRun_resultsPath_OrderByInput',
+    {
+        'resultsPath': 'SortOrder',
+    },
+    total=True
+)
+
 _TrainingRun_metrics_OrderByInput = TypedDict(
     '_TrainingRun_metrics_OrderByInput',
     {
@@ -2303,6 +2319,14 @@ _TrainingRun_parameters_OrderByInput = TypedDict(
     '_TrainingRun_parameters_OrderByInput',
     {
         'parameters': 'SortOrder',
+    },
+    total=True
+)
+
+_TrainingRun_geneDepmapResults_OrderByInput = TypedDict(
+    '_TrainingRun_geneDepmapResults_OrderByInput',
+    {
+        'geneDepmapResults': 'SortOrder',
     },
     total=True
 )
@@ -2349,8 +2373,10 @@ TrainingRunOrderByInput = Union[
     '_TrainingRun_status_OrderByInput',
     '_TrainingRun_datasetUri_OrderByInput',
     '_TrainingRun_modelPath_OrderByInput',
+    '_TrainingRun_resultsPath_OrderByInput',
     '_TrainingRun_metrics_OrderByInput',
     '_TrainingRun_parameters_OrderByInput',
+    '_TrainingRun_geneDepmapResults_OrderByInput',
     '_TrainingRun_createdAt_OrderByInput',
     '_TrainingRun_updatedAt_OrderByInput',
     '_TrainingRun_RelevanceOrderByInput',
@@ -2724,8 +2750,10 @@ class TrainingRunWhereInput(TypedDict, total=False):
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
+    resultsPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
     parameters: Union[None, 'fields.Json', 'types.JsonFilter']
+    geneDepmapResults: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2746,8 +2774,10 @@ class TrainingRunWhereInputRecursive1(TypedDict, total=False):
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
+    resultsPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
     parameters: Union[None, 'fields.Json', 'types.JsonFilter']
+    geneDepmapResults: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2768,8 +2798,10 @@ class TrainingRunWhereInputRecursive2(TypedDict, total=False):
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
+    resultsPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
     parameters: Union[None, 'fields.Json', 'types.JsonFilter']
+    geneDepmapResults: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2790,8 +2822,10 @@ class TrainingRunWhereInputRecursive3(TypedDict, total=False):
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
+    resultsPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
     parameters: Union[None, 'fields.Json', 'types.JsonFilter']
+    geneDepmapResults: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2812,8 +2846,10 @@ class TrainingRunWhereInputRecursive4(TypedDict, total=False):
     status: Union[_str, 'types.StringFilter']
     datasetUri: Union[_str, 'types.StringFilter']
     modelPath: Union[None, _str, 'types.StringFilter']
+    resultsPath: Union[None, _str, 'types.StringFilter']
     metrics: Union[None, 'fields.Json', 'types.JsonFilter']
     parameters: Union[None, 'fields.Json', 'types.JsonFilter']
+    geneDepmapResults: Union[None, 'fields.Json', 'types.JsonFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeFilter']
 
@@ -2833,8 +2869,10 @@ class TrainingRunScalarWhereWithAggregatesInput(TypedDict, total=False):
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
+    resultsPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    geneDepmapResults: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2852,8 +2890,10 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive1(TypedDict, total=False
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
+    resultsPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    geneDepmapResults: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2871,8 +2911,10 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive2(TypedDict, total=False
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
+    resultsPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    geneDepmapResults: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2890,8 +2932,10 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive3(TypedDict, total=False
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
+    resultsPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    geneDepmapResults: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2909,8 +2953,10 @@ class TrainingRunScalarWhereWithAggregatesInputRecursive4(TypedDict, total=False
     status: Union[_str, 'types.StringWithAggregatesFilter']
     datasetUri: Union[_str, 'types.StringWithAggregatesFilter']
     modelPath: Union[_str, 'types.StringWithAggregatesFilter']
+    resultsPath: Union[_str, 'types.StringWithAggregatesFilter']
     metrics: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     parameters: Union['fields.Json', 'types.JsonWithAggregatesFilter']
+    geneDepmapResults: Union['fields.Json', 'types.JsonWithAggregatesFilter']
     createdAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
     updatedAt: Union[datetime.datetime, 'types.DateTimeWithAggregatesFilter']
 
@@ -2924,8 +2970,10 @@ class TrainingRunGroupByOutput(TypedDict, total=False):
     status: _str
     datasetUri: _str
     modelPath: _str
+    resultsPath: _str
     metrics: 'fields.Json'
     parameters: 'fields.Json'
+    geneDepmapResults: 'fields.Json'
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
     _sum: 'TrainingRunSumAggregateOutput'
@@ -2954,8 +3002,10 @@ class TrainingRunScalarAggregateOutput(TypedDict, total=False):
     status: _str
     datasetUri: _str
     modelPath: _str
+    resultsPath: _str
     metrics: 'fields.Json'
     parameters: 'fields.Json'
+    geneDepmapResults: 'fields.Json'
     createdAt: datetime.datetime
     updatedAt: datetime.datetime
 
@@ -2973,8 +3023,10 @@ class TrainingRunMaxAggregateInput(TypedDict, total=False):
     status: bool
     datasetUri: bool
     modelPath: bool
+    resultsPath: bool
     metrics: bool
     parameters: bool
+    geneDepmapResults: bool
     createdAt: bool
     updatedAt: bool
 
@@ -2988,8 +3040,10 @@ class TrainingRunMinAggregateInput(TypedDict, total=False):
     status: bool
     datasetUri: bool
     modelPath: bool
+    resultsPath: bool
     metrics: bool
     parameters: bool
+    geneDepmapResults: bool
     createdAt: bool
     updatedAt: bool
 
@@ -3013,8 +3067,10 @@ TrainingRunCountAggregateInput = TypedDict(
         'status': bool,
         'datasetUri': bool,
         'modelPath': bool,
+        'resultsPath': bool,
         'metrics': bool,
         'parameters': bool,
+        'geneDepmapResults': bool,
         'createdAt': bool,
         'updatedAt': bool,
         '_all': bool,
@@ -3032,8 +3088,10 @@ TrainingRunCountAggregateOutput = TypedDict(
         'status': int,
         'datasetUri': int,
         'modelPath': int,
+        'resultsPath': int,
         'metrics': int,
         'parameters': int,
+        'geneDepmapResults': int,
         'createdAt': int,
         'updatedAt': int,
         '_all': int,
@@ -3051,8 +3109,10 @@ TrainingRunKeys = Literal[
     'status',
     'datasetUri',
     'modelPath',
+    'resultsPath',
     'metrics',
     'parameters',
+    'geneDepmapResults',
     'createdAt',
     'updatedAt',
 ]
@@ -3064,8 +3124,10 @@ TrainingRunScalarFieldKeys = Literal[
     'status',
     'datasetUri',
     'modelPath',
+    'resultsPath',
     'metrics',
     'parameters',
+    'geneDepmapResults',
     'createdAt',
     'updatedAt',
 ]

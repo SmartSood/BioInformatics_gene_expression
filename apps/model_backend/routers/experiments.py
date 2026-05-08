@@ -1,9 +1,79 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import FileResponse
+from pathlib import Path
+import os
 from auth.deps import get_current_user
 from client.db import db
 from workers.queue_worker import get_queue
 from typing import Optional, Dict, Any
 router = APIRouter(prefix="/experiments", tags=["experiments"])
+
+# Get artifacts directory - same logic as train_worker.py
+ARTIFACTS_DIR = os.getenv("ARTIFACTS_DIR", "./artifacts")
+
+@router.get("/{experiment_id}/genes/download")
+async def download_ranked_genes_csv(experiment_id: str, user=Depends(get_current_user)):
+    """
+    Download the ranked-genes CSV produced during training for this experiment.
+    The TrainingRun.resultsPath field stores the local/remote path.
+    """
+    if not user["sub"]:
+        raise HTTPException(401, "No subject in token")
+
+    experiment = await db.trainingrun.find_unique(where={"id": experiment_id})
+    if not experiment:
+        raise HTTPException(404, "Experiment not found")
+
+    # Verify ownership
+    if str(experiment.userId) != str(user["sub"]):
+        raise HTTPException(403, "Access denied")
+
+    results_path = getattr(experiment, "resultsPath", None)
+
+    candidate_paths = []
+    if results_path:
+        p = Path(results_path)
+        if not p.is_absolute():
+            # Try relative to current working directory
+            candidate_paths.append(Path.cwd() / p)
+            # Also try relative to model_backend directory
+            model_backend_dir = Path(__file__).resolve().parent.parent
+            candidate_paths.append(model_backend_dir / p)
+        else:
+            candidate_paths.append(p)
+
+    # Fallback: reconstruct expected artifacts path even if resultsPath was never saved
+    # Use same logic as train_worker.py - ARTIFACTS_DIR defaults to "./artifacts"
+    # Pattern: artifacts/<userId>/<job_id>/ranked_genes.csv
+    artifacts_base = Path(ARTIFACTS_DIR)
+    if not artifacts_base.is_absolute():
+        # Resolve relative to current working directory (same as train_worker does)
+        artifacts_base = Path.cwd() / artifacts_base
+    
+    derived_path = artifacts_base / str(experiment.userId) / experiment.id / "ranked_genes.csv"
+    candidate_paths.append(derived_path)
+    
+    # Also try relative to model_backend directory (in case backend runs from project root)
+    model_backend_dir = Path(__file__).resolve().parent.parent
+    model_backend_artifacts = model_backend_dir / "artifacts" / str(experiment.userId) / experiment.id / "ranked_genes.csv"
+    candidate_paths.append(model_backend_artifacts)
+
+    path = None
+    for p in candidate_paths:
+        if p.exists():
+            path = p
+            break
+
+    if path is None:
+        # Preserve a clear error for the client
+        raise HTTPException(404, "No ranked-genes CSV available for this experiment")
+
+    return FileResponse(
+        str(path),
+        media_type="text/csv",
+        filename=f"{experiment.id}_ranked_genes.csv",
+    )
+
 
 @router.get("")
 async def list_experiments(user=Depends(get_current_user)):
@@ -132,14 +202,16 @@ async def get_experiment_details(experiment_id: str, user=Depends(get_current_us
         if isinstance(feature_selection_info, dict):
             selected_features = feature_selection_info.get("selected_feature_names", [])
             if selected_features and isinstance(selected_features, list):
-                # Convert feature names to Gene-like objects
-                # This is a simplified version - you may want to enhance this with actual expression data
+                # Convert feature names to Gene-like objects.
+                # We currently only know which features were selected, not their
+                # per-gene statistics, so we leave expression/pvalue/foldChange
+                # as null for the frontend to render as "N/A" rather than 0.
                 top_genes = [
                     {
                         "symbol": str(feat),
-                        "expression": 0.0,  # Placeholder - would need actual expression data
-                        "pvalue": 0.0,  # Placeholder
-                        "foldChange": 0.0  # Placeholder
+                        "expression": None,
+                        "pvalue": None,
+                        "foldChange": None,
                     }
                     for feat in selected_features[:20]  # Limit to top 20
                 ]
@@ -204,6 +276,7 @@ async def get_experiment_details(experiment_id: str, user=Depends(get_current_us
             "updatedAt": experiment.updatedAt.isoformat() if experiment.updatedAt else None,
             "datasetUri": experiment.datasetUri,
             "modelPath": experiment.modelPath,
+            "resultsPath": getattr(experiment, "resultsPath", None),
         },
         "parameters": parameters,
         "results": results,
@@ -217,7 +290,17 @@ def _extract_preprocessing_steps(metrics: Dict[str, Any]) -> list:
     # Check for preprocessing config in metrics
     prep_config = metrics.get("preprocessing") or {}
     
-    if prep_config.get("missing_values", {}).get("strategy_numeric"):
+    # Missing value imputation: only show as an explicit step if the user has
+    # configured something beyond the safe defaults (e.g. dropping rows or
+    # specifying custom fill values/strategies).
+    mv_cfg = prep_config.get("missing_values", {}) or {}
+    if (
+        mv_cfg.get("drop_rows")
+        or mv_cfg.get("fill_value_numeric") is not None
+        or mv_cfg.get("fill_value_categorical") is not None
+        or mv_cfg.get("strategy_numeric") not in (None, "median")
+        or mv_cfg.get("strategy_categorical") not in (None, "most_frequent")
+    ):
         steps.append("Missing Value Imputation")
     if prep_config.get("scaling", {}).get("method") and prep_config.get("scaling", {}).get("method") != "none":
         steps.append("Scaling")
@@ -242,7 +325,15 @@ def _extract_preprocessing_steps_from_config(config: Dict[str, Any]) -> list:
     
     prep_config = config.get("preprocessing", {})
     
-    if prep_config.get("missing_values", {}).get("strategy_numeric"):
+    # Missing value imputation: only show when configured beyond defaults
+    mv_cfg = prep_config.get("missing_values", {}) or {}
+    if (
+        mv_cfg.get("drop_rows")
+        or mv_cfg.get("fill_value_numeric") is not None
+        or mv_cfg.get("fill_value_categorical") is not None
+        or mv_cfg.get("strategy_numeric") not in (None, "median")
+        or mv_cfg.get("strategy_categorical") not in (None, "most_frequent")
+    ):
         steps.append("Missing Value Imputation")
     if prep_config.get("scaling", {}).get("method") and prep_config.get("scaling", {}).get("method") != "none":
         steps.append("Scaling")

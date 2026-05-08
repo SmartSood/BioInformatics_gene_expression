@@ -6,6 +6,10 @@ export interface Experiment {
   status: "queued" | "started" | "finished" | "failed" | "running" | "pending" | "completed";
   createdAt: string;
   updatedAt: string;
+  // Optional fields returned by the detailed experiment API
+  datasetUri?: string | null;
+  modelPath?: string | null;
+  resultsPath?: string | null;
 }
 
 export interface dataset_props {
@@ -36,9 +40,12 @@ export interface ExperimentParameters {
 
 export interface Gene {
   symbol: string;
-  expression: number;
-  pvalue: number;
-  foldChange: number;
+  // These may be null/undefined if the backend only knows that the
+  // feature was selected (e.g. from feature selection) but does not
+  // have per-gene statistics like expression, p-value or fold-change.
+  expression?: number | null;
+  pvalue?: number | null;
+  foldChange?: number | null;
 }
 
 export interface ExperimentResults {
