@@ -42,6 +42,7 @@ uploads
 data
 mlruns
 mlruns
+outputs
 
 #models trained
 artifacts

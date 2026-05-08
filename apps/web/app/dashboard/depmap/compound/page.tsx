@@ -946,6 +946,20 @@ export default function DepmapCompoundDetailPage() {
                       <ExternalLink className="w-4 h-4" />
                     </a>
                   )}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      router.push(
+                        `/dashboard/depmap/compound/embeddings?gene=${encodeURIComponent(
+                          gene
+                        )}&compound=${encodeURIComponent(compound)}`
+                      )
+                    }
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600/80 text-white border border-purple-500/50 hover:bg-purple-500/80 text-sm font-medium"
+                  >
+                    <Search className="w-4 h-4" />
+                    Find embeddings
+                  </button>
                 </div>
 
                 {data.rcsb.pdbIds.length > 0 && (
