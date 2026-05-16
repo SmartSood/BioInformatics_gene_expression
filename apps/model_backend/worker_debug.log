@@ -1971,3 +1971,487 @@ KeyError: 'label'
 2026-01-07 16:36:20,455 INFO: Prisma update attempt for job 9de54458-241e-4a47-aff6-51f75f579bf1; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/9de54458-241e-4a47-aff6-51f75f579bf1/model.joblib", "metrics": "Json", "resultsPath": "artifacts/11/9de54458-241e-4a47-aff6-51f75f579bf1/ranked_genes.csv"}
 2026-01-07 16:36:21,060 INFO: Prisma update successful for job 9de54458-241e-4a47-aff6-51f75f579bf1 on attempt 1
 2026-01-07 16:36:21,061 INFO: DB updated to finished for job 9de54458-241e-4a47-aff6-51f75f579bf1
+2026-05-08 10:19:06,466 ERROR: Training error for job 71ef05ee-1897-41a8-b4d7-99cb57b166fa: Training failed: 'label'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'label'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 278, in train
+    y = df[target]
+        ~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'label'
+
+2026-05-08 10:19:06,466 INFO: Prisma update attempt for job 71ef05ee-1897-41a8-b4d7-99cb57b166fa; payload (truncated): {"status": "failed", "metrics": "Json"}
+2026-05-08 10:19:06,709 INFO: Prisma update successful for job 71ef05ee-1897-41a8-b4d7-99cb57b166fa on attempt 1
+2026-05-08 10:19:06,709 INFO: Prisma update attempt for job 71ef05ee-1897-41a8-b4d7-99cb57b166fa; payload (truncated): {"status": "failed"}
+2026-05-08 10:19:06,918 INFO: Prisma update successful for job 71ef05ee-1897-41a8-b4d7-99cb57b166fa on attempt 1
+2026-05-08 10:23:29,707 ERROR: Training error for job df6df5b1-5a1e-4d66-b86c-638aca780994: Training failed: 'Label'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Label'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 278, in train
+    y = df[target]
+        ~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/frame.py", line 4113, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Label'
+
+2026-05-08 10:23:29,708 INFO: Prisma update attempt for job df6df5b1-5a1e-4d66-b86c-638aca780994; payload (truncated): {"status": "failed", "metrics": "Json"}
+2026-05-08 10:23:29,923 INFO: Prisma update successful for job df6df5b1-5a1e-4d66-b86c-638aca780994 on attempt 1
+2026-05-08 10:23:29,924 INFO: Prisma update attempt for job df6df5b1-5a1e-4d66-b86c-638aca780994; payload (truncated): {"status": "failed"}
+2026-05-08 10:23:30,132 INFO: Prisma update successful for job df6df5b1-5a1e-4d66-b86c-638aca780994 on attempt 1
+2026-05-08 10:36:30,641 ERROR: Training error for job a59a9cbb-eafa-41a3-8df2-e353b623797e: Training failed: Cross-validation failed: could not convert string to float: 'GSM711937'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 429, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM711937'
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 429, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM711937'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 484, in train
+    raise ValueError(error_msg) from e
+ValueError: Cross-validation failed: could not convert string to float: 'GSM711937'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 429, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM711937'
+
+
+2026-05-08 10:36:30,642 INFO: Prisma update attempt for job a59a9cbb-eafa-41a3-8df2-e353b623797e; payload (truncated): {"status": "failed", "metrics": "Json"}
+2026-05-08 10:36:31,037 INFO: Prisma update successful for job a59a9cbb-eafa-41a3-8df2-e353b623797e on attempt 1
+2026-05-08 10:36:31,037 INFO: Prisma update attempt for job a59a9cbb-eafa-41a3-8df2-e353b623797e; payload (truncated): {"status": "failed"}
+2026-05-08 10:36:31,235 INFO: Prisma update successful for job a59a9cbb-eafa-41a3-8df2-e353b623797e on attempt 1
+2026-05-08 10:44:23,769 ERROR: Training error for job a2e0c308-dfd4-4db5-9ed7-99bfc6d15bb9: Training failed: Cross-validation failed: could not convert string to float: 'GSM711937'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 429, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM711937'
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 429, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM711937'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/workers/train_worker.py", line 172, in _run
+    result = train(dataset_path, config, str(out_dir))
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 484, in train
+    raise ValueError(error_msg) from e
+ValueError: Cross-validation failed: could not convert string to float: 'GSM711937'
+Traceback (most recent call last):
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/pipeline/pipeline.py", line 429, in train
+    cv_scores = cross_val_score(pipe, X_tr, y_tr, cv=cv_folds, scoring=scoring, error_score='raise')
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 677, in cross_val_score
+    cv_results = cross_validate(
+        estimator=estimator,
+    ...<9 lines>...
+        error_score=error_score,
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_param_validation.py", line 218, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 399, in cross_validate
+    results = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        for train, test in indices
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 82, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1986, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/joblib/parallel.py", line 1914, in _get_sequential_output
+    res = func(*args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/parallel.py", line 147, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/model_selection/_validation.py", line 859, in _fit_and_score
+    estimator.fit(X_train, y_train, **fit_params)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/pipeline.py", line 663, in fit
+    self._final_estimator.fit(Xt, y, **last_step_params["fit"])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/base.py", line 1365, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/ensemble/_forest.py", line 359, in fit
+    X, y = validate_data(
+           ~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<5 lines>...
+        ensure_all_finite=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 2971, in validate_data
+    X, y = check_X_y(X, y, **check_params)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1368, in check_X_y
+    X = check_array(
+        X,
+    ...<12 lines>...
+        input_name="X",
+    )
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/validation.py", line 1053, in check_array
+    array = _asarray_with_order(array, order=order, dtype=dtype, xp=xp)
+  File "/Users/smarthsood/Desktop/Gene_startup/gene_web/apps/model_backend/venv/lib/python3.13/site-packages/sklearn/utils/_array_api.py", line 757, in _asarray_with_order
+    array = numpy.asarray(array, order=order, dtype=dtype)
+ValueError: could not convert string to float: 'GSM711937'
+
+
+2026-05-08 10:44:23,769 INFO: Prisma update attempt for job a2e0c308-dfd4-4db5-9ed7-99bfc6d15bb9; payload (truncated): {"status": "failed", "metrics": "Json"}
+2026-05-08 10:44:24,094 INFO: Prisma update successful for job a2e0c308-dfd4-4db5-9ed7-99bfc6d15bb9 on attempt 1
+2026-05-08 10:44:24,095 INFO: Prisma update attempt for job a2e0c308-dfd4-4db5-9ed7-99bfc6d15bb9; payload (truncated): {"status": "failed"}
+2026-05-08 10:44:24,313 INFO: Prisma update successful for job a2e0c308-dfd4-4db5-9ed7-99bfc6d15bb9 on attempt 1
+2026-05-08 10:48:08,824 INFO: Raw metrics from result: <class 'dict'>, keys: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-05-08 10:48:08,825 INFO: Metrics extracted: ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-05-08 10:48:08,828 INFO: Metrics to save to DB (keys): ['accuracy', 'precision', 'recall', 'f1', 'roc_auc', 'cv_mean', 'cv_std', 'feature_selection', 'n_features_original', 'n_features_selected']
+2026-05-08 10:48:08,828 INFO: Classification metrics found: {'accuracy': 0.8888888888888888, 'precision': 0.8888888888888888, 'recall': 0.8888888888888888, 'f1': 0.8888888888888888, 'roc_auc': 0.9012345679012346}
+2026-05-08 10:48:08,829 INFO: Attempting final DB update for job 53b0dca5-3451-4557-b90f-7137d9e7402c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/53b0dca5-3451-4557-b90f-7137d9e7402c/model.joblib", "metrics": {"accuracy": 0.8888888888888888, "precision": 0.8888888888888888, "recall": 0.8888888888888888, "f1": 0.8888888888888888, "roc_auc": 0.9012345679012346, "cv_mean": 0.8476190476190476, "cv_std": 0.12192708129011962, "feature_selection": {"n_features_original": 22001, "n_features_selected": 22001, "selected_feature_names": ["KIR2DS21", "KIR2DS27", "KIR2DS26", "KIR2DS25", "KIR2DS24", "KIR2DS23", "KIR2DS22", "A1CF", "A2M", "A2ML1", "A3GALT2", "A4GALT", "A4GNT", "AAAS", "AACS", "AADAC", "AADACL2", "AADACL3", "AADACL4", "AADAT", "AAED1", "AAGAB", "AAK11", "AAK12", "AAMDC", "AAMP", "AANAT", "AAR2", "AARD", "AARS", "AARS2", "AASDH", "AASDHPPT1", "AASDHPPT2", "AASS", "AATBC", "AATF", "AATK", "AATK-AS1", "ABAT", "ABCA1", "ABCA10", "ABCA11P", "ABCA11P///ZNF141", "ABCA12", "ABCA13", "ABCA2", "ABCA3", "ABCA4", "ABCA5", "ABCA6", "ABCA7", "ABCA8", "ABCA9", "ABCB1", "ABCB10", "ABCB11", "ABCB4", "ABCB5", "ABCB6", "ABCB7", "ABCB81", "ABCB83", "ABCB82", "ABCB9", "ABCC1", "ABCC10", "ABCC11", "ABCC12", "ABCC13///ABCC13", "ABCC2", "ABCC3", "ABCC4", "ABCC5", "ABCC6", "ABCC6P2///ABCC6P1///ABCC6", "ABCC8", "ABCC9", "ABCD1", "ABCD2", "ABCD3", "ABCD4///ABCD4", "ABCE1", "ABCF11", "ABCF13", "ABCF12", "ABCF2", "ABCF3", "ABCG1", "ABCG2", "ABCG4", "ABCG5", "ABCG8", "ABHD1", "ABHD10", "ABHD11", "ABHD12", "ABHD12B", "ABHD13", "ABHD14A", "ABHD14B", "ABHD15", "ABHD16A1", "ABHD16A2", "ABHD16B1", "ABHD17A1", "ABHD17A5", "ABHD17A4", "ABHD17A3", "ABHD17A2", "ABHD17B", "ABHD17C", "ABHD18", "ABHD2", "ABHD3", "ABHD4", "ABHD5", "ABHD6///ABHD6", "ABHD8", "ABI1", "ABI2", "ABI3", "ABI3BP", "ABL1", "ABL2", "ABLIM1", "ABLIM2", "ABLIM3", "ABO", "ABR", "ABRA", "ABRACL", "ABT1", "ABTB1", "ABTB2", "ACAA1", "ACAA2", "ACACA", "ACACB", "ACAD10", "ACAD8", "ACAD9", "ACADL", "ACADM", "ACADS", "ACADSB", "ACADVL", "ACAN", "ACAP2", "ACAP3", "ACAT1", "ACAT2", "ACBD3", "ACBD4", "ACBD5", "ACBD6", "ACBD7", "ACCS", "ACCS
+2026-05-08 10:48:08,831 INFO: Prisma update attempt for job 53b0dca5-3451-4557-b90f-7137d9e7402c; payload (truncated): {"status": "finished", "modelPath": "artifacts/11/53b0dca5-3451-4557-b90f-7137d9e7402c/model.joblib", "metrics": "Json", "resultsPath": "artifacts/11/53b0dca5-3451-4557-b90f-7137d9e7402c/ranked_genes.csv"}
+2026-05-08 10:48:10,482 INFO: Prisma update successful for job 53b0dca5-3451-4557-b90f-7137d9e7402c on attempt 1
+2026-05-08 10:48:10,482 INFO: DB updated to finished for job 53b0dca5-3451-4557-b90f-7137d9e7402c

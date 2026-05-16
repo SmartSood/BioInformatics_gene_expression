@@ -31,5 +31,45 @@ python -m uvicorn apps.depmap_backend.server:app --reload --port 8001
 cd /Users/smarthsood/Desktop/Gene_startup/gene_web
 source apps/model_backend/venv/bin/activate
 export REDIS_URL="${REDIS_URL:-redis://localhost:6379/0}"
-# Use SimpleWorker on macOS (no per-job fork). Plain `rq worker` often still crashes with objc+fork even if OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES.
 python -m apps.depmap_backend.workers.run_rq_worker
+
+
+# Use SimpleWorker on macOS (no per-job fork). Plain `rq worker` often still crashes with objc+fork even if OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES.
+
+
+cd /Users/smarthsood/Desktop/Gene_startup/gene_web
+source apps/model_backend/venv/bin/activate
+python -m uvicorn apps.embedding_backend.server:app --reload --port 8002
+
+
+
+cd /Users/smarthsood/Desktop/Gene_startup/gene_web
+source apps/model_backend/venv/bin/activate
+export REDIS_URL="${REDIS_URL:-redis://localhost:6379/0}"
+python -m apps.embedding_backend.workers.run_rq_worker
+
+
+
+cd /Users/smarthsood/Desktop/Gene_startup/gene_web
+source apps/model_backend/venv/bin/activate
+python -m uvicorn apps.affinity_backend.server:app --reload --port 8003
+
+
+
+cd /Users/smarthsood/Desktop/Gene_startup/gene_web/apps/auth_backend
+npm run dev
+
+
+
+cd /Users/smarthsood/Desktop/Gene_startup/gene_web
+export REDIS_URL="${REDIS_URL:-redis://localhost:6379/0}"
+redis-cli -u "$REDIS_URL" ping
+redis-cli -u "$REDIS_URL" info server | head -20
+redis-cli -u "$REDIS_URL" keys "rq:queue:*"
+redis-cli -u "$REDIS_URL" llen rq:queue:train
+redis-cli -u "$REDIS_URL" llen rq:queue:depmap
+redis-cli -u "$REDIS_URL" llen rq:queue:embedding
+
+
+
+redis-cli -u "$REDIS_URL" shutdown

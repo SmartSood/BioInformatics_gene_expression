@@ -135,7 +135,7 @@ export default function DepmapCompoundDetailPage() {
    * non-null = pass as `geneSearchName` to the API.
    */
   const [geneSearchOverride, setGeneSearchOverride] = useState<string | null>(
-    null
+    null,
   );
   const [sequenceCopied, setSequenceCopied] = useState(false);
 
@@ -172,7 +172,7 @@ export default function DepmapCompoundDetailPage() {
         if (!res.ok) {
           const errBody = await res.json().catch(() => ({}));
           throw new Error(
-            (errBody as { error?: string }).error || `HTTP ${res.status}`
+            (errBody as { error?: string }).error || `HTTP ${res.status}`,
           );
         }
         const json = (await res.json()) as MolecularResponse;
@@ -185,7 +185,7 @@ export default function DepmapCompoundDetailPage() {
       } catch (e: unknown) {
         if (!cancelled) {
           setError(
-            e instanceof Error ? e.message : "Failed to load molecular data."
+            e instanceof Error ? e.message : "Failed to load molecular data.",
           );
         }
       } finally {
@@ -310,11 +310,13 @@ export default function DepmapCompoundDetailPage() {
                 </label>
                 <p className="text-xs text-slate-500 mb-2">
                   Automatic mode strips suffixes like{" "}
-                  <span className="font-mono text-slate-400">(GDSC2:1086)</span>.
-                  If PubChem still fails or the name is complex, edit below and
-                  search again—the value below is what we send to PubChem and
-                  store as{" "}
-                  <span className="font-mono text-slate-400">compoundQuery</span>{" "}
+                  <span className="font-mono text-slate-400">(GDSC2:1086)</span>
+                  . If PubChem still fails or the name is complex, edit below
+                  and search again—the value below is what we send to PubChem
+                  and store as{" "}
+                  <span className="font-mono text-slate-400">
+                    compoundQuery
+                  </span>{" "}
                   on success.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2">
@@ -442,9 +444,7 @@ export default function DepmapCompoundDetailPage() {
         {loading && (
           <Card color="slate" className="text-center py-16">
             <Loader className="w-12 h-12 text-teal-400 mx-auto mb-4 animate-spin" />
-            <p className="text-slate-400">
-              Loading PubChem and RCSB PDB data…
-            </p>
+            <p className="text-slate-400">Loading PubChem and RCSB PDB data…</p>
           </Card>
         )}
 
@@ -523,7 +523,9 @@ export default function DepmapCompoundDetailPage() {
                         <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
                           {data.pubchem.molecularFormula && (
                             <>
-                              <dt className="text-slate-500">Molecular formula</dt>
+                              <dt className="text-slate-500">
+                                Molecular formula
+                              </dt>
                               <dd className="text-white font-mono">
                                 {data.pubchem.molecularFormula}
                               </dd>
@@ -601,7 +603,9 @@ export default function DepmapCompoundDetailPage() {
                           {data.pubchem.xlogp != null && (
                             <>
                               <dt className="text-slate-500">XLogP</dt>
-                              <dd className="text-slate-200">{data.pubchem.xlogp}</dd>
+                              <dd className="text-slate-200">
+                                {data.pubchem.xlogp}
+                              </dd>
                             </>
                           )}
                           {data.pubchem.tpsa != null && (
@@ -623,9 +627,7 @@ export default function DepmapCompoundDetailPage() {
                           )}
                           {data.pubchem.hBondDonorCount != null && (
                             <>
-                              <dt className="text-slate-500">
-                                H-bond donors
-                              </dt>
+                              <dt className="text-slate-500">H-bond donors</dt>
                               <dd className="text-slate-200">
                                 {data.pubchem.hBondDonorCount}
                               </dd>
@@ -752,10 +754,13 @@ export default function DepmapCompoundDetailPage() {
                           onClick={async () => {
                             try {
                               await navigator.clipboard.writeText(
-                                data.geneProduct!.sequence!.replace(/\s+/g, "")
+                                data.geneProduct!.sequence!.replace(/\s+/g, ""),
                               );
                               setSequenceCopied(true);
-                              window.setTimeout(() => setSequenceCopied(false), 2000);
+                              window.setTimeout(
+                                () => setSequenceCopied(false),
+                                2000,
+                              );
                             } catch {
                               /* ignore */
                             }
@@ -812,10 +817,7 @@ export default function DepmapCompoundDetailPage() {
                       <div className="rounded-md bg-slate-900/80 border border-slate-700/50 p-3 overflow-x-auto">
                         <pre className="font-mono text-[11px] sm:text-xs leading-relaxed text-slate-300 whitespace-pre">
                           {formatUniProtSequenceLines(data.geneProduct.sequence)
-                            .map(
-                              (row) =>
-                                `${row.ruler}\n${row.aa}`
-                            )
+                            .map((row) => `${row.ruler}\n${row.aa}`)
                             .join("\n\n")}
                         </pre>
                       </div>
@@ -951,8 +953,8 @@ export default function DepmapCompoundDetailPage() {
                     onClick={() =>
                       router.push(
                         `/dashboard/depmap/compound/embeddings?gene=${encodeURIComponent(
-                          gene
-                        )}&compound=${encodeURIComponent(compound)}`
+                          gene,
+                        )}&compound=${encodeURIComponent(compound)}`,
                       )
                     }
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600/80 text-white border border-purple-500/50 hover:bg-purple-500/80 text-sm font-medium"

@@ -8,11 +8,13 @@ import {
   Loader,
   LogOut,
   User,
+  Target,
 } from "lucide-react";
 import { Experiment } from "../../../utils/scemma";
 import { useState, useEffect } from "react";
 import { Button } from "@repo/ui/button";
 import { SideCard } from "@repo/ui/sidecard";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   selectedExperimentId: string | null;
@@ -28,6 +30,7 @@ export function Sidebar({
   onLogout,
 }: SidebarProps) {
   const { experiments, loading } = useExperiments();
+  const router = useRouter();
   const [userName, setUserName] = useState<string>("User");
   const [userEmail, setUserEmail] = useState<string>("");
 
@@ -52,16 +55,6 @@ export function Sidebar({
       default:
         return <Clock className="w-4 h-4 text-amber-400" />;
     }
-  };
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat("en-US", {
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(date);
   };
 
   return (
@@ -98,6 +91,14 @@ export function Sidebar({
         >
           <Plus className="w-5 h-5" />
           New Analysis
+        </Button>
+        <Button
+          onClick={() => router.push("/dashboard/affinity")}
+          type="secondary"
+          className="w-full justify-center mt-2"
+        >
+          <Target className="w-5 h-5" />
+          Find Affinity
         </Button>
       </div>
 
