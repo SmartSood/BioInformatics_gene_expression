@@ -7,13 +7,14 @@ from pathlib import Path
 from typing import Tuple
 from client.db import db
 
+from storage.s3_storage import USE_S3, S3_BUCKET, upload_file
+
 try:
     from dotenv import load_dotenv
     load_dotenv()
 except Exception:
     pass
 
-USE_S3 = os.getenv("USE_S3", "false").lower() == "true"
 DATA_DIR = os.getenv("DATA_DIR", "/Users/smarthsood/Desktop/Gene_startup/gene_web/uploads")
 
 if USE_S3:
@@ -102,22 +103,16 @@ async def save_upload(name,description,file, owner_id: str) -> Tuple[str, str]:
 
     # Now decide final storage path / URI
     if USE_S3:
-        # upload temp file to S3 (run blocking boto3 in thread)
         key = f"{owner_id}/{ds_id}/{filename}"
-        uri = f"s3://{S3_BUCKET}/{key}"
         try:
-            await asyncio.to_thread(s3.upload_file, str(tmp_path), S3_BUCKET, key)
+            final_path = await upload_file(tmp_path, key)
         except Exception as e:
             print(f"Error uploading to S3: {e}")
-            # optionally cleanup tmp_path here
             raise
-        # optional: remove tmp file after successful upload
         try:
             tmp_path.unlink(missing_ok=True)
         except Exception:
             pass
-
-        final_path = uri  # store S3 uri in DB
 
     else:
         # move temp file to permanent DATA_DIR path

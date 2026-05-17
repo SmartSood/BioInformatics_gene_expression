@@ -1,0 +1,166 @@
+name: Legacy EKS Deploy (Manual Only)
+
+on:
+  workflow_dispatch:
+
+env:
+  REGISTRY: docker.io
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service:
+          - name: model
+            dockerfile: apps/model_backend/Dockerfile
+            image: ${{ secrets.DOCKER_USERNAME }}/gene-model
+          - name: embedding
+            dockerfile: apps/embedding_backend/Dockerfile
+            image: ${{ secrets.DOCKER_USERNAME }}/gene-embedding
+          - name: depmap
+            dockerfile: apps/depmap_backend/Dockerfile
+            image: ${{ secrets.DOCKER_USERNAME }}/gene-depmap
+          - name: affinity
+            dockerfile: apps/affinity_backend/Dockerfile
+            image: ${{ secrets.DOCKER_USERNAME }}/gene-affinity
+          - name: auth
+            dockerfile: apps/auth_backend/Dockerfile
+            image: ${{ secrets.DOCKER_USERNAME }}/gene-auth
+          - name: web
+            dockerfile: apps/web/Dockerfile
+            image: ${{ secrets.DOCKER_USERNAME }}/gene-web
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push ${{ matrix.service.name }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ${{ matrix.service.dockerfile }}
+          push: true
+          tags: |
+            ${{ matrix.service.image }}:${{ env.IMAGE_TAG }}
+            ${{ matrix.service.image }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-to-eks:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig \
+            --region ${{ secrets.AWS_REGION }} \
+            --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Update image tags in manifests
+        run: |
+          # Update all image references to use the new tag
+          for manifest in k8s/*.yaml; do
+            sed -i "s|docker.io/${{ secrets.DOCKER_USERNAME }}/gene-.*:.*|docker.io/${{ secrets.DOCKER_USERNAME }}/gene-\${service}:${{ env.IMAGE_TAG }}|g" "$manifest" || true
+          done
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f k8s/namespace.yaml
+          kubectl apply -f k8s/configmap.yaml
+          kubectl apply -f k8s/secrets.yaml
+          kubectl apply -f k8s/model-backend.yaml
+          kubectl apply -f k8s/embedding-backend.yaml
+          kubectl apply -f k8s/depmap-backend.yaml
+          kubectl apply -f k8s/affinity-backend.yaml
+          kubectl apply -f k8s/frontend-auth.yaml
+          kubectl apply -f k8s/ingress.yaml
+
+      - name: Wait for rollout
+        run: |
+          kubectl rollout status deployment/model-backend-api -n gene-web --timeout=5m
+          kubectl rollout status deployment/embedding-backend-api -n gene-web --timeout=5m
+          kubectl rollout status deployment/depmap-backend-api -n gene-web --timeout=5m
+          kubectl rollout status deployment/affinity-backend-api -n gene-web --timeout=5m
+          kubectl rollout status deployment/auth-backend-api -n gene-web --timeout=5m
+          kubectl rollout status deployment/web-frontend -n gene-web --timeout=5m
+
+      - name: Verify deployment
+        run: |
+          kubectl get pods -n gene-web
+          kubectl get svc -n gene-web
+
+      - name: Notify deployment status
+        if: always()
+        run: |
+          if [ $? -eq 0 ]; then
+            echo "✅ Deployment successful"
+          else
+            echo "❌ Deployment failed"
+            exit 1
+          fi
+
+  health-check:
+    needs: deploy-to-eks
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig \
+            --region ${{ secrets.AWS_REGION }} \
+            --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Health check API endpoints
+        run: |
+          # Get the ingress IP
+          INGRESS_IP=$(kubectl get ingress gene-web-ingress -n gene-web -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+          
+          echo "Testing endpoints at $INGRESS_IP"
+          
+          # Test model backend
+          curl -f http://$INGRESS_IP/models/docs || true
+          
+          # Test embeddings
+          curl -f http://$INGRESS_IP/embeddings/docs || true
+          
+          # Test associations
+          curl -f http://$INGRESS_IP/associations/docs || true
+          
+          echo "Health checks completed"

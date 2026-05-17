@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shared-config
+  namespace: gene-web
+data:
+  REDIS_URL: redis://redis-elasticache:6379/0
+  USE_S3: "true"
+  S3_BUCKET: gene-web-data
+  S3_REGION: us-east-1
+  PYTHONUNBUFFERED: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: model-backend-config
+  namespace: gene-web
+data:
+  MODEL_BACKEND_PORT: "8000"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: embedding-backend-config
+  namespace: gene-web
+data:
+  EMBEDDING_BACKEND_PORT: "8002"
+  HF_HOME: /tmp/hf_cache
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: depmap-backend-config
+  namespace: gene-web
+data:
+  DEPMAP_BACKEND_PORT: "8001"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: affinity-backend-config
+  namespace: gene-web
+data:
+  AFFINITY_BACKEND_PORT: "8003"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: auth-backend-config
+  namespace: gene-web
+data:
+  AUTH_BACKEND_PORT: "3001"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-frontend-config
+  namespace: gene-web
+data:
+  WEB_FRONTEND_PORT: "3000"
+  NEXT_PUBLIC_API_URL: http://api.EC2_PUBLIC_IP.nip.io
+  NEXT_PUBLIC_AUTH_URL: http://auth.EC2_PUBLIC_IP.nip.io

@@ -1,0 +1,187 @@
+# Embedding Backend API Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: embedding-backend-api
+  namespace: gene-web
+  labels:
+    app: embedding-backend
+    component: api
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: embedding-backend
+      component: api
+  template:
+    metadata:
+      labels:
+        app: embedding-backend
+        component: api
+    spec:
+      containers:
+        - name: embedding-backend
+          image: smarthcnbl/gene-embedding:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8002
+              name: http
+          envFrom:
+            - configMapRef:
+                name: shared-config
+            - configMapRef:
+                name: embedding-backend-config
+          env:
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: S3_BUCKET
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: S3_ACCESS_KEY
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: S3_SECRET_KEY
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: REDIS_URL
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 4Gi
+            limits:
+              cpu: 4000m
+              memory: 16Gi
+          livenessProbe:
+            httpGet:
+              path: /docs
+              port: 8002
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /docs
+              port: 8002
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 2
+---
+# Embedding Backend API Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: embedding-backend
+  namespace: gene-web
+  labels:
+    app: embedding-backend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8002
+      targetPort: 8002
+      protocol: TCP
+      name: http
+  selector:
+    app: embedding-backend
+    component: api
+---
+# Embedding Backend Worker Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: embedding-backend-worker
+  namespace: gene-web
+  labels:
+    app: embedding-backend
+    component: worker
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: embedding-backend
+      component: worker
+  template:
+    metadata:
+      labels:
+        app: embedding-backend
+        component: worker
+    spec:
+      containers:
+        - name: embedding-backend-worker
+          image: smarthcnbl/gene-embedding:latest
+          imagePullPolicy: Always
+          command: ["python", "-m", "rq.cli", "worker"]
+          envFrom:
+            - configMapRef:
+                name: shared-config
+            - configMapRef:
+                name: embedding-backend-config
+          env:
+            - name: S3_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: S3_BUCKET
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: S3_ACCESS_KEY
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-credentials
+                  key: S3_SECRET_KEY
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: redis-credentials
+                  key: REDIS_URL
+          resources:
+            requests:
+              cpu: 1000m
+              memory: 4Gi
+            limits:
+              cpu: 4000m
+              memory: 16Gi
+---
+# Embedding Backend HPA
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: embedding-backend-api-hpa
+  namespace: gene-web
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: embedding-backend-api
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70

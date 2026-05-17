@@ -1,5 +1,6 @@
 # workers/train_worker.py
 import os
+import tempfile
 from pathlib import Path
 import asyncio
 from typing import Optional, Any, Dict
@@ -12,6 +13,7 @@ import traceback
 # DB helpers
 from client.db import db, connect_db
 from workers.db_utils import sanitize_metrics, update_trainingrun_with_retries
+from storage.s3_storage import USE_S3, upload_file
 
 # Optional numpy/pandas lazy imports
 try:
@@ -24,7 +26,7 @@ try:
 except Exception:
     pd = None
 
-ARTIFACTS_DIR = os.getenv("ARTIFACTS_DIR", "./artifacts")
+ARTIFACTS_DIR = os.getenv("ARTIFACTS_DIR", os.path.join(tempfile.gettempdir(), "gene_web_artifacts"))
 
 # logger: reuse train_worker logger (or create if missing)
 logger = logging.getLogger("train_worker")
@@ -206,6 +208,13 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
             
             # Get model_path from result (this is the actual path where model was saved)
             actual_model_path = (result or {}).get("model_path") or model_path
+            if actual_model_path and not str(actual_model_path).startswith("s3://") and USE_S3:
+                model_path_obj = Path(str(actual_model_path))
+                if model_path_obj.exists():
+                    actual_model_path = await upload_file(
+                        model_path_obj,
+                        f"{owner_id}/{job_id}/{model_path_obj.name}",
+                    )
             
             # First try to get metrics from result
             raw_metrics = (result or {}).get("metrics")
@@ -300,6 +309,13 @@ def run_train(dataset_uri: str, config: dict, owner_id: str):
             # Prepare payload and update DB (awaiting the async update helper)
             if prisma:
                 ranked_genes_csv = (result or {}).get("ranked_genes_csv")
+                if ranked_genes_csv and not str(ranked_genes_csv).startswith("s3://") and USE_S3:
+                    ranked_path = Path(str(ranked_genes_csv))
+                    if ranked_path.exists():
+                        ranked_genes_csv = await upload_file(
+                            ranked_path,
+                            f"{owner_id}/{job_id}/{ranked_path.name}",
+                        )
                 payload = {
                     "status": "finished",
                     "modelPath": actual_model_path,

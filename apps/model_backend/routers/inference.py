@@ -6,6 +6,7 @@ import pandas as pd
 
 from auth.deps import get_current_user
 from scemma.model import PredictRequest, PredictResponse
+from storage.s3_storage import download_to_temp, is_s3_uri
 
 router = APIRouter(prefix="/models", tags=["inference"])
 
@@ -19,10 +20,14 @@ def _model_path(user_id: str, job_id: str) -> Path:
 @router.post("/{job_id}/predict", response_model=PredictResponse)
 async def predict_by_job(job_id: str, req: PredictRequest, user=Depends(get_current_user)):
     path = _model_path(user["sub"], job_id)
-    if not path.exists():
-        raise HTTPException(status_code=404, detail="Model not found for this job")
+    if is_s3_uri(str(path)):
+        local_path = await download_to_temp(str(path), suffix=".joblib")
+    else:
+        local_path = path
+        if not local_path.exists():
+            raise HTTPException(status_code=404, detail="Model not found for this job")
 
-    pipe = load(path)
+    pipe = load(local_path)
     df = pd.DataFrame(req.records)
 
     preds = pipe.predict(df)

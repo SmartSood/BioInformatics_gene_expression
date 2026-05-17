@@ -6,6 +6,7 @@ from auth.deps import get_current_user
 from client.db import db
 from workers.queue_worker import get_queue
 from typing import Optional, Dict, Any
+from storage.s3_storage import download_to_temp, is_s3_uri
 router = APIRouter(prefix="/experiments", tags=["experiments"])
 
 # Get artifacts directory - same logic as train_worker.py
@@ -30,39 +31,28 @@ async def download_ranked_genes_csv(experiment_id: str, user=Depends(get_current
 
     results_path = getattr(experiment, "resultsPath", None)
 
-    candidate_paths = []
-    if results_path:
-        p = Path(results_path)
-        if not p.is_absolute():
-            # Try relative to current working directory
-            candidate_paths.append(Path.cwd() / p)
-            # Also try relative to model_backend directory
-            model_backend_dir = Path(__file__).resolve().parent.parent
-            candidate_paths.append(model_backend_dir / p)
-        else:
-            candidate_paths.append(p)
-
-    # Fallback: reconstruct expected artifacts path even if resultsPath was never saved
-    # Use same logic as train_worker.py - ARTIFACTS_DIR defaults to "./artifacts"
-    # Pattern: artifacts/<userId>/<job_id>/ranked_genes.csv
-    artifacts_base = Path(ARTIFACTS_DIR)
-    if not artifacts_base.is_absolute():
-        # Resolve relative to current working directory (same as train_worker does)
-        artifacts_base = Path.cwd() / artifacts_base
-    
-    derived_path = artifacts_base / str(experiment.userId) / experiment.id / "ranked_genes.csv"
-    candidate_paths.append(derived_path)
-    
-    # Also try relative to model_backend directory (in case backend runs from project root)
-    model_backend_dir = Path(__file__).resolve().parent.parent
-    model_backend_artifacts = model_backend_dir / "artifacts" / str(experiment.userId) / experiment.id / "ranked_genes.csv"
-    candidate_paths.append(model_backend_artifacts)
-
     path = None
-    for p in candidate_paths:
-        if p.exists():
-            path = p
-            break
+    if results_path:
+        if is_s3_uri(str(results_path)):
+            path = await download_to_temp(str(results_path), suffix=".csv")
+        else:
+            p = Path(results_path)
+            if not p.is_absolute():
+                candidate_paths = [Path.cwd() / p, Path(__file__).resolve().parent.parent / p]
+                for candidate in candidate_paths:
+                    if candidate.exists():
+                        path = candidate
+                        break
+            elif p.exists():
+                path = p
+
+    if path is None:
+        artifacts_base = Path(ARTIFACTS_DIR)
+        if not artifacts_base.is_absolute():
+            artifacts_base = Path.cwd() / artifacts_base
+        derived_path = artifacts_base / str(experiment.userId) / experiment.id / "ranked_genes.csv"
+        if derived_path.exists():
+            path = derived_path
 
     if path is None:
         # Preserve a clear error for the client

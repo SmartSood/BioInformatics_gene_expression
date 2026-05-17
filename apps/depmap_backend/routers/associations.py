@@ -20,6 +20,8 @@ from client.db import db, connect_db
 from prisma import Json
 import logging
 
+from storage.s3_storage import download_to_temp, is_s3_uri
+
 logger = logging.getLogger("depmap_backend.associations")
 
 router = APIRouter(prefix="/associations", tags=["associations"])
@@ -99,15 +101,17 @@ async def create_gene_association(
                     for gene in cleaned_genes:
                         logger.info(f"Checking gene: '{gene}'")
                         if gene in normalized_depmap_results:
-                            file_path = Path(normalized_depmap_results[gene])
-                            logger.info(f"  Found in DB, checking file: {file_path}")
-                            logger.info(f"  File exists: {file_path.exists()}")
-                            if file_path.exists():
-                                existing_files[gene] = str(file_path)
-                                logger.info(f"  ✓ Found existing file for gene {gene}: {file_path}")
+                            file_value = normalized_depmap_results[gene]
+                            file_path = Path(file_value)
+                            logger.info(f"  Found in DB, checking file: {file_value}")
+                            file_exists = is_s3_uri(str(file_value)) or file_path.exists()
+                            logger.info(f"  File exists: {file_exists}")
+                            if file_exists:
+                                existing_files[gene] = str(file_value)
+                                logger.info(f"  ✓ Found existing file for gene {gene}: {file_value}")
                             else:
                                 missing_genes.append(gene)
-                                logger.warning(f"  ✗ File for gene {gene} doesn't exist: {file_path}")
+                                logger.warning(f"  ✗ File for gene {gene} doesn't exist: {file_value}")
                         else:
                             missing_genes.append(gene)
                             logger.warning(f"  ✗ Gene '{gene}' not found in depmap_results. Available keys: {list(normalized_depmap_results.keys())}")
@@ -231,9 +235,13 @@ async def download_association_by_gene(
         if gene_name_clean not in normalized_depmap_results:
             raise HTTPException(404, f"No DepMap results found for gene: {gene_name_clean}. Available genes: {list(normalized_depmap_results.keys())}")
         
-        csv_path = Path(normalized_depmap_results[gene_name_clean])
-        if not csv_path.exists():
-            raise HTTPException(404, "CSV file not found on server")
+        csv_value = normalized_depmap_results[gene_name_clean]
+        if is_s3_uri(str(csv_value)):
+            csv_path = await download_to_temp(str(csv_value), suffix=".csv")
+        else:
+            csv_path = Path(csv_value)
+            if not csv_path.exists():
+                raise HTTPException(404, "CSV file not found on server")
         
         return FileResponse(
             str(csv_path),
@@ -282,9 +290,13 @@ async def download_association_csv(
     if not result or "csv_path" not in result:
         raise HTTPException(404, "CSV file not found in job result")
 
-    csv_path = Path(result["csv_path"])
-    if not csv_path.exists():
-        raise HTTPException(404, "CSV file not found on server")
+    csv_value = result["csv_path"]
+    if is_s3_uri(str(csv_value)):
+        csv_path = await download_to_temp(str(csv_value), suffix=".csv")
+    else:
+        csv_path = Path(csv_value)
+        if not csv_path.exists():
+            raise HTTPException(404, "CSV file not found on server")
 
     # Additional security: verify path contains user ID
     user_id = str(user["sub"])

@@ -1,0 +1,102 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gene-web-ingress
+  namespace: gene-web
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rate-limit: "100"
+    nginx.ingress.kubernetes.io/proxy-body-size: "500m"
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - gene-web.example.com
+    - api.gene-web.example.com
+    - auth.gene-web.example.com
+    secretName: gene-web-tls
+  rules:
+  # Web frontend
+  - host: gene-web.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-frontend
+            port:
+              number: 3000
+  # Auth backend
+  - host: auth.gene-web.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-backend
+            port:
+              number: 3001
+  # API gateway (model backend)
+  - host: api.gene-web.example.com
+    http:
+      paths:
+      - path: /models
+        pathType: Prefix
+        backend:
+          service:
+            name: model-backend
+            port:
+              number: 8000
+      - path: /jobs
+        pathType: Prefix
+        backend:
+          service:
+            name: model-backend
+            port:
+              number: 8000
+      - path: /experiments
+        pathType: Prefix
+        backend:
+          service:
+            name: model-backend
+            port:
+              number: 8000
+      - path: /embeddings
+        pathType: Prefix
+        backend:
+          service:
+            name: embedding-backend
+            port:
+              number: 8002
+      - path: /associations
+        pathType: Prefix
+        backend:
+          service:
+            name: depmap-backend
+            port:
+              number: 8001
+      - path: /affinity
+        pathType: Prefix
+        backend:
+          service:
+            name: affinity-backend
+            port:
+              number: 8003
+---
+# Certificate Issuer (for Let's Encrypt)
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: admin@gene-web.example.com
+    privateKeySecretRef:
+      name: letsencrypt-prod-key
+    solvers:
+    - http01:
+        ingress:
+          class: nginx

@@ -17,6 +17,8 @@ from rdkit import Chem
 from transformers import AutoModel, AutoTokenizer, BertModel, BertTokenizer
 from unimol_tools import UniMolRepr
 
+from storage.s3_storage import USE_S3, S3_BUCKET, upload_file_sync, build_s3_uri
+
 # Paths
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 EMBEDDING_BUNDLE_ROOT = PROJECT_ROOT / "apps" / "embedding_bundle"
@@ -36,7 +38,7 @@ HF_CACHE_DIR = Path(
 OUTPUT_ROOT = Path(
     os.getenv(
         "EMBEDDING_OUTPUT_DIR",
-        str(PROJECT_ROOT / "apps" / "embedding_backend" / "outputs"),
+        str(Path(tempfile.gettempdir()) / "gene_web_embedding_outputs"),
     )
 )
 
@@ -321,6 +323,20 @@ def _write_artifacts(
             if include_combined_csv:
                 zf.write(combined_csv, arcname=combined_csv.name)
         artifacts["zip_file"] = str(zip_path)
+
+    if USE_S3:
+        s3_base = f"embedding_backend/{user_id}/{request_id}"
+        uploaded: Dict[str, str] = {
+            "input_metadata_csv": upload_file_sync(metadata_csv, f"{s3_base}/{metadata_csv.name}"),
+            "drug_embeddings_csv": upload_file_sync(drug_csv, f"{s3_base}/{drug_csv.name}"),
+            "gene_embeddings_csv": upload_file_sync(gene_csv, f"{s3_base}/{gene_csv.name}"),
+        }
+        uploaded["output_dir"] = build_s3_uri(S3_BUCKET, f"{s3_base}/") if S3_BUCKET else str(output_dir)
+        if include_combined_csv:
+            uploaded["combined_embeddings_csv"] = upload_file_sync(combined_csv, f"{s3_base}/{combined_csv.name}")
+        if create_zip:
+            uploaded["zip_file"] = upload_file_sync(zip_path, f"{s3_base}/{zip_path.name}")
+        artifacts.update(uploaded)
 
     return artifacts
 

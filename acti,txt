@@ -1,0 +1,20 @@
+Set GitHub Secrets (in repo Settings → Secrets)
+
+DOCKER_USERNAME
+DOCKER_PASSWORD (Docker Hub token)
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_REGION (e.g., us-east-1)
+EKS_CLUSTER_NAME
+Update k8s manifests with actual values:
+
+Replace docker-registry.example.com/ → your Docker Hub username
+Replace example.com → your actual domain
+Update secret values in secrets.yaml (S3 bucket, DB URL, JWT secret, etc.)
+Setup AWS infrastructure (one-time):
+
+RDS PostgreSQL database
+ElastiCache Redis cluster
+S3 bucket
+IAM role
+Push to main → workflow auto-triggers, builds all images, deploys to EKS

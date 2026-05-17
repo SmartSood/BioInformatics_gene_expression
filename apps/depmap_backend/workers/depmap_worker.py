@@ -5,6 +5,7 @@ This worker loads datasets once (caching) and processes gene associations.
 """
 import os
 import sys
+import tempfile
 from pathlib import Path
 from typing import List, Dict, Any
 import logging
@@ -38,6 +39,8 @@ from depmap_associations import (
 
 import pandas as pd
 import csv
+
+from storage.s3_storage import USE_S3, upload_file_sync
 
 logger = logging.getLogger("depmap_worker")
 
@@ -201,12 +204,24 @@ def run_depmap_association(genes: List[str], user_id: str, experiment_id: str, f
         )
         
         # Save CSV organized by userId/experimentId
-        output_dir = Path(__file__).resolve().parents[2] / "depmap_backend" / "outputs" / str(user_id) / str(experiment_id)
+        output_dir = Path(os.getenv("DEPMAP_OUTPUT_DIR", str(Path(tempfile.gettempdir()) / "gene_web_depmap_outputs"))) / str(user_id) / str(experiment_id)
         output_dir.mkdir(parents=True, exist_ok=True)
         csv_path = output_dir / f"{job_id}_associations.csv"
         
         combined.to_csv(csv_path, index=False, quoting=csv.QUOTE_MINIMAL)
         logger.info(f"Wrote associations for {len(genes)} gene(s) to {csv_path}")
+
+        result_csv_path = str(csv_path)
+        if USE_S3:
+            try:
+                result_csv_path = upload_file_sync(
+                    csv_path,
+                    f"depmap_backend/{user_id}/{experiment_id}/{csv_path.name}",
+                )
+            except Exception as upload_error:
+                logger.error(f"Failed to upload DepMap CSV to S3: {upload_error}")
+                logger.error(traceback.format_exc())
+                raise
         
         # Save file locations to database (if experiment_id is valid)
         if experiment_id != "default":
@@ -248,8 +263,8 @@ def run_depmap_association(genes: List[str], user_id: str, experiment_id: str, f
                         
                         # Update with new gene file locations (genes are already normalized to uppercase)
                         for gene in genes:
-                            existing_results[gene] = str(csv_path)
-                            logger.info(f"Adding/updating gene {gene} -> {csv_path}")
+                            existing_results[gene] = result_csv_path
+                            logger.info(f"Adding/updating gene {gene} -> {result_csv_path}")
                         
                         logger.info(f"Final results to save: {list(existing_results.keys())}")
                         
@@ -291,7 +306,7 @@ def run_depmap_association(genes: List[str], user_id: str, experiment_id: str, f
                 logger.error(traceback.format_exc())
         
         return {
-            "csv_path": str(csv_path),
+            "csv_path": result_csv_path,
             "gene_count": len(genes),
             "association_count": len(combined),
         }

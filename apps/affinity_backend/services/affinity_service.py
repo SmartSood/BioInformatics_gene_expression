@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import re
 import uuid
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Tuple
@@ -13,6 +14,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from storage.s3_storage import USE_S3, upload_file_sync
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_CHECKPOINT = PROJECT_ROOT / "apps" / "affinity" / "gene_embeddings.pth"
@@ -20,7 +23,7 @@ CHECKPOINT_PATH = Path(os.getenv("AFFINITY_CHECKPOINT_PATH", str(DEFAULT_CHECKPO
 OUTPUT_ROOT = Path(
     os.getenv(
         "AFFINITY_OUTPUT_DIR",
-        str(PROJECT_ROOT / "apps" / "affinity_backend" / "outputs"),
+        str(Path(tempfile.gettempdir()) / "gene_web_affinity_outputs"),
     )
 )
 
@@ -255,7 +258,7 @@ def predict_affinity(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def save_prediction_csv(user_id: str, drug_name: str, gene_name: str, df_out: pd.DataFrame) -> Tuple[str, Path]:
+def save_prediction_csv(user_id: str, drug_name: str, gene_name: str, df_out: pd.DataFrame) -> Tuple[str, str]:
     request_id = str(uuid.uuid4())
     user_dir = OUTPUT_ROOT / user_id / request_id
     user_dir.mkdir(parents=True, exist_ok=True)
@@ -268,7 +271,9 @@ def save_prediction_csv(user_id: str, drug_name: str, gene_name: str, df_out: pd
     filename = f"{safe_drug}_{safe_gene}_affinity_predictions.csv"
     out_path = user_dir / filename
     df_out.to_csv(out_path, index=False)
-    return request_id, out_path
+    if USE_S3:
+        return request_id, upload_file_sync(out_path, f"affinity_backend/{user_id}/{request_id}/{filename}")
+    return request_id, str(out_path)
 
 
 def build_sample_csv() -> pd.DataFrame:

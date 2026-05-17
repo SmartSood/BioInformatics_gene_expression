@@ -12,6 +12,7 @@ from apps.embedding_backend.auth.deps import get_current_user
 from apps.embedding_backend.services.embedding_service import compute_embeddings
 from apps.embedding_backend.workers.embedding_worker import run_embedding_job
 from apps.embedding_backend.workers.queue_worker import get_queue
+from storage.s3_storage import download_to_temp, is_s3_uri
 
 router = APIRouter(prefix="/embeddings", tags=["embeddings"])
 
@@ -147,9 +148,12 @@ async def download_embedding_artifacts(
     if not artifact:
         raise HTTPException(404, f"Artifact not available for format: {format}")
 
-    file_path = Path(artifact)
-    if not file_path.exists():
-        raise HTTPException(404, "Artifact file missing")
+    if is_s3_uri(str(artifact)):
+        file_path = await download_to_temp(str(artifact), suffix=".zip" if format == "zip" else ".csv")
+    else:
+        file_path = Path(artifact)
+        if not file_path.exists():
+            raise HTTPException(404, "Artifact file missing")
 
     media_type = "application/zip" if format == "zip" else "text/csv"
     return FileResponse(path=file_path, media_type=media_type, filename=file_path.name)
