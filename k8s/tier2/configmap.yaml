@@ -7,7 +7,16 @@ data:
   REDIS_URL: redis://redis-elasticache:6379/0
   USE_S3: "true"
   S3_BUCKET: gene-web-data
-  S3_REGION: us-east-1
+  # ap-south-1 is where the actual bucket lives (it was left at the
+  # us-east-1 placeholder from before the region was decided, which
+  # apparently boto3 tolerates via redirect handling but s3fs/aiobotocore
+  # does not - it fails outright with a 403 rather than redirecting).
+  S3_REGION: ap-south-1
+  # s3_storage.py reads the custom S3_REGION above, but s3fs (used by
+  # pandas/fsspec for direct s3:// reads) follows the standard AWS SDK
+  # env vars instead, which were never set at all.
+  AWS_DEFAULT_REGION: ap-south-1
+  AWS_REGION: ap-south-1
   PYTHONUNBUFFERED: "1"
   PYTHONDONTWRITEBYTECODE: "1"
   # Tier 1's public address - the frontend calls Tier 2 cross-origin
