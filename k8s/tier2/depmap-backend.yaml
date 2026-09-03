@@ -126,6 +126,16 @@ spec:
           envFrom:
             - configMapRef:
                 name: shared-config
+          env:
+            # depmap_worker.py's update_database() writes results back via
+            # Prisma after computing them - was missing here (only added to
+            # the API container earlier), so every job "succeeded" but
+            # silently failed to persist its actual results.
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: database-credentials
+                  key: DATABASE_URL
           # OOMKilled repeatedly at the original 1Gi limit - a single
           # association job loads the full 543MB expression CSV plus
           # model/GDSC/CTRP/PRISM metadata into pandas DataFrames, which
