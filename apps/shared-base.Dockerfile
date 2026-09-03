@@ -8,9 +8,12 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1
 
+# libatomic1: required only by the Node runtime that prisma-client-py's CLI
+# bundles internally to run codegen (`prisma generate` below), a build-time
+# step - not needed once the client is generated.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        build-essential gcc g++ git libgomp1 libssl-dev libffi-dev \
+        build-essential gcc g++ git libgomp1 libssl-dev libffi-dev libatomic1 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /install
@@ -54,11 +57,45 @@ RUN python -m pip install --upgrade pip && \
 # installed above (numpy directly, scipy transitively via scikit-learn).
 RUN python -m pip install --target=/install --no-deps xgboost
 
+# python-multipart: required by FastAPI for any endpoint that accepts
+# UploadFile/Form data (model_backend, embedding_backend, affinity_backend
+# all have file-upload routes) - not pulled in automatically by fastapi
+# itself.
+RUN python -m pip install --target=/install python-multipart
+
+# Generate the Prisma Python client once here (not per-service): every
+# backend that touches the DB does `from prisma import Prisma`, which fails
+# at runtime with "Client hasn't been generated yet" unless `prisma generate`
+# has run against packages/db/prisma/schema.prisma first. Generating into
+# /install (the site-packages payload copied into every service image)
+# means each service's Dockerfile needs no changes or extra PYTHONPATH.
+# --generator py_client skips the sibling `prisma-client-js` generator block,
+# which needs an npm/Node project we don't have in this Python image.
+COPY packages/db/prisma /build/packages/db/prisma
+# A normal (non --target) install here, unlike the main dependency install
+# above: `pip install --target=` doesn't create the `prisma-client-py`
+# console-script entry point, which Prisma's own CLI shells out to as a
+# subprocess during generate - it needs to actually be on PATH.
+RUN pip install prisma && \
+    DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder" \
+    prisma generate --generator py_client --schema=/build/packages/db/prisma/schema.prisma && \
+    rm -rf /install/prisma && \
+    cp -r /build/packages/db/generated/python/prisma /install/prisma
+
 # Runtime stage
 FROM python:3.13-slim
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
+
+# libgomp1: OpenMP runtime used by scikit-learn/xgboost/torch at inference
+# time. libxrender1/libxext6: X11 rendering libs that rdkit.Chem.Draw needs
+# just to *import* (pulled in transitively via unimol-tools ->
+# rdkit.Chem.PandasTools), even though nothing here renders to a display.
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        libgomp1 libxrender1 libxext6 libexpat1 \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
