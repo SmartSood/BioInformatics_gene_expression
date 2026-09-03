@@ -63,6 +63,12 @@ RUN python -m pip install --target=/install --no-deps xgboost
 # itself.
 RUN python -m pip install --target=/install python-multipart
 
+# s3fs: lets pandas/fsspec read/write s3:// URIs directly (e.g.
+# pd.read_csv("s3://...")) - train_worker.py does this for dataset files
+# already uploaded to S3. Without it, fsspec raises "Install s3fs to
+# access S3" the first time a job actually reads one.
+RUN python -m pip install --target=/install s3fs
+
 # Generate the Prisma Python client once here (not per-service): every
 # backend that touches the DB does `from prisma import Prisma`, which fails
 # at runtime with "Client hasn't been generated yet" unless `prisma generate`
