@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: embedding-backend
-          image: smarthcnbl/gene-embedding:9f85baa
+          image: smarthcnbl/gene-embedding:fbb466c
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8002
@@ -114,7 +114,7 @@ spec:
     spec:
       containers:
         - name: embedding-backend-worker
-          image: smarthcnbl/gene-embedding:9f85baa
+          image: smarthcnbl/gene-embedding:fbb466c
           imagePullPolicy: IfNotPresent
           # NOT `rq.cli worker` (defaults to the "default" queue, which
           # nothing ever enqueues to - embeddings.py enqueues to
