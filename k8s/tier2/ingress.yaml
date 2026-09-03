@@ -11,6 +11,17 @@ spec:
     - host: api.EC2_PUBLIC_IP.nip.io
       http:
         paths:
+          # model-backend's actual FastAPI router prefixes (verified against
+          # apps/model_backend/routers/*.py) - every one of these must be
+          # listed, since Traefik forwards the matched path unchanged with
+          # no rewrite, and there's no catch-all route on the backend side.
+          - path: /health
+            pathType: Exact
+            backend:
+              service:
+                name: model-backend
+                port:
+                  number: 8000
           - path: /models
             pathType: Prefix
             backend:
@@ -26,6 +37,27 @@ spec:
                 port:
                   number: 8000
           - path: /experiments
+            pathType: Prefix
+            backend:
+              service:
+                name: model-backend
+                port:
+                  number: 8000
+          - path: /dataset
+            pathType: Prefix
+            backend:
+              service:
+                name: model-backend
+                port:
+                  number: 8000
+          - path: /datasets
+            pathType: Prefix
+            backend:
+              service:
+                name: model-backend
+                port:
+                  number: 8000
+          - path: /train
             pathType: Prefix
             backend:
               service:
