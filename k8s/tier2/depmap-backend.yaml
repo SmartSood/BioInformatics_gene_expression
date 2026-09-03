@@ -118,7 +118,11 @@ spec:
         - name: depmap-backend-worker
           image: smarthcnbl/gene-depmap:706a4e0
           imagePullPolicy: IfNotPresent
-          command: ["python", "-m", "rq.cli", "worker"]
+          # NOT `rq.cli worker` (defaults to the "default" queue, which
+          # nothing ever enqueues to - associations.py enqueues to
+          # "depmap" specifically). This is the purpose-built entrypoint
+          # that already listens on the right queue.
+          command: ["python", "-m", "apps.depmap_backend.workers.run_rq_worker"]
           envFrom:
             - configMapRef:
                 name: shared-config

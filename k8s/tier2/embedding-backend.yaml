@@ -116,7 +116,11 @@ spec:
         - name: embedding-backend-worker
           image: smarthcnbl/gene-embedding:706a4e0
           imagePullPolicy: IfNotPresent
-          command: ["python", "-m", "rq.cli", "worker"]
+          # NOT `rq.cli worker` (defaults to the "default" queue, which
+          # nothing ever enqueues to - embeddings.py enqueues to
+          # "embedding" specifically). This is the purpose-built
+          # entrypoint that already listens on the right queue.
+          command: ["python", "-m", "apps.embedding_backend.workers.run_rq_worker"]
           envFrom:
             - configMapRef:
                 name: shared-config

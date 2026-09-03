@@ -118,7 +118,11 @@ spec:
         - name: model-backend-worker
           image: smarthcnbl/gene-model:706a4e0
           imagePullPolicy: IfNotPresent
-          command: ["python", "-m", "rq.cli", "worker"]
+          # NOT `rq.cli worker` (defaults to the "default" queue, which
+          # nothing ever enqueues to - train.py enqueues to "train"
+          # specifically). This is the purpose-built entrypoint that
+          # already listens on the right queue.
+          command: ["python", "-m", "apps.model_backend.workers.rq_worker"]
           envFrom:
             - configMapRef:
                 name: shared-config
