@@ -17,7 +17,10 @@ async def connect_db() -> Prisma:
     """Ensure prisma client is connected in this process/event loop."""
     try:
         if not db.is_connected():
-            await db.connect()
+            # Default engine-connect timeout (~10s) is too tight for this
+            # binary's cold-start time on this hardware - startup logs
+            # showed the connection attempt failing right around 10s in.
+            await db.connect(timeout=30)
     except Exception:
         # bubble up or let caller handle (we'll print from caller)
         raise
