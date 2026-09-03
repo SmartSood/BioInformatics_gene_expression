@@ -127,6 +127,13 @@ spec:
             - configMapRef:
                 name: shared-config
           env:
+            # pipeline.py defaults to a local ./mlruns filesystem tracking
+            # store. Newer MLflow versions hard-block plain filesystem
+            # tracking unless explicitly opted into - a single-node
+            # in-container store is exactly the intended use case here,
+            # no DB-backed tracking server needed.
+            - name: MLFLOW_ALLOW_FILE_STORE
+              value: "true"
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
