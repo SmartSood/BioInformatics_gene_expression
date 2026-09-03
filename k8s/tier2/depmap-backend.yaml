@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: depmap-backend
-          image: smarthcnbl/gene-depmap:IMAGE_TAG
+          image: smarthcnbl/gene-depmap:4f62c03
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8001
@@ -105,7 +105,7 @@ spec:
     spec:
       containers:
         - name: depmap-backend-worker
-          image: smarthcnbl/gene-depmap:IMAGE_TAG
+          image: smarthcnbl/gene-depmap:4f62c03
           imagePullPolicy: IfNotPresent
           command: ["python", "-m", "rq.cli", "worker"]
           envFrom:
