@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: model-backend
-          image: smarthcnbl/gene-model:5b0d26b
+          image: smarthcnbl/gene-model:706a4e0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
@@ -116,7 +116,7 @@ spec:
     spec:
       containers:
         - name: model-backend-worker
-          image: smarthcnbl/gene-model:5b0d26b
+          image: smarthcnbl/gene-model:706a4e0
           imagePullPolicy: IfNotPresent
           command: ["python", "-m", "rq.cli", "worker"]
           envFrom:
