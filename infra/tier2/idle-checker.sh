@@ -1,9 +1,11 @@
 #!/bin/bash
 # Runs every IDLE_CHECK_INTERVAL (via systemd timer) on Tier 2 itself.
 # Stops the instance once no real ingress traffic has been seen for
-# IDLE_THRESHOLD_MINUTES. Health/readiness probes never reach Traefik
-# (kubelet hits each pod directly), so any line in the Traefik access log
-# is genuine external traffic.
+# IDLE_THRESHOLD_MINUTES. Kubelet health/readiness probes never reach
+# Traefik (they hit each pod directly), but Traefik's own --ping=true
+# self-check does show up in this same access log as constant "/ping"
+# noise every few seconds - excluded below, or this would never see
+# "idle" and the instance would run 24/7 regardless of real usage.
 set -euo pipefail
 
 IDLE_THRESHOLD_MINUTES="${IDLE_THRESHOLD_MINUTES:-20}"
@@ -20,7 +22,8 @@ if [[ -z "${TRAEFIK_POD}" ]]; then
 fi
 
 SINCE="${IDLE_THRESHOLD_MINUTES}m"
-RECENT_REQUESTS="$(kubectl logs -n kube-system "${TRAEFIK_POD}" --since="${SINCE}" 2>/dev/null | grep -c '"RequestPath"' || true)"
+RECENT_REQUESTS="$(kubectl logs -n kube-system "${TRAEFIK_POD}" --since="${SINCE}" 2>/dev/null \
+  | grep '"RequestPath"' | grep -cv '"RequestPath":"/ping"' || true)"
 
 if [[ "${RECENT_REQUESTS}" -gt 0 ]]; then
   log "saw ${RECENT_REQUESTS} request(s) in the last ${IDLE_THRESHOLD_MINUTES}m, staying up"
