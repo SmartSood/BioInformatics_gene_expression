@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 from pathlib import Path
 
@@ -21,8 +22,11 @@ logging.basicConfig(
 logger = logging.getLogger("apps.embedding_backend.server")
 
 origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    o.strip()
+    for o in os.getenv(
+        "CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
+    ).split(",")
+    if o.strip()
 ]
 
 

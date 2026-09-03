@@ -21,6 +21,7 @@ if str(APP_DIR) not in sys.path:
 
 # --- Standard app imports (after sys.path is set) ---
 import logging
+import os
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
@@ -35,8 +36,11 @@ logging.basicConfig(
 logger = logging.getLogger("apps.depmap_backend.server")
 
 origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    o.strip()
+    for o in os.getenv(
+        "CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
+    ).split(",")
+    if o.strip()
 ]
 
 # --- create app and include routers ---

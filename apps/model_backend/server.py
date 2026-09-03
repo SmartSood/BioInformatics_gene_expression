@@ -24,6 +24,7 @@ if str(APP_DIR) not in sys.path:
 
 # --- Standard app imports (after sys.path is set) ---
 import logging
+import os
 import asyncio
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
@@ -43,9 +44,11 @@ logging.basicConfig(
 )
 logger = logging.getLogger("apps.model_backend.server")
 origins = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    # add any other dev hosts you use, or use "*" to allow all origins (not recommended for prod)
+    o.strip()
+    for o in os.getenv(
+        "CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
+    ).split(",")
+    if o.strip()
 ]
 # --- create app and include routers ---
 def create_app() -> FastAPI:
