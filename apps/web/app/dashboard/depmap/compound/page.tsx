@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card } from "@repo/ui/card";
 import {
@@ -32,12 +32,12 @@ function formatUniProtSequenceLines(sequence: string): Array<{
       blocks.push(slice.slice(i, i + BLOCK));
     }
     const ruler = blocks
-      .map((_, idx) => {
+      .map((block, idx) => {
         const cumLen = blocks
           .slice(0, idx + 1)
           .reduce((acc, b) => acc + b.length, 0);
         const endPos = start + cumLen;
-        return String(endPos).padStart(blocks[idx].length, " ");
+        return String(endPos).padStart(block.length, " ");
       })
       .join(" ");
     const aa = blocks.join(" ");
@@ -111,6 +111,14 @@ type MolecularResponse = {
 };
 
 export default function DepmapCompoundDetailPage() {
+  return (
+    <Suspense fallback={null}>
+      <DepmapCompoundDetailContent />
+    </Suspense>
+  );
+}
+
+function DepmapCompoundDetailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const gene = searchParams.get("gene") || "";

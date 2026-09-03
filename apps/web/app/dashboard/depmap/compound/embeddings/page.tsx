@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Card } from "@repo/ui/card";
 import { Loader, AlertCircle, Search } from "lucide-react";
@@ -29,6 +29,14 @@ type EmbeddingJobResult = {
 };
 
 export default function EmbeddingsPage() {
+  return (
+    <Suspense fallback={null}>
+      <EmbeddingsPageContent />
+    </Suspense>
+  );
+}
+
+function EmbeddingsPageContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const gene = searchParams.get("gene") || "";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { Suspense, useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { Card } from "@repo/ui/card";
@@ -22,6 +22,14 @@ interface AssociationResult {
 }
 
 export default function DepMapPage() {
+  return (
+    <Suspense fallback={null}>
+      <DepMapPageContent />
+    </Suspense>
+  );
+}
+
+function DepMapPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const geneSymbol = searchParams.get("gene") || "";
@@ -104,9 +112,13 @@ export default function DepMapPage() {
       // Trim whitespace from gene symbol and normalize to uppercase for consistency
       const cleanedGene = geneSymbol.trim().toUpperCase();
       
-      const response = await axios.post(
+      const response = await axios.post<{
+        status?: string;
+        existing_files?: Record<string, string>;
+        job_id?: string;
+      }>(
         `${DEPMAP_BACKEND_URL}/associations`,
-        { 
+        {
           genes: [cleanedGene],
           experiment_id: experimentId,
           force: forceExport
@@ -135,7 +147,7 @@ export default function DepMapPage() {
           }
         }
       } else {
-        setJobId(response.data.job_id);
+        setJobId(response.data.job_id ?? null);
         setJobStatus(response.data.status || "queued");
       }
     } catch (err: any) {
@@ -155,7 +167,7 @@ export default function DepMapPage() {
 
     try {
       const token = sessionStorage.getItem("authToken");
-      const response = await axios.get(
+      const response = await axios.get<{ status?: string }>(
         `${DEPMAP_BACKEND_URL}/associations/${jobId}/status`,
         {
           headers: {
@@ -164,7 +176,7 @@ export default function DepMapPage() {
         }
       );
 
-      const status = response.data.status;
+      const status = response.data.status ?? "";
       setJobStatus(status);
 
       if (status === "finished") {
@@ -195,17 +207,17 @@ export default function DepMapPage() {
       // Gene name is already normalized to uppercase
       const url = `${DEPMAP_BACKEND_URL}/associations/experiment/${experimentId}/gene/${encodeURIComponent(geneName)}/download`;
       
-      const response = await axios.get(url, {
+      const response = await axios.get<Blob>(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
         responseType: "blob",
       });
-      
+
       // Parse CSV blob - handle quoted fields properly
       const text = await response.data.text();
       const lines = text.split("\n").filter(line => line.trim());
-      
+
       if (lines.length < 2) {
         setError("CSV file is empty or invalid");
         return;
@@ -236,7 +248,7 @@ export default function DepMapPage() {
 
       // Skip header line
       for (let i = 1; i < lines.length; i++) {
-        const values = parseCSVLine(lines[i]);
+        const values = parseCSVLine(lines[i] ?? "");
         if (values.length >= 4) {
           data.push({
             "Gene/Compound": values[0] || "",
@@ -270,7 +282,7 @@ export default function DepMapPage() {
 
     try {
       const token = sessionStorage.getItem("authToken");
-      const response = await axios.get(
+      const response = await axios.get<Blob>(
         `${DEPMAP_BACKEND_URL}/associations/${jobId}/download`,
         {
           headers: {
@@ -313,7 +325,7 @@ export default function DepMapPage() {
 
       // Skip header line
       for (let i = 1; i < lines.length; i++) {
-        const values = parseCSVLine(lines[i]);
+        const values = parseCSVLine(lines[i] ?? "");
         if (values.length >= 4) {
           data.push({
             "Gene/Compound": values[0] || "",
@@ -334,12 +346,12 @@ export default function DepMapPage() {
   const handleDownload = async () => {
     try {
       const token = sessionStorage.getItem("authToken");
-      let response;
-      
+      let response: Awaited<ReturnType<typeof axios.get<Blob>>> | undefined;
+
       // Use different endpoint for cached vs new results
       if (jobId === "cached" && experimentId !== "default") {
         // Gene symbol is already normalized to uppercase
-        response = await axios.get(
+        response = await axios.get<Blob>(
           `${DEPMAP_BACKEND_URL}/associations/experiment/${experimentId}/gene/${encodeURIComponent(geneSymbol.trim().toUpperCase())}/download`,
           {
             headers: {
@@ -349,7 +361,7 @@ export default function DepMapPage() {
           }
         );
       } else if (jobId && jobId !== "cached") {
-        response = await axios.get(
+        response = await axios.get<Blob>(
           `${DEPMAP_BACKEND_URL}/associations/${jobId}/download`,
           {
             headers: {
