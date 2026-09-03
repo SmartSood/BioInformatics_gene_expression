@@ -82,6 +82,13 @@ RUN pip install prisma && \
     rm -rf /install/prisma && \
     cp -r /build/packages/db/generated/python/prisma /install/prisma
 
+# `generate` only produces the client's Python source - the actual query
+# engine it calls at runtime is a separate platform-specific Rust binary,
+# fetched here into /root/.cache/prisma-python. That cache has to be
+# explicitly carried into the runtime stage below (COPY --from=builder),
+# since it lives outside /install and nothing else copies it.
+RUN prisma py fetch
+
 # Runtime stage
 FROM python:3.13-slim
 
@@ -101,6 +108,10 @@ WORKDIR /app
 
 # Copy all pre-built dependencies
 COPY --from=builder /install /usr/local/lib/python3.13/site-packages
+# The Prisma Python client's query engine binary (fetched above via
+# `prisma py fetch`), without which every DB-touching backend fails at
+# startup with BinaryNotFoundError.
+COPY --from=builder /root/.cache/prisma-python /root/.cache/prisma-python
 
 # Create app directories
 RUN mkdir -p /app/apps /app/packages
