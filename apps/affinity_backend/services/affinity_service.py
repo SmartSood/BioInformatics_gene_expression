@@ -14,7 +14,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from storage.s3_storage import USE_S3, upload_file_sync
+from apps.model_backend.storage.s3_storage import USE_S3, upload_file_sync
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]

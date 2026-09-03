@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Tuple
 from client.db import db
 
-from storage.s3_storage import USE_S3, S3_BUCKET, upload_file
+from apps.model_backend.storage.s3_storage import USE_S3, S3_BUCKET, upload_file
 
 try:
     from dotenv import load_dotenv

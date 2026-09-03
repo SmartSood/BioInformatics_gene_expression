@@ -6,7 +6,7 @@ from auth.deps import get_current_user
 from client.db import db
 from workers.queue_worker import get_queue
 from typing import Optional, Dict, Any
-from storage.s3_storage import download_to_temp, is_s3_uri
+from apps.model_backend.storage.s3_storage import download_to_temp, is_s3_uri
 router = APIRouter(prefix="/experiments", tags=["experiments"])
 
 # Get artifacts directory - same logic as train_worker.py

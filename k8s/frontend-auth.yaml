@@ -25,56 +25,56 @@ spec:
         component: api
     spec:
       containers:
-        - name: auth-backend
-          image: smarthcnbl/gene-auth:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 3001
-              name: http
-          envFrom:
-            - configMapRef:
-                name: shared-config
-            - configMapRef:
-                name: auth-backend-config
-          env:
-            - name: JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: jwt-secret
-                  key: JWT_SECRET
-            - name: JWT_ALGORITHM
-              valueFrom:
-                secretKeyRef:
-                  name: jwt-secret
-                  key: JWT_ALGORITHM
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: database-credentials
-                  key: DATABASE_URL
-          resources:
-            requests:
-              cpu: 250m
-              memory: 512Mi
-            limits:
-              cpu: 1000m
-              memory: 2Gi
-          livenessProbe:
-            httpGet:
-              path: /health
-              port: 3001
-            initialDelaySeconds: 20
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-          readinessProbe:
-            httpGet:
-              path: /health
-              port: 3001
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            timeoutSeconds: 3
-            failureThreshold: 2
+      - name: auth-backend
+        image: docker-registry.example.com/gene-auth:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3001
+          name: http
+        envFrom:
+        - configMapRef:
+            name: shared-config
+        - configMapRef:
+            name: auth-backend-config
+        env:
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: JWT_SECRET
+        - name: JWT_ALGORITHM
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: JWT_ALGORITHM
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DATABASE_URL
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
 ---
 # Auth Backend Service
 apiVersion: v1
@@ -87,10 +87,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 3001
-      targetPort: 3001
-      protocol: TCP
-      name: http
+  - port: 3001
+    targetPort: 3001
+    protocol: TCP
+    name: http
   selector:
     app: auth-backend
     component: api
@@ -122,45 +122,45 @@ spec:
         component: frontend
     spec:
       containers:
-        - name: web-frontend
-          image: smarthcnbl/gene-web:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 3000
-              name: http
-          envFrom:
-            - configMapRef:
-                name: shared-config
-            - configMapRef:
-                name: web-frontend-config
-          env:
-            - name: NEXT_PUBLIC_API_URL
-              value: "https://api.example.com"
-            - name: NEXT_PUBLIC_AUTH_URL
-              value: "https://auth.example.com"
-          resources:
-            requests:
-              cpu: 250m
-              memory: 512Mi
-            limits:
-              cpu: 1000m
-              memory: 2Gi
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 20
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            timeoutSeconds: 3
-            failureThreshold: 2
+      - name: web-frontend
+        image: docker-registry.example.com/gene-web:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          name: http
+        envFrom:
+        - configMapRef:
+            name: shared-config
+        - configMapRef:
+            name: web-frontend-config
+        env:
+        - name: NEXT_PUBLIC_API_URL
+          value: "https://api.example.com"
+        - name: NEXT_PUBLIC_AUTH_URL
+          value: "https://auth.example.com"
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
 ---
 # Web Frontend Service
 apiVersion: v1
@@ -173,10 +173,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 3000
-      targetPort: 3000
-      protocol: TCP
-      name: http
+  - port: 3000
+    targetPort: 3000
+    protocol: TCP
+    name: http
   selector:
     app: web-frontend
     component: frontend

@@ -7,18 +7,23 @@ from pathlib import Path
 from typing import Optional, Tuple
 from urllib.parse import urlparse
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 try:
     import boto3
 except Exception:  # pragma: no cover - boto3 is optional for local-only runs
     boto3 = None
 
 
-USE_S3 = os.getenv("USE_S3", "true").lower() == "true"
+USE_S3 = os.getenv("USE_S3", "false").lower() == "true"
 S3_BUCKET = os.getenv("S3_BUCKET")
 S3_ENDPOINT_URL = os.getenv("S3_ENDPOINT_URL")
 S3_REGION = os.getenv("S3_REGION")
 S3_ACCESS_KEY = os.getenv("S3_ACCESS_KEY")
 S3_SECRET_KEY = os.getenv("S3_SECRET_KEY")
+ 
 
 
 def _client():

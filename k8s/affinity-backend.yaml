@@ -25,61 +25,61 @@ spec:
         component: api
     spec:
       containers:
-        - name: affinity-backend
-          image: smarthcnbl/gene-affinity:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 8003
-              name: http
-          envFrom:
-            - configMapRef:
-                name: shared-config
-            - configMapRef:
-                name: affinity-backend-config
-          env:
-            - name: S3_BUCKET
-              valueFrom:
-                secretKeyRef:
-                  name: aws-credentials
-                  key: S3_BUCKET
-            - name: S3_ACCESS_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws-credentials
-                  key: S3_ACCESS_KEY
-            - name: S3_SECRET_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: aws-credentials
-                  key: S3_SECRET_KEY
-            - name: REDIS_URL
-              valueFrom:
-                secretKeyRef:
-                  name: redis-credentials
-                  key: REDIS_URL
-          resources:
-            requests:
-              cpu: 500m
-              memory: 2Gi
-            limits:
-              cpu: 2000m
-              memory: 8Gi
-          livenessProbe:
-            httpGet:
-              path: /docs
-              port: 8003
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            failureThreshold: 3
-          readinessProbe:
-            httpGet:
-              path: /docs
-              port: 8003
-            initialDelaySeconds: 10
-            periodSeconds: 5
-            timeoutSeconds: 3
-            failureThreshold: 2
+      - name: affinity-backend
+        image: docker-registry.example.com/gene-affinity:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8003
+          name: http
+        envFrom:
+        - configMapRef:
+            name: shared-config
+        - configMapRef:
+            name: affinity-backend-config
+        env:
+        - name: S3_BUCKET
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: S3_BUCKET
+        - name: S3_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: S3_ACCESS_KEY
+        - name: S3_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: aws-credentials
+              key: S3_SECRET_KEY
+        - name: REDIS_URL
+          valueFrom:
+            secretKeyRef:
+              name: redis-credentials
+              key: REDIS_URL
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+          limits:
+            cpu: 2000m
+            memory: 8Gi
+        livenessProbe:
+          httpGet:
+            path: /docs
+            port: 8003
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /docs
+            port: 8003
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 2
 ---
 # Affinity Backend API Service
 apiVersion: v1
@@ -92,10 +92,10 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 8003
-      targetPort: 8003
-      protocol: TCP
-      name: http
+  - port: 8003
+    targetPort: 8003
+    protocol: TCP
+    name: http
   selector:
     app: affinity-backend
     component: api
@@ -114,9 +114,9 @@ spec:
   minReplicas: 2
   maxReplicas: 4
   metrics:
-    - type: Resource
-      resource:
-        name: cpu
-        target:
-          type: Utilization
-          averageUtilization: 70
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70

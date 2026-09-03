@@ -13,7 +13,7 @@ import traceback
 # DB helpers
 from client.db import db, connect_db
 from workers.db_utils import sanitize_metrics, update_trainingrun_with_retries
-from storage.s3_storage import USE_S3, upload_file
+from apps.model_backend.storage.s3_storage import USE_S3, upload_file
 
 # Optional numpy/pandas lazy imports
 try:

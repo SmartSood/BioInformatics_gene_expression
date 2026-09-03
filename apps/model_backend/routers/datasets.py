@@ -1,6 +1,6 @@
 from fastapi import APIRouter, UploadFile, File, Depends
 from auth.deps import get_current_user
-from storage.storage import save_upload
+from apps.model_backend.storage.storage import save_upload
 from scemma.model import DatasetInfoRequest
 router = APIRouter(prefix="/datasets", tags=["datasets"])
 

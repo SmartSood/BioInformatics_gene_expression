@@ -12,7 +12,7 @@ from apps.embedding_backend.auth.deps import get_current_user
 from apps.embedding_backend.services.embedding_service import compute_embeddings
 from apps.embedding_backend.workers.embedding_worker import run_embedding_job
 from apps.embedding_backend.workers.queue_worker import get_queue
-from storage.s3_storage import download_to_temp, is_s3_uri
+from apps.model_backend.storage.s3_storage import download_to_temp, is_s3_uri
 
 router = APIRouter(prefix="/embeddings", tags=["embeddings"])
 

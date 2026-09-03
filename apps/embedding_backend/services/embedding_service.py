@@ -17,7 +17,7 @@ from rdkit import Chem
 from transformers import AutoModel, AutoTokenizer, BertModel, BertTokenizer
 from unimol_tools import UniMolRepr
 
-from storage.s3_storage import USE_S3, S3_BUCKET, upload_file_sync, build_s3_uri
+from apps.model_backend.storage.s3_storage import USE_S3, S3_BUCKET, upload_file_sync, build_s3_uri
 
 # Paths
 PROJECT_ROOT = Path(__file__).resolve().parents[3]

@@ -6,7 +6,7 @@ from auth.deps import get_current_user
 from scemma.model import JobStatus
 from workers.queue_worker import get_queue
 from client.db import db
-from storage.s3_storage import is_s3_uri
+from apps.model_backend.storage.s3_storage import is_s3_uri
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 

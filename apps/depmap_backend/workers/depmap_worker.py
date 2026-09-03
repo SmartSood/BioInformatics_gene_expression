@@ -40,7 +40,7 @@ from depmap_associations import (
 import pandas as pd
 import csv
 
-from storage.s3_storage import USE_S3, upload_file_sync
+from apps.model_backend.storage.s3_storage import USE_S3, upload_file_sync
 
 logger = logging.getLogger("depmap_worker")
 
@@ -275,7 +275,6 @@ def run_depmap_association(genes: List[str], user_id: str, experiment_id: str, f
                         logger.info(f"✓✓✓ Successfully updated database with DepMap results for experiment {experiment_id}")
                     except Exception as e:
                         logger.error(f"Database update error: {e}")
-                        import traceback
                         logger.error(traceback.format_exc())
                 
                 # Execute async function (create new event loop)
@@ -296,13 +295,11 @@ def run_depmap_association(genes: List[str], user_id: str, experiment_id: str, f
                         asyncio.run(update_database())
                 except Exception as e:
                     logger.error(f"Failed to run database update: {e}")
-                    import traceback
                     logger.error(traceback.format_exc())
                     
             except Exception as db_error:
                 # Don't fail the job if database update fails
                 logger.error(f"Failed to update database with DepMap results: {db_error}")
-                import traceback
                 logger.error(traceback.format_exc())
         
         return {

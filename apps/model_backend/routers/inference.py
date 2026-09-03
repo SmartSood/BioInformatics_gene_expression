@@ -6,7 +6,7 @@ import pandas as pd
 
 from auth.deps import get_current_user
 from scemma.model import PredictRequest, PredictResponse
-from storage.s3_storage import download_to_temp, is_s3_uri
+from apps.model_backend.storage.s3_storage import download_to_temp, is_s3_uri
 
 router = APIRouter(prefix="/models", tags=["inference"])
 

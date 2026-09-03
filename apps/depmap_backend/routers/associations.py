@@ -20,7 +20,7 @@ from client.db import db, connect_db
 from prisma import Json
 import logging
 
-from storage.s3_storage import download_to_temp, is_s3_uri
+from apps.model_backend.storage.s3_storage import download_to_temp, is_s3_uri
 
 logger = logging.getLogger("depmap_backend.associations")
 
