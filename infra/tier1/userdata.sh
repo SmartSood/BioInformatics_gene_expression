@@ -34,6 +34,13 @@ source .env
 set +a
 
 npm install
+
+# The JS Prisma client's query engine binary is platform-specific and
+# packages/db/generated/prisma is committed to git as generated on the
+# developer's Mac - regenerate it natively here so auth_backend gets a
+# Linux/arm64 engine instead of crash-looping on a missing binary.
+npx prisma generate --schema=packages/db/prisma/schema.prisma --generator client
+
 npm run build --workspace apps/web --workspace apps/auth_backend --workspace apps/wake_gateway
 
 FE_PORT="${FE_PORT}" AUTH_PORT="${AUTH_PORT}" WAKE_GATEWAY_PORT="${WAKE_GATEWAY_PORT:-4100}" \
