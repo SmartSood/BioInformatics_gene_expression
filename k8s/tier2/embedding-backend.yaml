@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: embedding-backend
-          image: smarthcnbl/gene-embedding:4f62c03
+          image: smarthcnbl/gene-embedding:89a1bbb
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8002
@@ -108,7 +108,7 @@ spec:
     spec:
       containers:
         - name: embedding-backend-worker
-          image: smarthcnbl/gene-embedding:4f62c03
+          image: smarthcnbl/gene-embedding:89a1bbb
           imagePullPolicy: IfNotPresent
           command: ["python", "-m", "rq.cli", "worker"]
           envFrom:
