@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Card } from "@repo/ui/card";
 import { Loader, AlertCircle, Search } from "lucide-react";
+import { EMBEDDING_BACKEND_URL } from "@repo/config";
 
 type MolecularResponse = {
   compound?: string;
@@ -94,7 +95,7 @@ function EmbeddingsPageContent() {
     setResult(null);
     try {
       // enqueue async job so the worker will produce artifacts (including zip)
-      const enqueueRes = await fetch("http://localhost:8002/embeddings/async", {
+      const enqueueRes = await fetch(`${EMBEDDING_BACKEND_URL}/embeddings/async`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +127,7 @@ function EmbeddingsPageContent() {
       while (!finished) {
         await new Promise((r) => setTimeout(r, 1500));
         const statusRes = await fetch(
-          `http://localhost:8002/embeddings/${encodeURIComponent(jobId)}/status`,
+          `${EMBEDDING_BACKEND_URL}/embeddings/${encodeURIComponent(jobId)}/status`,
           {
             headers: { Authorization: `Bearer ${token}` },
           },
@@ -145,7 +146,7 @@ function EmbeddingsPageContent() {
           setResult(statusJson.result ?? null);
           // download zip artifact
           const dlRes = await fetch(
-            `http://localhost:8002/embeddings/${encodeURIComponent(jobId)}/download?format=zip`,
+            `${EMBEDDING_BACKEND_URL}/embeddings/${encodeURIComponent(jobId)}/download?format=zip`,
             {
               headers: { Authorization: `Bearer ${token}` },
             },
