@@ -1,0 +1,22 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "DescribeIsAccountWideInEC2",
+      "Effect": "Allow",
+      "Action": ["ec2:DescribeInstances", "ec2:DescribeInstanceStatus"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "StartOnlyTheTaggedTier2Instance",
+      "Effect": "Allow",
+      "Action": ["ec2:StartInstances"],
+      "Resource": "arn:aws:ec2:*:*:instance/*",
+      "Condition": {
+        "StringEquals": {
+          "ec2:ResourceTag/Role": "gene-web-tier2"
+        }
+      }
+    }
+  ]
+}

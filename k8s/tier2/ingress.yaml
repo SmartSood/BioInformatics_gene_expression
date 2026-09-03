@@ -1,0 +1,55 @@
+# Frontend + auth live on Tier 1 now (always-on, PM2) - this ingress only
+# routes to the compute backends that live on Tier 2.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gene-web-ingress
+  namespace: gene-web
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: api.EC2_PUBLIC_IP.nip.io
+      http:
+        paths:
+          - path: /models
+            pathType: Prefix
+            backend:
+              service:
+                name: model-backend
+                port:
+                  number: 8000
+          - path: /jobs
+            pathType: Prefix
+            backend:
+              service:
+                name: model-backend
+                port:
+                  number: 8000
+          - path: /experiments
+            pathType: Prefix
+            backend:
+              service:
+                name: model-backend
+                port:
+                  number: 8000
+          - path: /embeddings
+            pathType: Prefix
+            backend:
+              service:
+                name: embedding-backend
+                port:
+                  number: 8002
+          - path: /associations
+            pathType: Prefix
+            backend:
+              service:
+                name: depmap-backend
+                port:
+                  number: 8001
+          - path: /affinity
+            pathType: Prefix
+            backend:
+              service:
+                name: affinity-backend
+                port:
+                  number: 8003

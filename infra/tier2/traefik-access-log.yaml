@@ -1,0 +1,16 @@
+# Drop this in /var/lib/rancher/k3s/server/manifests/ on Tier 2 (k3s
+# auto-applies anything there). Turns on JSON access logs for the bundled
+# Traefik ingress, to stdout -> readable via `kubectl logs`. This is the
+# only signal idle-checker.sh uses to decide "is anyone actually using
+# Tier 2 right now" - without it there is no way to tell real traffic
+# from an idle cluster.
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    additionalArguments:
+      - "--accesslog=true"
+      - "--accesslog.format=json"

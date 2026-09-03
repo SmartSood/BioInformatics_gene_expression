@@ -40,7 +40,7 @@ if [[ "${USE_GPU}" == "true" ]]; then
   systemctl restart docker
 fi
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="${K3S_CHANNEL}" sh -
+curl -sfL https://get.k3s.io | INSTALL_K3S_CHANNEL="${K3S_CHANNEL}" sh -
 
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 mkdir -p "${APP_ROOT}"

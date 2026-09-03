@@ -1,0 +1,9 @@
+[Unit]
+Description=Stop this instance when Tier 2 has been idle
+After=k3s.service
+Requires=k3s.service
+
+[Service]
+Type=oneshot
+Environment=IDLE_THRESHOLD_MINUTES=20
+ExecStart=/opt/gene-web/infra/tier2/idle-checker.sh
