@@ -298,10 +298,13 @@ async def download_association_csv(
         if not csv_path.exists():
             raise HTTPException(404, "CSV file not found on server")
 
-    # Additional security: verify path contains user ID
-    user_id = str(user["sub"])
-    if user_id not in str(csv_path):
-        raise HTTPException(403, "Access denied: Invalid file path")
+    # Ownership was already verified above via job.args[1] against the
+    # authenticated user's sub claim - that's the real, tamper-proof check.
+    # A second check used to string-match the user ID against csv_path, but
+    # download_to_temp() only keeps the S3 key's basename (e.g.
+    # "results.csv"), stripping the "<user_id>/<job>/..." prefix that
+    # actually carried the user ID - so it could never match for any
+    # S3-backed result and rejected every legitimate download with 403.
 
     return FileResponse(
         str(csv_path),
