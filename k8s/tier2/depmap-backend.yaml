@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: depmap-backend
-          image: smarthcnbl/gene-depmap:706a4e0
+          image: smarthcnbl/gene-depmap:e88510a
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8001
@@ -116,7 +116,7 @@ spec:
     spec:
       containers:
         - name: depmap-backend-worker
-          image: smarthcnbl/gene-depmap:706a4e0
+          image: smarthcnbl/gene-depmap:e88510a
           imagePullPolicy: IfNotPresent
           # NOT `rq.cli worker` (defaults to the "default" queue, which
           # nothing ever enqueues to - associations.py enqueues to

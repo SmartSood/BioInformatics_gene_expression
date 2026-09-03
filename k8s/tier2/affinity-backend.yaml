@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: affinity-backend
-          image: smarthcnbl/gene-affinity:706a4e0
+          image: smarthcnbl/gene-affinity:e88510a
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8003
