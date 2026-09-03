@@ -36,6 +36,12 @@ spec:
                 name: shared-config
             - configMapRef:
                 name: embedding-backend-config
+          env:
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_SECRET
           # This is the biggest consumer on the node - HF model weights are
           # cached under HF_HOME. Bump this if your chosen embedding models
           # (ESM-2 / ProtBERT / etc.) exceed ~1.2Gi resident.

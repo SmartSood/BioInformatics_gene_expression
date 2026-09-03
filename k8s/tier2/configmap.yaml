@@ -14,6 +14,11 @@ data:
   # (different host), so every FastAPI backend needs this in its CORS
   # allow-list or the browser blocks the response entirely.
   CORS_ALLOWED_ORIGINS: "http://13.207.189.132,http://localhost:3000,http://127.0.0.1:3000"
+  # Must exactly match what Tier 1's auth_backend signs into every JWT
+  # (apps/auth_backend/src/index.ts) - every backend here verifies both
+  # claims and rejects the token otherwise.
+  AUTH_JWT_ISSUER: "http://localhost:4000"
+  AUTH_JWT_AUDIENCE: "mlapp"
 ---
 apiVersion: v1
 kind: ConfigMap
