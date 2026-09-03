@@ -10,16 +10,23 @@ module.exports = {
       args: "run start",
       env: { NODE_ENV: "production" },
     },
+    // Run via tsx, not `node dist/index.js`: @repo/dotenv-path, @repo/db and
+    // @repo/zod-scemma all export raw .ts source directly (no build step of
+    // their own), which Next.js transpiles fine for apps/web but which
+    // plain `node` cannot load at all (ERR_UNKNOWN_FILE_EXTENSION) - tsx
+    // resolves and transpiles those workspace imports on the fly instead.
     {
       name: "gene-auth-backend",
       cwd: "/opt/gene-web/apps/auth_backend",
-      script: "dist/index.js",
+      script: "npx",
+      args: "tsx src/index.ts",
       env: { NODE_ENV: "production" },
     },
     {
       name: "gene-wake-gateway",
       cwd: "/opt/gene-web/apps/wake_gateway",
-      script: "dist/index.js",
+      script: "npx",
+      args: "tsx src/index.ts",
       env: { NODE_ENV: "production" },
     },
   ],
