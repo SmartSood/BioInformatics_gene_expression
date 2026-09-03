@@ -4,7 +4,9 @@
 # repo. Deliberately does NOT `kubectl apply` anything or touch secrets -
 # user-data is visible to anyone with ec2:DescribeInstanceAttribute on this
 # instance, so it must never carry real credentials. Apply manifests over
-# SSH after filling in k8s/tier2/secrets.yaml for real (see infra/README.md).
+# SSH after filling in k8s/tier2/secrets.yaml's jwt-secret placeholder, and
+# applying database-credentials separately (it's not in that file at all -
+# see infra/README.md).
 set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
@@ -47,4 +49,4 @@ cp "${APP_ROOT}/infra/tier2/idle-checker.timer" /etc/systemd/system/idle-checker
 systemctl daemon-reload
 systemctl enable --now idle-checker.timer
 
-echo "Tier 2 bootstrap complete. SSH in, fill k8s/tier2/secrets.yaml, then run infra/tier2/apply-tier2.sh"
+echo "Tier 2 bootstrap complete. SSH in, fill k8s/tier2/secrets.yaml's jwt-secret, run infra/tier2/apply-tier2.sh, then apply database-credentials separately per infra/README.md"

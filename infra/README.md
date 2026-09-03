@@ -100,13 +100,22 @@ see the `_comment` in each policy file.)
 
 ### 3. Fill in Tier 2 secrets and apply manifests
 
-SSH into Tier 2, edit `k8s/tier2/secrets.yaml` with a real `DATABASE_URL`
-(never commit real values — prefer
-`kubectl create secret generic ... --dry-run=client -o yaml | kubectl apply -f -`
-once it's running), then:
+SSH into Tier 2, edit `k8s/tier2/secrets.yaml` with a real `JWT_SECRET`
+(must exactly match Tier 1's — see step 4), then apply the manifests:
 
 ```bash
 sudo bash /opt/gene-web/infra/tier2/apply-tier2.sh
+```
+
+`database-credentials` is deliberately **not** in `secrets.yaml` at all —
+apply it directly, every time, and never add it back to that file (a
+prior version had it there, and re-applying the file after setting the
+real value silently reset it to a placeholder in production):
+
+```bash
+kubectl create secret generic database-credentials -n gene-web \
+  --from-literal=DATABASE_URL='<your real Neon/Postgres URL>' \
+  --dry-run=client -o yaml | kubectl apply -f -
 ```
 
 ### 4. Launch Tier 1

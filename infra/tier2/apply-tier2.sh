@@ -1,7 +1,12 @@
 #!/bin/bash
-# Run this over SSH on Tier 2, after filling in k8s/tier2/secrets.yaml with
-# real values (never commit real secrets - see infra/README.md for the
-# `kubectl create secret --dry-run | kubectl apply` pattern instead).
+# Run this over SSH on Tier 2. k8s/tier2/secrets.yaml only carries the
+# jwt-secret placeholder (fill in the real value to match Tier 1's
+# JWT_SECRET after this runs). database-credentials is NOT in that file at
+# all - apply it separately, every time, via `kubectl create secret
+# --dry-run=client -o yaml | kubectl apply -f -` (see infra/README.md).
+# Re-running this script does NOT touch DATABASE_URL, by design - a prior
+# version had it in secrets.yaml and re-applying that file silently
+# clobbered the real value back to a placeholder in production.
 set -euo pipefail
 
 ROOT="${1:-/opt/gene-web}"
