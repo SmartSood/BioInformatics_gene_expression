@@ -2,6 +2,7 @@ import argparse
 import csv
 import os
 import zipfile
+from pathlib import Path
 from typing import Dict, Iterable, List, Tuple, Union
 
 import numpy as np
@@ -18,8 +19,14 @@ import pandas as pd
 # DATASET FILE PATHS - UPDATE THESE WHEN NEW VERSIONS BECOME AVAILABLE
 ###############################################################################
 
-# Base directory for all data files
-DATASET_DIR = "dataset"
+# Base directory for all data files. Anchored to this script's own location
+# (not the process's cwd, which depmap_worker.py has no reason to set to
+# apps/depmap/ - it imports this module via sys.path insertion and runs
+# from /app). A bare relative "dataset" string here silently resolved to
+# nothing under any other cwd, so every gene lookup found an empty
+# DataFrame instead of erroring - it looked like "gene not found" rather
+# than "file not found".
+DATASET_DIR = str(Path(__file__).resolve().parent / "dataset")
 
 # ============================================================================
 # EXPRESSION DATA
