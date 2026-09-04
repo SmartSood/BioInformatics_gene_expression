@@ -122,11 +122,18 @@ def _load_protvec() -> Word2Vec:
 
 def _load_esm() -> tuple[Any, Any]:
     if _CACHE.esm_tokenizer is None or _CACHE.esm_model is None:
+        # local_files_only=True was hardcoded, but the bundled hf_cache is
+        # only ~580KB - nowhere near enough to hold real pretrained weights
+        # (ESM2-650M alone is several GB). Allowing a fallback download here
+        # trades a slow first-use cold start for not needing to ship
+        # multi-GB of transformer weights in the image; the in-memory
+        # _CACHE above means this only downloads once per pod lifetime, not
+        # per request.
         _CACHE.esm_tokenizer = AutoTokenizer.from_pretrained(
-            ESM_MODEL_NAME, cache_dir=str(HF_CACHE_DIR), local_files_only=True
+            ESM_MODEL_NAME, cache_dir=str(HF_CACHE_DIR), local_files_only=False
         )
         _CACHE.esm_model = AutoModel.from_pretrained(
-            ESM_MODEL_NAME, cache_dir=str(HF_CACHE_DIR), local_files_only=True
+            ESM_MODEL_NAME, cache_dir=str(HF_CACHE_DIR), local_files_only=False
         ).to(DEVICE)
         _CACHE.esm_model.eval()
     return _CACHE.esm_tokenizer, _CACHE.esm_model
@@ -138,10 +145,10 @@ def _load_protbert() -> tuple[Any, Any]:
             PROTBERT_MODEL_NAME,
             do_lower_case=False,
             cache_dir=str(HF_CACHE_DIR),
-            local_files_only=True,
+            local_files_only=False,
         )
         _CACHE.protbert_model = BertModel.from_pretrained(
-            PROTBERT_MODEL_NAME, cache_dir=str(HF_CACHE_DIR), local_files_only=True
+            PROTBERT_MODEL_NAME, cache_dir=str(HF_CACHE_DIR), local_files_only=False
         ).to(DEVICE)
         _CACHE.protbert_model.eval()
     return _CACHE.protbert_tokenizer, _CACHE.protbert_model
