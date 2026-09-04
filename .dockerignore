@@ -66,6 +66,11 @@ models
 # embedding job failed with "Missing required local model files".
 !apps/embedding_bundle/models
 !apps/embedding_bundle/models/**
+# Same issue, second occurrence: affinity_backend's trained checkpoint
+# (apps/affinity/gene_embeddings.pth) was also silently excluded by the
+# bare "*.pth" pattern above - every prediction failed with
+# "Checkpoint not found".
+!apps/affinity/**
 
 # OS & IDE
 .DS_Store
