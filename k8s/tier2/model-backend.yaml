@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: model-backend
-          image: smarthcnbl/gene-model:ed0c08f
+          image: smarthcnbl/gene-model:7e119df
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
@@ -116,7 +116,7 @@ spec:
     spec:
       containers:
         - name: model-backend-worker
-          image: smarthcnbl/gene-model:ed0c08f
+          image: smarthcnbl/gene-model:7e119df
           imagePullPolicy: IfNotPresent
           # NOT `rq.cli worker` (defaults to the "default" queue, which
           # nothing ever enqueues to - train.py enqueues to "train"
