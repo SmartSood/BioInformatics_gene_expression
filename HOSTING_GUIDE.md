@@ -206,3 +206,57 @@ sudo pm2 list
 sudo pm2 logs gene-web-frontend --lines 30
 sudo pm2 restart gene-wake-gateway --update-env
 ```
+
+## 10. Full tech stack
+
+### Frontend
+- Next.js 15 (App Router) + React 19, TypeScript
+- Tailwind CSS 4
+- Axios (HTTP client)
+- Turborepo (monorepo build orchestration, npm workspaces)
+
+### Backend — Node.js
+- Express.js + TypeScript (`auth_backend`)
+- `wake_gateway` (custom Express/TypeScript control-plane service)
+- Prisma ORM (JS client) + PostgreSQL
+- JWT (`jsonwebtoken`) + `bcrypt` for auth
+- Run via `tsx` in production (not compiled output — see §7.12)
+
+### Backend — Python / ML
+- FastAPI + Uvicorn (`model_backend`, `embedding_backend`, `depmap_backend`, `affinity_backend`)
+- Prisma ORM (Python client)
+- Redis + RQ (async job queue, one named queue per service)
+- MLflow (experiment tracking, filesystem-backed)
+- pandas, NumPy, scikit-learn, XGBoost
+- PyTorch (CPU build), Transformers (HuggingFace), RDKit
+- gensim (Word2Vec — Mol2Vec, ProtVec), unimol-tools
+- boto3 + s3fs (S3 access)
+
+### ML models
+- Tabular: Random Forest, SVM, MLP, Gradient Boosting, Logistic Regression, XGBoost
+- Protein/gene embeddings: ESM-2, ProtBERT, ProtVec
+- Drug/compound embeddings: Mol2Vec, GIN/GROVER, Uni-Mol
+- Drug-target affinity: custom PyTorch CNN (checkpoint-based inference)
+
+### Data & storage
+- PostgreSQL (Neon, serverless) — application data via Prisma
+- Redis — job queues
+- AWS S3 — datasets, training outputs, embedding/affinity results
+- DepMap public reference datasets (expression, GDSC, CTRP, PRISM) — bundled in-image
+
+### Infrastructure & DevOps
+- AWS EC2 (Graviton/ARM64, `t4g` family)
+- Docker (multi-stage builds, shared base-image strategy)
+- Kubernetes (k3s — CNCF-certified upstream k8s)
+- Traefik (Tier 2 ingress), Nginx (Tier 1 reverse proxy)
+- PM2 (Tier 1 process manager)
+- AWS IAM (least-privilege, resource-tag-scoped policies)
+- AWS VPC, Security Groups, Elastic IP
+- Docker Hub (container registry)
+- systemd (timers/services — idle-checker, PM2 boot persistence)
+- Git/GitHub (manual GitOps-style deploy loop, no managed CI/CD)
+
+### External APIs / data sources
+- PubChem, UniProt, RCSB PDB (compound/protein lookups)
+- DepMap (public cancer dependency map datasets)
+
