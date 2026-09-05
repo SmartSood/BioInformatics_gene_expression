@@ -12,6 +12,12 @@ type Tier2Status = "asleep" | "waking" | "ready" | "error";
 
 const POLL_INTERVAL_MS = 3_000;
 const POLL_TIMEOUT_MS = 120_000;
+// /wake/status only confirms ONE health endpoint responds - on a single-node
+// cluster every pod (Postgres client, ML backends) cold-starts together on
+// wake, so the health check can pass a few seconds before Prisma's query
+// engine is actually able to serve DB-backed requests. This buffer absorbs
+// that gap instead of surfacing a transient 500 on the very first request.
+const READY_GRACE_MS = 8_000;
 
 /**
  * Ensures the on-demand Tier 2 node (model/embedding/depmap/affinity
@@ -51,6 +57,7 @@ export function useTier2Wake() {
         await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
         const { ready } = await checkStatus();
         if (ready) {
+          await new Promise((r) => setTimeout(r, READY_GRACE_MS));
           setStatus("ready");
           return;
         }
