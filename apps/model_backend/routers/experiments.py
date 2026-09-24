@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import FileResponse
 from pathlib import Path
 import os
@@ -76,7 +77,11 @@ async def list_experiments(user=Depends(get_current_user)):
         order={"createdAt": "desc"}
     )
 
-    return {"experiments": experiments}
+    return {
+        "experiments": [
+            jsonable_encoder(experiment.model_dump()) for experiment in experiments
+        ]
+    }
 
 @router.get("/{experiment_id}")
 async def get_experiment_details(experiment_id: str, user=Depends(get_current_user)):
