@@ -1,3 +1,7 @@
 {
-  "python.analysis.extraPaths": ["./packages/db/generated/python"]
+  "python.analysis.extraPaths": ["./packages/db/generated/python"],
+  "chat.tools.terminal.autoApprove": {
+    "ssh": true,
+    "aws": true
+  }
 }

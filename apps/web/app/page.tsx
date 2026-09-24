@@ -6,6 +6,7 @@ import {
   ChevronRight,
   Database,
   Dna,
+  FileText,
   FlaskConical,
   Network,
   ShieldCheck,
@@ -72,6 +73,34 @@ export default function Home() {
         <div><Network size={22} /><span>DepMap-informed associations</span></div>
         <div><Dna size={22} /><span>Multi-modal embeddings</span></div>
         <div><ChartNoAxesCombined size={22} /><span>Reproducible artifacts</span></div>
+      </section>
+
+      <section className={styles.aboutSection}>
+        <div className={styles.aboutCopy}>
+          <span className={styles.sectionKicker}>HOW THE PLATFORM WORKS</span>
+          <h2>A guided path from biological signal to candidate drug.</h2>
+          <p>
+            GeneWeb brings the computational drug-repurposing workflow into one
+            workspace. Researchers upload gene-expression data, choose quality
+            control and preprocessing steps, train and compare models, then use
+            the resulting targets to explore drug associations and molecular
+            representations.
+          </p>
+          <p>
+            Long-running training, DepMap analysis, and embedding jobs run in
+            background workers. Results, metrics, models, and downloadable
+            artifacts are tracked so each stage can be inspected before moving
+            to affinity prioritization.
+          </p>
+          <a href="/demonstration-mie.pdf" target="_blank" rel="noreferrer" className={styles.paperLink}>
+            <FileText size={18} /> Read the platform demonstration paper <ArrowRight size={16} />
+          </a>
+        </div>
+        <div className={styles.aboutSteps}>
+          <div><span>01</span><strong>Target identification</strong><p>Configure preprocessing, select a model, validate performance, and rank relevant genes.</p></div>
+          <div><span>02</span><strong>Drug-target exploration</strong><p>Connect targets to DepMap associations and retrieve compound information and representations.</p></div>
+          <div><span>03</span><strong>Candidate prioritization</strong><p>Generate multi-modal embeddings and run drug-gene affinity inference for downstream review.</p></div>
+        </div>
       </section>
 
       <footer className={styles.footer}>
