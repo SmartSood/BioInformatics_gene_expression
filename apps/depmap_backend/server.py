@@ -38,7 +38,7 @@ logger = logging.getLogger("apps.depmap_backend.server")
 origins = [
     o.strip()
     for o in os.getenv(
-        "CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000"
+        "CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000,https://gene.smarthsood.com,http://gene.smarthsood.com"
     ).split(",")
     if o.strip()
 ]

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Microscope,
@@ -26,6 +26,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    setIsSignUp(new URLSearchParams(window.location.search).get("mode") === "signup");
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
