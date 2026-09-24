@@ -1,6 +1,5 @@
-# Rendered by infra/tier1/userdata.sh via envsubst, using FE_PORT / AUTH_PORT
-# / WAKE_GATEWAY_PORT from /opt/gene-web/.env - check that file for the
-# actual values in use, they're read from the repo, not guessed here.
+# Rendered by infra/tier1/userdata.sh via envsubst. TIER2_API_HOST should be
+# the Tier 2 ingress hostname, for example api.203.0.113.10.nip.io.
 server {
     listen 80 default_server;
     server_name _;
@@ -28,5 +27,43 @@ server {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    # Keep browser requests same-origin over HTTPS. These routes are proxied
+    # to the on-demand Tier 2 ingress after Tier2WakeGate wakes the node.
+    location /api/models/ {
+        rewrite ^/api/models/(.*)$ /$1 break;
+        proxy_pass http://${TIER2_API_HOST};
+        proxy_set_header Host ${TIER2_API_HOST};
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /api/depmap/ {
+        rewrite ^/api/depmap/(.*)$ /$1 break;
+        proxy_pass http://${TIER2_API_HOST};
+        proxy_set_header Host ${TIER2_API_HOST};
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /api/embeddings/ {
+        rewrite ^/api/embeddings/(.*)$ /$1 break;
+        proxy_pass http://${TIER2_API_HOST};
+        proxy_set_header Host ${TIER2_API_HOST};
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /api/affinity/ {
+        rewrite ^/api/affinity/(.*)$ /$1 break;
+        proxy_pass http://${TIER2_API_HOST};
+        proxy_set_header Host ${TIER2_API_HOST};
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
     }
 }

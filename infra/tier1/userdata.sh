@@ -33,6 +33,8 @@ set -a
 source .env
 set +a
 
+: "${TIER2_API_HOST:?TIER2_API_HOST must be set to the Tier 2 ingress hostname}"
+
 npm install
 
 # The JS Prisma client's query engine binary is platform-specific and
@@ -43,8 +45,8 @@ npx prisma generate --schema=packages/db/prisma/schema.prisma --generator client
 
 npm run build --workspace apps/web --workspace apps/auth_backend --workspace apps/wake_gateway
 
-FE_PORT="${FE_PORT}" AUTH_PORT="${AUTH_PORT}" WAKE_GATEWAY_PORT="${WAKE_GATEWAY_PORT:-4100}" \
-  envsubst '${FE_PORT} ${AUTH_PORT} ${WAKE_GATEWAY_PORT}' \
+FE_PORT="${FE_PORT}" AUTH_PORT="${AUTH_PORT}" WAKE_GATEWAY_PORT="${WAKE_GATEWAY_PORT:-4100}" TIER2_API_HOST="${TIER2_API_HOST}" \
+  envsubst '${FE_PORT} ${AUTH_PORT} ${WAKE_GATEWAY_PORT} ${TIER2_API_HOST}' \
   < infra/tier1/nginx.conf.template > /etc/nginx/sites-available/gene-web
 ln -sf /etc/nginx/sites-available/gene-web /etc/nginx/sites-enabled/gene-web
 rm -f /etc/nginx/sites-enabled/default

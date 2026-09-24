@@ -19,6 +19,9 @@ const POLL_TIMEOUT_MS = 120_000;
 // that gap instead of surfacing a transient 500 on the very first request.
 const READY_GRACE_MS = 8_000;
 
+const wakeGatewayBase =
+  WAKE_GATEWAY_URL === "/wake" ? "" : WAKE_GATEWAY_URL;
+
 /**
  * Ensures the on-demand Tier 2 node (model/embedding/depmap/affinity
  * backends + Postgres + Redis) is up before letting a feature call it.
@@ -30,7 +33,7 @@ export function useTier2Wake() {
   const pollingRef = useRef(false);
 
   const checkStatus = useCallback(async () => {
-    const { data } = await axios.get(`${WAKE_GATEWAY_URL}/wake/status`);
+    const { data } = await axios.get(`${wakeGatewayBase}/wake/status`);
     return data as { instanceState: string; ready: boolean };
   }, []);
 
@@ -47,7 +50,7 @@ export function useTier2Wake() {
       }
 
       await axios.post(
-        `${WAKE_GATEWAY_URL}/wake`,
+        `${wakeGatewayBase}/wake`,
         {},
         { headers: { "x-wake-secret": WAKE_SHARED_SECRET } }
       );

@@ -351,11 +351,6 @@ export function NewExperimentForm({
         description: description || "",
       };
 
-      // backend base URL (set via env var in your app) or default to localhost
-      const MODEL_BACKEND_URL =
-        (process.env.NEXT_PUBLIC_MODEL_BACKEND_URL as string) ||
-        "http://localhost:8000";
-
       const token = sessionStorage.getItem("authToken") || undefined;
 
       const headers: any = { "Content-Type": "application/json" };
